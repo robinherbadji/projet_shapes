@@ -1,47 +1,66 @@
-/*
+
 package graphics.shapes;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
-public class SCircle extends Shape {
+import graphics.shapes.ui.ShapeVisitor;
 
-	private int radius;
-	private Point loc;
-	private Rectangle bounds;
+public class SCollection extends Shape {
+
+	List<Shape> listofShapes;
+	private Point locmoyen; 
 	
-	public SCircle() {
-		this.radius = 1;
-		this.loc = new Point(5,6);
-		this.bounds = new Rectangle(getLoc().x, getLoc().y, getRadius(), getRadius());
+	public SCollection() {
+		this.listofShapes = new ArrayList<Shape>();
+		this.locmoyen = null;
 	}
 	
-	public int getRadius() {
-		return this.radius;
+	public Iterator iterator() {
+		
+		ListIterator<Shape> it = listofShapes.listIterator();
+		return it;
 	}
 	
-	public void setRadius(int r) {
-		this.radius = r;
+	public void add(Shape s) {
+		this.listofShapes.add(s);
 	}
 	
 	public Point getLoc() {
-		return this.loc;
+		return null;
 	}
 	
 	public void setLoc(Point p) {
-		this.loc = p.getLocation();
+		while(iterator().hasNext()) {
+			((Shape) iterator().next()).setLoc(p);
+		}
 	}
 	
 	public void translate(int dx, int dy) {
-		this.loc = new Point((int) this.loc.getX()+dx, (int) this.loc.getY()+dy);
-	}
-	
-	public Rectangle getBounds() {
-		return this.bounds;
-	}
-	
-	public void accept(ShapeVisitor sv) {
+		while(iterator().hasNext()) {
+			//((Shape) iterator().next()).setLoc(getLoc().x + dx);
+			//((Shape) iterator().next()).setLoc(getLoc().y + dy);
+		}
 		
 	}
+	
+	
+	public Rectangle getBounds() {
+		Rectangle r = new Rectangle();
+		for(Iterator it = this.iterator(); it.hasNext();) {
+			r.union(((Shape) it.next()).getBounds());
+		}
+		return r;
+	}
+	
+	
+	public void accept(ShapeVisitor sv) {
+		sv.visitCollection(this);
+	}
 }
-*/
+
+

@@ -1,6 +1,7 @@
 package graphics.shapes.ui;
 
-import graphics.shapes.SCollection;//import graphics.shapes.SCircle;
+ //import graphics.shapes.SCircle;
+import graphics.shapes.SCollection;
 import graphics.shapes.SRectangle;
 import graphics.shapes.Shape;
 import graphics.shapes.attributes.SelectionAttributes;
