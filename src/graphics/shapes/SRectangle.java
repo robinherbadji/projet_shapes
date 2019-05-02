@@ -6,7 +6,10 @@ import java.awt.Rectangle;
 public class SRectangle extends Shape {
 	// Attributs
 	private Rectangle rect;
-	//
+	public SRectangle()
+	{
+		this(new Point(50,50),100,100);
+	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -18,7 +21,7 @@ public class SRectangle extends Shape {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
-	// Méthodes	
+	// MÃ©thodes	
 	public Rectangle getRect() {
 		return rect;
 	}
@@ -36,6 +39,10 @@ public class SRectangle extends Shape {
 	@Override
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitRectangle(this); // Qu'est-ce que le shapevisitor va venir visiter? -> Le rectangle this
+	}
+	
+	public Rectangle getBounds() {
+		return this.rect.getBounds();
 	}
 	
 }
