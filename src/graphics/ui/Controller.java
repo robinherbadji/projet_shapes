@@ -8,8 +8,8 @@ import java.awt.event.MouseMotionListener;
 
 public class Controller implements MouseListener, MouseMotionListener, KeyListener
 {
-	private Object model;
-	private View view;
+	protected Object model;
+	protected View view;
 		
 	
 	public Controller(Object newModel)

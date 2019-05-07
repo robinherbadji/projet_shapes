@@ -1,25 +1,36 @@
 package graphics.shapes;
 
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Map;
+import java.util.TreeMap;
+
+import graphics.shapes.attributes.Attributes;
 
 public abstract class Shape {
-	// Attributs
-	protected Point loc;
+	protected Point point;
+	private Map <String,Attributes> attributes;
 	
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	
-	// Constructeur
 	public Shape() {
-		// Vide pour l'instant, on verra après
+		attributes = new TreeMap <String,Attributes>();
 	}
 	
-	//////////////////////////////////////////////////////////////////////////////////////////////
+	public abstract Point getLoc();
 	
-	// Méthodes (celles dont nous avons besoin pour l'instant sont toutes abstraites)
-	public abstract Point getLoc(); // Retourne la position de la forme (la variable loc)
+	public abstract void setLoc(Point point);
 	
-	public abstract void setLoc(Point point); // Modifie la position de la forme (la variable loc)
+	public abstract void translate(int dx, int dy);
 	
-	public abstract void accept(ShapeVisitor sVisitor); // Permet d'accepter la visite du ShapeDraftman (dessinateur) chez une forme
+	public abstract Rectangle getBounds();
 	
+	
+	public void addAttributes(Attributes attribute) {
+		this.attributes.put(attribute.getId(), attribute);
+	}
+	
+	public Attributes getAttributes(String id) {
+		return this.attributes.get(id);
+	}
+	
+	public abstract void accept(ShapeVisitor sVisitor);
 }

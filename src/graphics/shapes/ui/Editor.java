@@ -3,28 +3,29 @@ package graphics.shapes.ui;
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
 import graphics.shapes.SRectangle;
-/*
 import graphics.shapes.SText;
 import graphics.shapes.attributes.ColorAttributes;
 import graphics.shapes.attributes.FontAttributes;
 import graphics.shapes.attributes.SelectionAttributes;
-*/
-import graphics.shapes.Shape;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class Editor extends JFrame
 {
-	ShapesView sview;
-	//SCollection model;
-	Shape model;
+	private ShapesView sview;
+	//Shape model;
+	private static SCollection model;
+	private ControlPanel controlPanel;
+	private ColorPanel colorPanel;
 	
 	public Editor()
-	{	
+	{
 		super("Shapes Editor");
 
 		this.addWindowListener(new java.awt.event.WindowAdapter()
@@ -35,24 +36,28 @@ public class Editor extends JFrame
 			}
 		});
 		
-		this.buildModel();
+		this.buildModel(); 
 		
+		// Affichage Modèle :
 		this.sview = new ShapesView(this.model);
 		this.sview.setPreferredSize(new Dimension(300,300));
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
+		
+	    // Affichage Menu :
+		controlPanel = new ControlPanel();
+	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);
+	    
+	    // Affichage Menu :
+	    colorPanel = new ColorPanel();
+	 	this.getContentPane().add(this.colorPanel, java.awt.BorderLayout.EAST);
 	}
 
 	
 	private void buildModel()
 	{
-		/*
-		this.model = new SCollection();
+		model = new SCollection();
 		this.model.addAttributes(new SelectionAttributes());
-		*/
 		
-		this.model = new SRectangle(new Point(50,25),150,200);
-		
-		/*
 		SRectangle r = new SRectangle(new Point(10,10),20,30);
 		r.addAttributes(new ColorAttributes(true,false,Color.BLUE,Color.BLUE));
 		r.addAttributes(new SelectionAttributes());
@@ -80,7 +85,10 @@ public class Editor extends JFrame
 		c.addAttributes(new SelectionAttributes());
 		sc.add(c);
 		this.model.add(sc);
-		*/
+	}
+	
+	public static SCollection getModel() {
+		return model;
 	}
 	
 	public static void main(String[] args)

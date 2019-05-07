@@ -1,6 +1,11 @@
 package graphics.shapes;
 
+
 public interface ShapeVisitor {
-	// Pas de constructeur pour une interface
+	// Ajouter les méthodes nouvelles
+	
 	public void visitRectangle(SRectangle rect);
+	public void visitCircle(SCircle circle);
+	public void visitText(SText text);	
+	public void visitCollection(SCollection collec);
 }
