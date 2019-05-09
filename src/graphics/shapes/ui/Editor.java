@@ -99,4 +99,3 @@ public class Editor extends JFrame
 		self.setVisible(true);
 	}
 }
-//y
