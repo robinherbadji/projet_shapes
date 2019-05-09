@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class Editor extends JFrame
 {
+	
 	private ShapesView sview;
 	//Shape model;
 	private static SCollection model;
@@ -98,3 +99,4 @@ public class Editor extends JFrame
 		self.setVisible(true);
 	}
 }
+//y
