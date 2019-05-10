@@ -17,3 +17,4 @@ Extensions :
 Questions :
 - Selectionner une SCollection -> Qu'est ce que le getBounds d'une SCollection?
 - Est-ce que l'utilisation de "static" est obligatoire dans le cas du ControlPanel?
+- Faut-il faire une nouvelle classe par Menu différent?
