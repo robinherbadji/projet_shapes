@@ -61,7 +61,7 @@ public class ControlPanel extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Création Texte");
-				SText t= new SText(new Point(150,180),"hello");
+				SText t= new SText(new Point(150,180),"Coucou");
 				t.addAttributes(new ColorAttributes(true,true,Color.GREEN,Color.BLUE));
 				t.addAttributes(new FontAttributes());
 				t.addAttributes(new SelectionAttributes());
