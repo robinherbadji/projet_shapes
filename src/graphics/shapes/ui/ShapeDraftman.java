@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
+import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
 import graphics.shapes.Shape;
@@ -149,6 +150,33 @@ public class ShapeDraftman implements ShapeVisitor {
 			}
 						
 		}
+	}
+
+	@Override
+	public void visitPolygone(SPolygone spolygone) {
+		if (spolygone != null) {						
+			
+			ColorAttributes cA = (ColorAttributes) spolygone.getAttributes("colorAttributes");
+			if (cA != null) {
+				if (cA.filled()) {
+					g.setColor(cA.filledColor());
+					g.fillPolygon(spolygone.getX(), spolygone.getY(), spolygone.numberOfPoint());
+				}				
+				if (cA.stroked()) {
+					g.setColor(cA.strokedColor());
+					g.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.numberOfPoint());
+				}
+			}
+			else {
+				g.setColor(Color.BLACK);
+				g.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.numberOfPoint());
+			}
+			
+			SelectionAttributes sA = (SelectionAttributes) spolygone.getAttributes("selectionAttributes");
+			if (sA != null && sA.isSelected()) {
+				drawSelectionShape(spolygone.getBounds());			
+			}			
+		}		
 	}
 	
 }

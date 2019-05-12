@@ -2,6 +2,7 @@ package graphics.shapes.ui;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
+import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
 import graphics.shapes.attributes.ColorAttributes;
@@ -11,6 +12,7 @@ import graphics.shapes.attributes.SelectionAttributes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -75,6 +77,21 @@ public class Editor extends JFrame
 		t.addAttributes(new SelectionAttributes());
 		this.model.add(t);
 		
+		ArrayList<Point> points = new ArrayList<Point>();
+		Point p1 = new Point(50,100);  
+		Point p2 = new Point(50,200);
+		Point p3 = new Point(70,100);
+		Point p4 = new Point(70,200);
+		points.add(p1);
+		points.add(p2);
+		points.add(p3);
+		points.add(p4);
+		
+		SPolygone p = new SPolygone(points);
+		p.addAttributes(new ColorAttributes(false,true,Color.red,Color.BLUE));
+		p.addAttributes(new SelectionAttributes());
+		this.model.add(p);
+		
 		SCollection sc = new SCollection();
 		sc.addAttributes(new SelectionAttributes());
 		r= new SRectangle(new Point(20,30),30,30);
@@ -99,4 +116,3 @@ public class Editor extends JFrame
 		self.setVisible(true);
 	}
 }
-//y
