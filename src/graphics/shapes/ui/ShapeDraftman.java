@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
+import graphics.shapes.SPicture;
 import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
@@ -160,23 +161,46 @@ public class ShapeDraftman implements ShapeVisitor {
 			if (cA != null) {
 				if (cA.filled()) {
 					g.setColor(cA.filledColor());
-					g.fillPolygon(spolygone.getX(), spolygone.getY(), spolygone.numberOfPoint());
+					g.fillPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 				}				
 				if (cA.stroked()) {
 					g.setColor(cA.strokedColor());
-					g.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.numberOfPoint());
+					g.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 				}
 			}
 			else {
 				g.setColor(Color.BLACK);
-				g.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.numberOfPoint());
+				g.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 			}
 			
 			SelectionAttributes sA = (SelectionAttributes) spolygone.getAttributes("selectionAttributes");
 			if (sA != null && sA.isSelected()) {
-				drawSelectionShape(spolygone.getBounds());			
+				drawSelectionShape(spolygone.getBounds());		
 			}			
 		}		
+	}
+
+	@Override
+	public void visitImage(SPicture spicture) {
+		Graphics g1 = spicture.getPicture().getGraphics();
+		
+		ColorAttributes cA = (ColorAttributes) spicture.getAttributes("colorAttributes");
+		if (cA != null) {			
+			if (cA.stroked()) {
+				g.setColor(cA.strokedColor());
+				g1.drawImage(spicture.getPicture(), spicture.getLoc().x, spicture.getLoc().y, null);
+				g1.drawRect(spicture.getLoc().x, spicture.getLoc().y, spicture.getBounds().width,  spicture.getBounds().height);
+			}
+			
+		}
+		else {
+			g1.drawImage(spicture.getPicture(), spicture.getLoc().x, spicture.getLoc().y, null);
+		}
+		
+		SelectionAttributes sA = (SelectionAttributes) spicture.getAttributes("selectionAttributes");
+		if (sA != null && sA.isSelected()) {
+			drawSelectionShape(spicture.getBounds());
+		}			
 	}
 	
 }

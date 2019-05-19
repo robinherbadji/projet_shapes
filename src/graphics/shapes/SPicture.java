@@ -17,11 +17,14 @@ public class SPicture extends Shape {
 		try {
 			this.picture = ImageIO.read(new File(path));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	public BufferedImage getPicture() {
+		return this.picture;
+	}
+	
 	@Override
 	public Point getLoc() {
 		return this.point;

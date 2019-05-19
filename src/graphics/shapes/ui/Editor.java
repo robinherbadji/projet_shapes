@@ -2,6 +2,7 @@ package graphics.shapes.ui;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
+import graphics.shapes.SPicture;
 import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
@@ -14,7 +15,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
@@ -77,6 +77,7 @@ public class Editor extends JFrame
 		t.addAttributes(new SelectionAttributes());
 		this.model.add(t);
 		
+		/*
 		ArrayList<Point> points = new ArrayList<Point>();
 		Point p1 = new Point(50,100);  
 		Point p2 = new Point(50,200);
@@ -86,11 +87,20 @@ public class Editor extends JFrame
 		points.add(p2);
 		points.add(p3);
 		points.add(p4);
+		*/
+		//int[] x={50,50,70,70,50};
+		//int[] y={100,200,200,100,100};
+		//int np = 4;
 		
-		SPolygone p = new SPolygone(points);
-		p.addAttributes(new ColorAttributes(false,true,Color.red,Color.BLUE));
+		//SPolygone p = new SPolygone(np,x,y);
+		SPolygone p = new SPolygone();
+		p.addAttributes(new ColorAttributes(true,true,Color.red,Color.BLUE));
 		p.addAttributes(new SelectionAttributes());
 		this.model.add(p);
+		
+		SPicture sp = new SPicture(new Point(80,100), "C:\\Users\\yassi\\Desktop\\Inkedavion-9673_LI.jpg\\");
+		sp.addAttributes(new SelectionAttributes());
+		this.model.add(sp);
 		
 		SCollection sc = new SCollection();
 		sc.addAttributes(new SelectionAttributes());
