@@ -3,99 +3,13 @@ package graphics.shapes;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 
 
 public class SPolygone extends Shape {
-	/*
-	private Point loc;
-	private ArrayList<Point> points;
-
-	
-	
-	public SPolygone (ArrayList<Point> points) {
-		this.points = points;
-		this.loc = getPoint(0);
-		
-	}
-	
-	
-	public Point getPoint(int i) {
-		return this.points.get(i);
-	}
-	
-	public int numberOfPoint() {
-		return this.points.size();
-	}
-	
-	
-	@Override
-	public Point getLoc() {
-		return this.loc;
-	}
-
-	@Override
-	public void setLoc(Point point) {
-		this.loc = point;
-	}
-
-	@Override
-	public void translate(int dx, int dy) {	
-		
-		for (int i = 0 ; i < numberOfPoint(); i++ ) {
-			
-			int x = this.points.get(i).x;
-			int y = this.points.get(i).y;
-			this.points.get(i).setLocation(x+dx ,y+dy);
-			
-		}
-	}
-
-	@Override
-	public Rectangle getBounds() {
-		
-		Polygon p = new Polygon(this.getX(), this.getY(),  numberOfPoint());
-		return p.getBounds();
-	}
-
-	
-	
-	//
-	public ArrayList<Point> getPoints() {
-		return this.points;
-	}
-
-	public void setPoints(ArrayList<Point> points) {
-		this.points = points;
-	}
-
-	public int[] getX() {
-		int np = numberOfPoint();
-		System.out.println(np);
-		int x[] = new int[np];
-		for (int i = 0 ; i < np; i++ ) {
-			x[i] = this.points.get(i).x;
-		}
-		return x;
-	}
-	
-	public int[] getY() {
-		
-		int np = numberOfPoint();
-		int y[] = new int[np];
-		for (int i = 0 ; i < np; i++ ) {
-			y[i] = this.points.get(i).x;
-		}
-		return y;
-	}
-	@Override
-	public void accept(ShapeVisitor sVisitor) {
-		sVisitor.visitPolygone(this);
-	}
-	*/
 	public int nPoints;
 	public int x[];
 	public int y[];
+	private float rotation;
 	
 	public SPolygone() {
 		this.nPoints = 5;
@@ -179,5 +93,28 @@ public class SPolygone extends Shape {
 	
 	public void accept(ShapeVisitor visitor) {
 		visitor.visitPolygone(this);
+	}
+
+	public void rotate(int degree) {
+	 	double rads = degree * (Math.PI/180);
+	    float sin = (float) Math.sin(rads);
+	    float cos = (float) Math.cos(rads);
+	    int[][] matrice = new int[4][4];
+	    matrice[0][0] = (int) cos;
+	    matrice[0][1] = (int) -sin;
+	    matrice[1][0] = (int) sin;
+	    matrice[1][1] = (int) cos;
+	    for(int i=0; i<this.x.length; i++) {
+	        this.x[i] = (this.x[i] * matrice[0][0]) + (this.y[i] * matrice[0][1]);
+	        this.y[i] = (x[i] * matrice[1][0]) + (y[i] * matrice[1][1]);
+	    }
+	}
+
+	public float getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
 	}
 }

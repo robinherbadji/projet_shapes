@@ -4,8 +4,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 public class SRectangle extends Shape {
+	
 	private Rectangle rect;	
 	private Point point;
+	private float rotation;
 	
 	public SRectangle(Point point, int rWidth, int rHeight) {
 		this.point = point;
@@ -45,5 +47,21 @@ public class SRectangle extends Shape {
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitRectangle(this);
 	}
+
+	public float getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
+
+	/*
+	@Override
+	public void rotate(int degree) {
+		// TODO Auto-generated method stub
+		
+	}*/
+
 	
 }

@@ -1,22 +1,37 @@
 package graphics.shapes;
-import javax.imageio.ImageIO;
 
+import javax.imageio.ImageIO;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class SPicture extends Shape {
 
 	private BufferedImage picture;
 	private Point point;
+	private float rotation;
 	
 	public SPicture(Point point, String path) {
 		this.point = point;
 		try {
-			this.picture = ImageIO.read(new File(path));
+			if(path.startsWith("http")) {
+				URL url = new URL(path);
+				URLConnection urlc = url.openConnection();
+				HttpURLConnection httpURLCon = (HttpURLConnection) urlc;
+				httpURLCon.addRequestProperty("User-Agent", "Mozilla/4.76");
+				this.picture = ImageIO.read(httpURLCon.getInputStream());
+			}
+			else {
+				this.picture = ImageIO.read(new File(path));
+			}
+			
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 	}
@@ -55,6 +70,17 @@ public class SPicture extends Shape {
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitImage(this);
 	}
+
+	@Override
+	public float getRotation() {
+		return this.rotation;
+	}
+
+	@Override
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
 	
 	
 }
+

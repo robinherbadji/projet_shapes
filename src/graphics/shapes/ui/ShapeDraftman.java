@@ -3,6 +3,7 @@ package graphics.shapes.ui;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Iterator;
@@ -10,6 +11,7 @@ import java.util.Iterator;
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
 import graphics.shapes.SPicture;
+//import graphics.shapes.SPicture;
 import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
@@ -37,6 +39,7 @@ public class ShapeDraftman implements ShapeVisitor {
 	// Visit Shapes
 	@Override
 	public void visitRectangle(SRectangle rect) {
+		 Graphics2D g2d = (Graphics2D) g.create();
 		if (rect != null) {
 			int sX = rect.getRect().x; // ou sX = rect.getLoc().x;
 			int sY = rect.getRect().y; // ou sY = rect.getLoc().y;
@@ -46,17 +49,20 @@ public class ShapeDraftman implements ShapeVisitor {
 			ColorAttributes cA = (ColorAttributes) rect.getAttributes("colorAttributes");
 			if (cA != null) {
 				if (cA.filled()) {
-					g.setColor(cA.filledColor());
-					g.fillRect(sX, sY, sW, sH);
+					g2d.setColor(cA.filledColor());
+					g2d.fillRect(sX, sY, sW, sH);
+					g2d.rotate(Math.toRadians(rect.getRotation()));
 				}
 				if (cA.stroked()) {
-					g.setColor(cA.strokedColor());
-					g.drawRect(sX, sY, sW, sH);
+					g2d.setColor(cA.strokedColor());
+					g2d.drawRect(sX, sY, sW, sH);
+					g2d.rotate(Math.toRadians(rect.getRotation()));
 				}			
 			}
 			else {
-				g.setColor(Color.BLACK);
-				g.fillRect(sX, sY, sW, sH);
+				g2d.setColor(Color.BLACK);
+				g2d.fillRect(sX, sY, sW, sH);
+				g2d.rotate(Math.toRadians(rect.getRotation()));
 			}
 			
 			SelectionAttributes sA = (SelectionAttributes) rect.getAttributes("selectionAttributes");
@@ -180,6 +186,7 @@ public class ShapeDraftman implements ShapeVisitor {
 		}		
 	}
 
+	
 	@Override
 	public void visitImage(SPicture spicture) {
 		Graphics g1 = spicture.getPicture().getGraphics();
@@ -202,5 +209,6 @@ public class ShapeDraftman implements ShapeVisitor {
 			drawSelectionShape(spicture.getBounds());
 		}			
 	}
+	
 	
 }

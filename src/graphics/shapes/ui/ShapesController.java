@@ -2,6 +2,8 @@ package graphics.shapes.ui;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
@@ -24,14 +26,14 @@ public class ShapesController extends Controller {
 	private Shape getTarget() {
 		Shape shape = null;
 		Iterator<Shape> itr = ((SCollection)model).iterator();
-		boolean targeted = false;		
+		boolean targeted = false;
 		while(!targeted && itr.hasNext()) {
 			shape = itr.next();
 			Rectangle bounds = shape.getBounds();
 			targeted = bounds.contains(this.mouseStart); // Utilisation de la classe Rectangle java		
 		}
 		if (targeted) return shape;
-		else return null;		
+		else return null;
 	}
 	
 	private void unselectAll() {
@@ -51,7 +53,7 @@ public class ShapesController extends Controller {
 		Shape shape = null;		
 		Iterator<Shape> itr = ((SCollection)model).iterator();
 		while(itr.hasNext()) {
-			shape = itr.next();	
+			shape = itr.next();
 			if (shape != null) {
 				SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
 				if (sA != null && sA.isSelected()) {
@@ -113,7 +115,29 @@ public class ShapesController extends Controller {
 		if (containsSelected) {
 			this.translateSelected(evt.getX(), evt.getY());
 			mouseStart.setLocation(evt.getX(),evt.getY());
-			this.getView().repaint();		
+			this.getView().repaint();
 		}
 	}
+
+	 public void keyTyped(KeyEvent evt) {
+		 
+		 	System.out.println("keyPressed");
+			Shape shape = null;		
+			Iterator<Shape> itr = ((SCollection)model).iterator();
+			while(itr.hasNext()) {
+				shape = itr.next();
+				if (shape != null) {
+					SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
+					if ((sA != null && sA.isSelected()) && evt.getKeyCode() == KeyEvent.VK_R) {
+						
+						shape.setRotation(shape.getRotation() + 10);
+					}
+					if ((sA != null && sA.isSelected()) && evt.getKeyCode() == KeyEvent.VK_L) {
+						shape.setRotation(shape.getRotation() - 10);
+					}
+				}
+			}
+		this.getView().repaint();
+	 }
+			
 }
