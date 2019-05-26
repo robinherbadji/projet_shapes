@@ -3,12 +3,17 @@ package graphics.shapes.ui;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.Iterator;
 
+import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
+import graphics.shapes.SPolygone;
+import graphics.shapes.SRectangle;
+import graphics.shapes.SText;
 import graphics.shapes.Shape;
+import graphics.shapes.attributes.FontAttributes;
 import graphics.shapes.attributes.SelectionAttributes;
 import graphics.ui.Controller;
 
@@ -65,6 +70,53 @@ public class ShapesController extends Controller {
 		}
 	}
 	
+	private void rotateSelected(float paceangle) {
+		Shape shape = null;		
+		Iterator<Shape> itr = ((SCollection)model).iterator();
+		while(itr.hasNext()) {
+			shape = itr.next();
+			if (shape != null) {
+				SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
+				if (sA != null && sA.isSelected()) {
+					shape.setRotation(shape.getRotation() + paceangle);
+					System.out.println(shape.getRotation());	
+				}				
+			}
+		}
+	}
+	private void reduceShape(Shape shape) {
+		if (shape instanceof SRectangle) {
+			Rectangle bounds = shape.getBounds();
+			Rectangle target = ((SRectangle) shape).getRect();
+			target.setSize(bounds.width-5, bounds.height-5);
+		}
+		else if (shape instanceof SCircle) {
+			int radius = ((SCircle) shape).getRadius();
+			((SCircle) shape).setRadius(radius-5);
+		}
+		else if (shape instanceof SPolygone) {
+			
+		}
+		
+	}
+
+
+	private void growShape(Shape shape){
+		if (shape instanceof SRectangle) {
+			Rectangle bounds = shape.getBounds();
+			Rectangle target = ((SRectangle) shape).getRect();
+			target.setSize(bounds.width+5, bounds.height+5);
+		}
+		else if (shape instanceof SCircle) {
+			int radius = ((SCircle) shape).getRadius();
+			((SCircle) shape).setRadius(radius+5);
+		}
+		else if (shape instanceof SPolygone) {
+			
+		}
+		
+	}
+	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Evenements Listeners
@@ -118,26 +170,50 @@ public class ShapesController extends Controller {
 			this.getView().repaint();
 		}
 	}
+	
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		super.mouseWheelMoved(e);
+		if(e.getWheelRotation()>0) {
+			reduceShape(this.target);
+		}
+		else if(e.getWheelRotation()<0) {
+			growShape(this.target);
+		}
+		this.getView().repaint();
+	}
 
 	 public void keyTyped(KeyEvent evt) {
 		 
-		 	System.out.println("keyPressed");
-			Shape shape = null;		
+	 }
+	 
+	 public void keyPressed(KeyEvent evt) {
+		 
+		 System.out.println("keyPressed");
+		    Shape shape = null;
+			boolean containsSelected = false;
 			Iterator<Shape> itr = ((SCollection)model).iterator();
 			while(itr.hasNext()) {
-				shape = itr.next();
+				shape = itr.next();	
 				if (shape != null) {
 					SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
-					if ((sA != null && sA.isSelected()) && evt.getKeyCode() == KeyEvent.VK_R) {
-						
-						shape.setRotation(shape.getRotation() + 10);
-					}
-					if ((sA != null && sA.isSelected()) && evt.getKeyCode() == KeyEvent.VK_L) {
-						shape.setRotation(shape.getRotation() - 10);
+					if (sA != null && sA.isSelected() && shape == this.target) {
+						containsSelected = true;
 					}
 				}
 			}
-		this.getView().repaint();
+			
+			if (containsSelected) {
+				if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
+					System.out.println("left rotation");
+		            rotateSelected(-10);
+		        }
+				if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+					System.out.println("right rotation");
+		            rotateSelected(10);
+		        }
+				
+			}
+			this.getView().repaint();
 	 }
 			
 }

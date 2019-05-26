@@ -1,5 +1,7 @@
 package graphics.ui;
 
+import java.awt.event.MouseWheelListener;
+
 import javax.swing.JPanel;
 
 
@@ -16,6 +18,8 @@ public abstract class View extends JPanel
 		this.addMouseListener(this.controller);
 		this.addMouseMotionListener(this.controller);
 		this.addKeyListener(this.controller);
+		this.addMouseWheelListener(this.controller);
+		setFocusable(true);
 	}
 	
 	public void setModel(Object model)

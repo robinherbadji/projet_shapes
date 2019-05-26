@@ -50,19 +50,22 @@ public class ShapeDraftman implements ShapeVisitor {
 			if (cA != null) {
 				if (cA.filled()) {
 					g2d.setColor(cA.filledColor());
-					g2d.fillRect(sX, sY, sW, sH);
 					g2d.rotate(Math.toRadians(rect.getRotation()));
+					g2d.fillRect(sX, sY, sW, sH);
+					
 				}
 				if (cA.stroked()) {
 					g2d.setColor(cA.strokedColor());
-					g2d.drawRect(sX, sY, sW, sH);
 					g2d.rotate(Math.toRadians(rect.getRotation()));
+					g2d.drawRect(sX, sY, sW, sH);
+					
 				}			
 			}
 			else {
 				g2d.setColor(Color.BLACK);
-				g2d.fillRect(sX, sY, sW, sH);
 				g2d.rotate(Math.toRadians(rect.getRotation()));
+				g2d.fillRect(sX, sY, sW, sH);
+				
 			}
 			
 			SelectionAttributes sA = (SelectionAttributes) rect.getAttributes("selectionAttributes");
@@ -75,6 +78,7 @@ public class ShapeDraftman implements ShapeVisitor {
 	
 	@Override
 	public void visitCircle(SCircle scircle) {
+		Graphics2D g2d = (Graphics2D) g.create();
 		if (scircle != null) {
 			int sX = scircle.getLoc().x;
 			int sY = scircle.getLoc().y;		
@@ -83,17 +87,18 @@ public class ShapeDraftman implements ShapeVisitor {
 			ColorAttributes cA = (ColorAttributes) scircle.getAttributes("colorAttributes");
 			if (cA != null) {
 				if (cA.filled()) {
-					g.setColor(cA.filledColor());
-					g.fillOval(sX, sY, diam, diam);
+					g2d.setColor(cA.filledColor());
+					g2d.rotate(Math.toRadians(scircle.getRotation()));
+					g2d.fillOval(sX, sY, diam, diam);
 				}				
 				if (cA.stroked()) {
-					g.setColor(cA.strokedColor());
-					g.drawOval(sX, sY, diam, diam);
+					g2d.setColor(cA.strokedColor());
+					g2d.drawOval(sX, sY, diam, diam);
 				}
 			}
 			else {
-				g.setColor(Color.BLACK);
-				g.fillOval(sX, sY, diam, diam);
+				g2d.setColor(Color.BLACK);
+				g2d.fillOval(sX, sY, diam, diam);
 			}
 			
 			SelectionAttributes sA = (SelectionAttributes) scircle.getAttributes("selectionAttributes");
@@ -106,6 +111,7 @@ public class ShapeDraftman implements ShapeVisitor {
 	
 	@Override
 	public void visitText(SText stext) {
+		Graphics2D g2d = (Graphics2D) g.create();
 		if (stext != null) {
 			Point loc = stext.getLoc();
 			String text = stext.getText();
@@ -123,13 +129,15 @@ public class ShapeDraftman implements ShapeVisitor {
 							int sY = stext.getBounds().y;
 							int sW = stext.getBounds().width;
 							int sH = stext.getBounds().height;
-							g.setColor(cA.filledColor());
-							g.fillRect(sX, sY, sW, sH);
+							g2d.setColor(cA.filledColor());
+							g2d.rotate(Math.toRadians(stext.getRotation()));
+							g2d.fillRect(sX, sY, sW, sH);
 						}				
 					}					
 					if (cA.stroked()) {				
-						g.setColor(cA.strokedColor());
-						g.drawString(text, loc.x, loc.y);
+						g2d.setColor(cA.strokedColor());
+						g2d.rotate(Math.toRadians(stext.getRotation()));
+						g2d.drawString(text, loc.x, loc.y);
 					}						
 				}
 				
@@ -161,22 +169,26 @@ public class ShapeDraftman implements ShapeVisitor {
 
 	@Override
 	public void visitPolygone(SPolygone spolygone) {
+		Graphics2D g2d = (Graphics2D) g.create();
 		if (spolygone != null) {						
 			
 			ColorAttributes cA = (ColorAttributes) spolygone.getAttributes("colorAttributes");
 			if (cA != null) {
 				if (cA.filled()) {
-					g.setColor(cA.filledColor());
-					g.fillPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
+					g2d.setColor(cA.filledColor());
+					g2d.rotate(Math.toRadians(spolygone.getRotation()));
+					g2d.fillPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 				}				
 				if (cA.stroked()) {
-					g.setColor(cA.strokedColor());
-					g.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
+					g2d.setColor(cA.strokedColor());
+					g2d.rotate(Math.toRadians(spolygone.getRotation()));
+					g2d.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 				}
 			}
 			else {
-				g.setColor(Color.BLACK);
-				g.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
+				g2d.setColor(Color.BLACK);
+				g2d.rotate(Math.toRadians(spolygone.getRotation()));
+				g2d.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 			}
 			
 			SelectionAttributes sA = (SelectionAttributes) spolygone.getAttributes("selectionAttributes");

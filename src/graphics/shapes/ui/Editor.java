@@ -77,19 +77,19 @@ public class Editor extends JFrame
 		this.model.add(t);
 		
 		
-		//int[] x={50,50,70,70,50};
-		//int[] y={100,200,200,100,100};
-		//int np = 4;
+		int[] x={50,70,50,70,50};
+		int[] y={100,200,200,100,100};
+		int np = 4;
 		
-		//SPolygone p = new SPolygone(np,x,y);
-		SPolygone p = new SPolygone();
+		SPolygone p = new SPolygone(np,x,y);
+		//SPolygone p = new SPolygone();
 		p.addAttributes(new ColorAttributes(true,true,Color.red,Color.BLUE));
 		p.addAttributes(new SelectionAttributes());
 		this.model.add(p);
 		
 		
 		
-		SPicture sp = new SPicture(new Point(100,200), "C:\\Users\\yassi\\git\\projet_shapes\\src\\ENSISA-logo-base-droite-RVB.jpg");
+		SPicture sp = new SPicture(new Point(100,200), "C:\\Documentutile\\ENSISA-logo-base-droite-RVB.jpg");
 		sp.addAttributes(new SelectionAttributes());
 		this.model.add(sp);
 		

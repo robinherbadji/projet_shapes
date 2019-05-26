@@ -7,8 +7,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
-public class Controller implements MouseListener, MouseMotionListener, KeyListener, ActionListener{
+public class Controller implements MouseListener, MouseMotionListener, KeyListener, ActionListener, MouseWheelListener{
 	protected Object model;
 	protected static View view;
 		
@@ -78,8 +80,11 @@ public class Controller implements MouseListener, MouseMotionListener, KeyListen
 	{
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
+		
+	}
+
+	public void mouseWheelMoved(MouseWheelEvent e) {
 		
 	}
 }

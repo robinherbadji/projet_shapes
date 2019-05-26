@@ -18,6 +18,15 @@ public class FontAttributes extends Attributes {
 		color = Color.BLUE;
 	}
 	
+	public FontAttributes(Font font) {
+		this(font , Color.BLACK);
+	}
+
+	public FontAttributes(Font font, Color color) {
+		this.font = font;
+		this.color = color;
+	}
+
 	public Font font() {
 		return this.font;
 	}
