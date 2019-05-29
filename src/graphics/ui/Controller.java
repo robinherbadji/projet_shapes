@@ -9,7 +9,7 @@ import java.awt.event.MouseMotionListener;
 public class Controller implements MouseListener, MouseMotionListener, KeyListener
 {
 	protected Object model;
-	protected static View view;
+	protected View view;
 		
 	
 	public Controller(Object newModel)
@@ -22,7 +22,7 @@ public class Controller implements MouseListener, MouseMotionListener, KeyListen
 		this.view = view;
 	}
 	
-	final public static View getView()
+	final public View getView()
 	{
 		return view;
 	}

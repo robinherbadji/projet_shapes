@@ -13,15 +13,15 @@ import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class Editor extends JFrame
 {
 	private ShapesView sview;
-	//Shape model;
-	private static SCollection model;
-	private ControlPanel controlPanel;
-	private ColorPanel colorPanel;
+	private SCollection model;
+	//private ControlPanel controlPanel;
+	private ControlPanel2 controlPanel;
 	
 	public Editor()
 	{
@@ -42,13 +42,11 @@ public class Editor extends JFrame
 		this.sview.setPreferredSize(new Dimension(300,300));
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
 		
-	    // Affichage Menu :
-		controlPanel = new ControlPanel();
-	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);
-	    
-	    // Affichage Menu :
-	    colorPanel = new ColorPanel();
-	 	this.getContentPane().add(this.colorPanel, java.awt.BorderLayout.EAST);
+	    // Affichage Menu Principal :		
+		controlPanel = new ControlPanel2(this.sview);
+		this.setJMenuBar(controlPanel.getMenuBar());
+	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);	    
+	    this.setVisible(true);
 	}
 
 	
@@ -86,9 +84,6 @@ public class Editor extends JFrame
 		this.model.add(sc);
 	}
 	
-	public static SCollection getModel() {
-		return model;
-	}
 	
 	public static void main(String[] args)
 	{

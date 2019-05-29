@@ -2,8 +2,14 @@ package graphics.shapes.ui;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 import graphics.shapes.SCollection;
 import graphics.shapes.Shape;
@@ -14,9 +20,11 @@ public class ShapesController extends Controller {
 	// Implémente donc les Listeners via Controller	
 	private Shape target;
 	private Point mouseStart;
+	private ControlPanel2 controlPanel;
 	
 	public ShapesController(Object newModel) {
 		super(newModel);
+		//controlPanel = new ControlPanel2(this);
 		this.target = null;
 	}
 	
@@ -90,7 +98,7 @@ public class ShapesController extends Controller {
 		else {
 			this.unselectAll();
 		}
-		this.getView().repaint();
+		this.getView().repaint();		
 	}
 	
 	public void mouseDragged(MouseEvent evt)
@@ -115,5 +123,35 @@ public class ShapesController extends Controller {
 			mouseStart.setLocation(evt.getX(),evt.getY());
 			this.getView().repaint();		
 		}
+	}
+	
+	public void mouseReleased(MouseEvent e) {
+		if (e.isPopupTrigger()) {
+			mouseStart = new Point(e.getX(),e.getY());
+			this.target = getTarget();
+			
+			JPopupMenu jpm = new JPopupMenu();
+			if (this.target != null) {
+				System.out.println("forme");
+				JMenu menuShape = new JMenu("Shape");
+				JMenuItem delShape = new JMenuItem("Delete");
+				delShape.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						System.out.println("Suppression de : " + target.getClass());
+						
+					}
+					
+				});
+				menuShape.add(delShape);
+				jpm.add(menuShape);
+			}
+			else System.out.println("vide");
+			
+			
+			jpm.show(getView(), e.getX(), e.getY());			
+		}
+		
 	}
 }
