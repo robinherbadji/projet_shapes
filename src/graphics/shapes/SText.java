@@ -6,8 +6,13 @@ import java.awt.Rectangle;
 import graphics.shapes.attributes.FontAttributes;
 
 public class SText extends Shape {
-	private Point loc;
 	private String text;
+	
+	public SText(String text) {
+		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
+		this.setLoc(point);
+		this.setText(text);
+	}
 	
 	public SText(Point loc, String text) {
 		this.setLoc(loc);
@@ -16,12 +21,12 @@ public class SText extends Shape {
 	
 	@Override
 	public Point getLoc() {
-		return this.loc;
+		return this.point;
 	}
 
 	@Override
 	public void setLoc(Point point) {
-		this.loc = point;		
+		this.point = point;		
 	}
 	
 	public String getText() {
@@ -35,7 +40,7 @@ public class SText extends Shape {
 	
 	@Override
 	public void translate(int dx, int dy) {
-		Point point = this.loc;
+		Point point = this.point;
 		point.x += dx;
 		point.y += dy;
 		this.setLoc(point);		
@@ -46,7 +51,7 @@ public class SText extends Shape {
 		FontAttributes fA = (FontAttributes) this.getAttributes("fontAttributes");
 		if (fA != null) {
 			Rectangle bounds = fA.getBounds(this.text);			
-			return new Rectangle(loc.x,loc.y-bounds.height,bounds.width,bounds.height);
+			return new Rectangle(point.x,point.y-bounds.height,bounds.width,bounds.height);
 		}
 		else return null;		
 	}

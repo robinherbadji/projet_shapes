@@ -1,6 +1,7 @@
 package graphics.shapes.ui;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 
 import graphics.shapes.Shape;
 import graphics.ui.Controller;
@@ -22,5 +23,11 @@ public class ShapesView extends View {
 	
 	public Controller defaultController(Object model) {
 		return new ShapesController(model);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
