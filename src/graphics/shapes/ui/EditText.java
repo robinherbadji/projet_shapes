@@ -19,25 +19,35 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class EditRectangle extends JDialog {
-	private JTextField nom, locX, locY, width, height;	
+public class EditText extends JDialog {
+	private JTextField jText;// locX, locY, width, height;	
 	private ControlPanel menu;	  
 	
-	public EditRectangle(JFrame parent, String title, boolean modal, ControlPanel menu){
+	public EditText(JFrame parent, String title, boolean modal, ControlPanel menu){
 		super(parent, title, modal);
-		this.setSize(500, 250);
+		this.setSize(300, 120);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		this.initComponent();
-		//this.setVisible(true);
-		
+		this.initComponent();		
 		this.menu = menu;
 	}
 	
 	
 	private void initComponent(){
+		JPanel panText = new JPanel();
+		panText.setBackground(Color.white);
+		panText.setPreferredSize(new Dimension(180, 120));
+		//panText.setBorder(BorderFactory.createTitledBorder("Position"));
+	    JLabel xLabel = new JLabel("Text : ");
+	    
+	    jText = new JTextField();
+	    jText.setPreferredSize(new Dimension(100, 25));
+	    panText.add(xLabel);
+	    panText.add(jText);
+		
 	  //La position
+	    /*
 	    JPanel panPosition = new JPanel();
 	    panPosition.setBackground(Color.white);
 	    panPosition.setPreferredSize(new Dimension(170, 100));
@@ -79,45 +89,39 @@ public class EditRectangle extends JDialog {
 	    panTaille.add(hauteurLabel);
 	    panTaille.add(height);
 	    panTaille.add(pxLabel4);
-	   
+	   */
 	    
 	    JPanel content = new JPanel();
 	    content.setBackground(Color.white);
 	   
 	    //content.add(panPosition);
-	    content.add(panTaille);
+	    //content.add(panTaille);
+	    content.add(panText);
 	   
 	    JPanel control = new JPanel();
-	    JButton okBouton = new JButton("OK");
+	    JButton okButton = new JButton("OK");
+	    this.getRootPane().setDefaultButton(okButton);
 	    
-	    okBouton.addActionListener(new ActionListener(){
-	      public void actionPerformed(ActionEvent arg0) {
-	    	  this.collectInfos();
-	    	  setVisible(false);
-	      }
+	    okButton.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		this.collectInfos();
+	    		setVisible(false);
+	    	}
 
-	      private void collectInfos() {
-	    	  System.out.println(width.getText());
-	    	  
-	    	  menu.setWidth(Integer.parseInt(width.getText()));
-	    	  menu.setHeight(Integer.parseInt(height.getText()));
-	    	  
-			
-		}
-
-	      public String getTaille(){
-	        return (width.getText().equals("")) ? "180" : width.getText();
-	      }      
+	    	private void collectInfos() {
+	    		System.out.println(jText.getText());
+	    		menu.setText(jText.getText());	    	  
+	    	}    
 	    });
 
 	    JButton cancelBouton = new JButton("Annuler");
 	    cancelBouton.addActionListener(new ActionListener(){
-	      public void actionPerformed(ActionEvent arg0) {
-	    	  setVisible(false);
-	      }      
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		setVisible(false);
+	    	}
 	    });
-
-	    control.add(okBouton);
+	    
+	    control.add(okButton);
 	    control.add(cancelBouton);
 
 	    this.getContentPane().add(content, BorderLayout.CENTER);

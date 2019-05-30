@@ -25,7 +25,8 @@ public class ControlPanel extends JPanel {
 	private JMenuBar menuBar;
 	private JMenu menuFile, menuShape, menuColor, menuHelp;
 	//private SCollection model;	
-	private int width, height;
+	//private int width, height;
+	private String text;
 	
 	public ControlPanel(ShapesView shapesView) {
 		this.shapesView = shapesView;
@@ -148,8 +149,11 @@ public class ControlPanel extends JPanel {
 		mText.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				EditText editText = new EditText(null, "Edit the Text", true, getMenu());
+				editText.setVisible(true);
+				
 				System.out.println("Création Texte");
-				SText t= new SText("Coucou");
+				SText t= new SText(text);
 				t.addAttributes(new ColorAttributes());
 				t.addAttributes(new FontAttributes());
 				t.addAttributes(new SelectionAttributes());
@@ -217,14 +221,18 @@ public class ControlPanel extends JPanel {
 		menuBar.add(menuColor);
 		menuBar.add(menuHelp);	
 	}
-	
-	
+		
+	/*
 	public void setWidth(int width) {
 		this.width = width;
 	}
 	
 	public void setHeight(int height) {
 		this.height = height;
+	}*/
+	
+	public void setText(String text) {
+		this.text = text;
 	}
 	
 	
