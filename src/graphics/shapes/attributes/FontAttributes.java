@@ -19,12 +19,9 @@ public class FontAttributes extends Attributes {
 	}
 	
 	public FontAttributes(Font font) {
-		this(font , Color.BLACK);
-	}
-
-	public FontAttributes(Font font, Color color) {
+		id = "fontAttributes";
 		this.font = font;
-		this.color = color;
+		this.color = Color.BLUE;
 	}
 
 	public Font font() {
@@ -38,6 +35,10 @@ public class FontAttributes extends Attributes {
 	@Override
 	public String getId() {
 		return id;
+	}
+	
+	public void setFont(Font font) {
+		this.font = font;
 	}
 	
 	// Méthode en plus par rapport au sujet

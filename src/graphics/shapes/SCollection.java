@@ -97,11 +97,4 @@ public class SCollection extends Shape {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
-
-	/*
-	@Override
-	public void rotate(int degree) {
-		// TODO Auto-generated method stub
-		
-	}*/
 }

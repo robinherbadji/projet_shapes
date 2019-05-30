@@ -24,7 +24,7 @@ public class Editor extends JFrame
 	//Shape model;
 	private static SCollection model;
 	private ControlPanel controlPanel;
-	private ColorPanel colorPanel;
+
 	
 	public Editor()
 	{
@@ -49,9 +49,6 @@ public class Editor extends JFrame
 		controlPanel = new ControlPanel();
 	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);
 	    
-	    // Affichage Menu :
-	    colorPanel = new ColorPanel();
-	 	this.getContentPane().add(this.colorPanel, java.awt.BorderLayout.EAST);
 	}
 
 	
@@ -81,10 +78,11 @@ public class Editor extends JFrame
 		int[] y={100,200,200,100,100};
 		int np = 4;
 		
-		SPolygone p = new SPolygone(np,x,y);
-		//SPolygone p = new SPolygone();
-		p.addAttributes(new ColorAttributes(true,true,Color.red,Color.BLUE));
+		//SPolygone p = new SPolygone(np,x,y);
+		SPolygone p = new SPolygone();
+		p.addAttributes(new ColorAttributes(true,true,Color.red,Color.green));
 		p.addAttributes(new SelectionAttributes());
+		//p.barycentre();
 		this.model.add(p);
 		
 		

@@ -10,6 +10,7 @@ public class SPolygone extends Shape {
 	public int x[];
 	public int y[];
 	private float rotation;
+	private double scale;
 	
 	public SPolygone() {
 		this.nPoints = 5;
@@ -19,15 +20,18 @@ public class SPolygone extends Shape {
 		int y[] ={100, 100, 50, 30, 50, 100};
 		this.x = x;
 		this.y = y;
+		this.scale = 1;
 	}
 	
 	public SPolygone(int nPoints, int x[], int y[]) {
+		
 		this.nPoints = nPoints;
 		this.x = new int[nPoints];
 		this.y = new int[nPoints];
 		for(int i = 0; i < nPoints; i++) {
 			this.x[i] = x[i];
 			this.y[i] = y[i];
+			this.scale = 1;
 		}
 	}
 	
@@ -94,27 +98,57 @@ public class SPolygone extends Shape {
 	public void accept(ShapeVisitor visitor) {
 		visitor.visitPolygone(this);
 	}
-
-	public void rotate(int degree) {
-	 	double rads = degree * (Math.PI/180);
-	    float sin = (float) Math.sin(rads);
-	    float cos = (float) Math.cos(rads);
-	    int[][] matrice = new int[4][4];
-	    matrice[0][0] = (int) cos;
-	    matrice[0][1] = (int) -sin;
-	    matrice[1][0] = (int) sin;
-	    matrice[1][1] = (int) cos;
-	    for(int i=0; i<this.x.length; i++) {
-	        this.x[i] = (this.x[i] * matrice[0][0]) + (this.y[i] * matrice[0][1]);
-	        this.y[i] = (x[i] * matrice[1][0]) + (y[i] * matrice[1][1]);
+	/*
+	//Somme des triangle définies par chaques points
+	 public double aire() {
+		 
+		    double sum = 0;
+		    for (int i = 0; i < nPoints-1; ++i) {
+		        sum += (this.x[i] * this.y[i+1]) - (this.x[i+1] * this.y[i]);
+		    }
+		    double area = Math.abs(sum / 2);
+		    System.out.println("Polygone area: " + area);
+		    return area;
 	    }
-	}
-
+	 
+	 // Barycentre du polygone
+	 
+	 public Point barycentre() {
+	        int x = 0;
+	        int y = 0;
+	        double bary =0;
+	        
+	        final double k = 1 / (6 * aire());
+	        for (int i = 0; i < nPoints-1; ++i) {
+	            bary =  this.x[i+1] * this.y[i] - this.x[i] * this.y[i+1];
+	            x += ((this.x[i] + this.x[i+1]) * bary);
+	            y += ((this.y[i] + this.y[i+1]) * bary);
+	        }
+	        Point barycentre = new Point((int) (k * x), (int) (k * y));
+	        System.out.println("xbary: "+barycentre.getX() +", ybary: "+barycentre.getY());
+	        return barycentre;
+	    }
+	 public void setDistanceBarycentre(int dx, int dy) {
+		 
+		 int xabs = this.x[0] + (int) Math.abs( (this.getLoc().x - barycentre().getX()) );
+		 int yabs = this.y[0] + (int) Math.abs( (this.getLoc().y - barycentre().getY()) );
+		 
+		 this.setLoc( new Point( xabs + dx , yabs + dy ) );
+	 }
+	 */
+	
 	public float getRotation() {
 		return rotation;
 	}
 
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
+	}
+	public double getScale() {
+		return this.scale;
+	}
+
+	public void setScale(double scale) {
+		this.scale = scale;
 	}
 }
