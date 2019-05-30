@@ -19,7 +19,7 @@ import graphics.shapes.attributes.ColorAttributes;
 import graphics.shapes.attributes.FontAttributes;
 import graphics.shapes.attributes.SelectionAttributes;
 
-public class ControlPanel2 extends JPanel {
+public class ControlPanel extends JPanel {
 	//private ShapesController shapeController;
 	private ShapesView shapesView;
 	private JMenuBar menuBar;
@@ -27,7 +27,7 @@ public class ControlPanel2 extends JPanel {
 	//private SCollection model;	
 	private int width, height;
 	
-	public ControlPanel2(ShapesView shapesView) {
+	public ControlPanel(ShapesView shapesView) {
 		this.shapesView = shapesView;
 		//this.shapeController = shapeController;
 		this.menuBar = new JMenuBar();
@@ -228,7 +228,7 @@ public class ControlPanel2 extends JPanel {
 	}
 	
 	
-	public ControlPanel2 getMenu() {
+	public ControlPanel getMenu() {
 		return this;
 	}
 	

@@ -20,7 +20,7 @@ public class ShapesController extends Controller {
 	// Implémente donc les Listeners via Controller	
 	private Shape target;
 	private Point mouseStart;
-	private ControlPanel2 controlPanel;
+	private ControlPanel controlPanel;
 	
 	public ShapesController(Object newModel) {
 		super(newModel);
@@ -133,19 +133,38 @@ public class ShapesController extends Controller {
 			JPopupMenu jpm = new JPopupMenu();
 			if (this.target != null) {
 				System.out.println("forme");
-				JMenu menuShape = new JMenu("Shape");
+				
 				JMenuItem delShape = new JMenuItem("Delete");
 				delShape.addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						System.out.println("Suppression de : " + target.getClass());
-						
+						System.out.println("Suppression de : " + target.getClass());						
 					}
-					
 				});
-				menuShape.add(delShape);
-				jpm.add(menuShape);
+				jpm.add(delShape);
+				
+				JMenuItem copy = new JMenuItem("Copy");
+				copy.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						System.out.println("Copie de : " + target.getClass());						
+					}					
+				});
+				jpm.add(copy);
+				
+				JMenuItem cut = new JMenuItem("Cut");
+				cut.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						System.out.println("Coupage de : " + target.getClass());						
+					}					
+				});
+				jpm.add(cut);
+				
+				
 			}
 			else System.out.println("vide");
 			

@@ -21,7 +21,7 @@ public class Editor extends JFrame
 	private ShapesView sview;
 	private SCollection model;
 	//private ControlPanel controlPanel;
-	private ControlPanel2 controlPanel;
+	private ControlPanel controlPanel;
 	
 	public Editor()
 	{
@@ -43,7 +43,7 @@ public class Editor extends JFrame
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
 		
 	    // Affichage Menu Principal :		
-		controlPanel = new ControlPanel2(this.sview);
+		controlPanel = new ControlPanel(this.sview);
 		this.setJMenuBar(controlPanel.getMenuBar());
 	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);	    
 	    this.setVisible(true);

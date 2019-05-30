@@ -21,9 +21,9 @@ import javax.swing.JTextField;
 
 public class EditRectangle extends JDialog {
 	private JTextField nom, locX, locY, width, height;	
-	private ControlPanel2 menu;	  
+	private ControlPanel menu;	  
 	
-	public EditRectangle(JFrame parent, String title, boolean modal, ControlPanel2 menu){
+	public EditRectangle(JFrame parent, String title, boolean modal, ControlPanel menu){
 		super(parent, title, modal);
 		this.setSize(500, 250);
 		this.setLocationRelativeTo(null);
