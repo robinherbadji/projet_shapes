@@ -196,6 +196,7 @@ public class ShapeDraftman implements ShapeVisitor {
 					g2d.fillPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 				}
 				if (cA.stroked()) {
+					
 					g2d.setColor(cA.strokedColor());
 					g2d.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 				}
