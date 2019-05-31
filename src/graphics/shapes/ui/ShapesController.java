@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.Timer;
 
 import graphics.shapes.SCollection;
 import graphics.shapes.Shape;
@@ -17,16 +17,26 @@ import graphics.shapes.attributes.SelectionAttributes;
 import graphics.ui.Controller;
 
 public class ShapesController extends Controller {
-	// Implémente donc les Listeners via Controller	
+	// Implémente donc les Listeners via Controller
 	private Shape target;
 	private Point mouseStart;
-	private ControlPanel controlPanel;
+	private Timer timer;
+	private int vx;
+	private int vy;
 	
 	public ShapesController(Object newModel) {
-		super(newModel);
-		//controlPanel = new ControlPanel2(this);
+		super(newModel);	
 		this.target = null;
+		this.vx = 1;
+		this.vy = 1;
 	}
+	
+	// Accesseurs
+	
+	public Timer getTimer() {
+		return this.timer;
+	}
+	
 	
 	// Méthodes	
 	private Shape getTarget() {
@@ -55,7 +65,7 @@ public class ShapesController extends Controller {
 		}
 	}
 	
-	private void translateSelected(int posx, int posy) {
+	public void translateSelected(int posx, int posy) {
 		Shape shape = null;		
 		Iterator<Shape> itr = ((SCollection)model).iterator();
 		while(itr.hasNext()) {
@@ -70,6 +80,40 @@ public class ShapesController extends Controller {
 			}
 		}
 	}
+	
+	public void animatedSelected(ShapesView shapesView, int speed) {
+		this.timer = new Timer(speed, new ActionListener() {			
+		    public void actionPerformed(ActionEvent evt) {
+		    	Shape shape = null;		    	
+				Iterator<Shape> itr = ((SCollection)model).iterator();
+				while(itr.hasNext()) {
+					shape = itr.next();
+					if (shape != null) {
+						SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
+						if (sA != null && sA.isSelected()) {
+							if (shape.getBounds().x <= 0) {
+								vx = 1;
+							}
+							if (shape.getBounds().x + shape.getBounds().width >= shapesView.getWidth()) {
+								vx = -1;
+							}
+							if (shape.getBounds().y <= 0) {
+								vy = 1;
+							}
+							if (shape.getBounds().y + shape.getBounds().height >= shapesView.getHeight()) {
+								vy = -1;
+							}
+							shape.translate(vx, vy);
+						}				
+					}
+				}
+				shapesView.repaint();				
+		    }    
+		});
+		this.timer.start();
+	}
+	
+	//public void selectedInside()
 	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,14 +158,13 @@ public class ShapesController extends Controller {
 					containsSelected = true;
 				}
 			}
-		}
-		
+		}		
 		
 		//if (((SCollection) model).getCollection().contains(this.target)) {
 		if (containsSelected) {
 			this.translateSelected(evt.getX(), evt.getY());
 			mouseStart.setLocation(evt.getX(),evt.getY());
-			this.getView().repaint();		
+			this.getView().repaint();
 		}
 	}
 	

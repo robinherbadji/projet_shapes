@@ -14,6 +14,8 @@ Extensions :
 - Créer un système de sauvegarde du modèle (nouveau, ouvrir, sauvegarder, exporter en jpg, ...)
 - Exporter le projet en un exécutable
 - Gestion des MouseEvents par états différents (enum)
+- Lire fichier mp3
+- Nouvelle forme : vidéo
 
 Questions :
 - Selectionner une SCollection -> Qu'est ce que le getBounds d'une SCollection? --> Selectionne aussi l'intérieur
