@@ -1,11 +1,15 @@
 package graphics.ui;
 
+
 import java.awt.event.MouseWheelListener;
+
+import java.awt.event.ActionListener;
+
 
 import javax.swing.JPanel;
 
-
-public abstract class View extends JPanel
+@SuppressWarnings("serial")
+public abstract class View extends JPanel implements ActionListener
 {
 	protected Object model;
 	private Controller controller;

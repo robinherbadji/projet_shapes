@@ -3,13 +3,24 @@ package graphics.shapes.ui;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
+
 import java.awt.event.KeyEvent;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Iterator;
 
+
 import graphics.shapes.SCircle;
+
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.Timer;
+
 import graphics.shapes.SCollection;
 import graphics.shapes.SPicture;
 import graphics.shapes.SPolygone;
@@ -21,14 +32,26 @@ import graphics.shapes.attributes.SelectionAttributes;
 import graphics.ui.Controller;
 
 public class ShapesController extends Controller {
-	// Implémente donc les Listeners via Controller	
+	// Implémente donc les Listeners via Controller
 	private Shape target;
 	private Point mouseStart;
+	private Timer timer;
+	private int vx;
+	private int vy;
 	
 	public ShapesController(Object newModel) {
-		super(newModel);
+		super(newModel);	
 		this.target = null;
+		this.vx = 1;
+		this.vy = 1;
 	}
+	
+	// Accesseurs
+	
+	public Timer getTimer() {
+		return this.timer;
+	}
+	
 	
 	// Méthodes	
 	private Shape getTarget() {
@@ -57,7 +80,7 @@ public class ShapesController extends Controller {
 		}
 	}
 	
-	private void translateSelected(int posx, int posy) {
+	public void translateSelected(int posx, int posy) {
 		Shape shape = null;		
 		Iterator<Shape> itr = ((SCollection)model).iterator();
 		while(itr.hasNext()) {
@@ -73,6 +96,7 @@ public class ShapesController extends Controller {
 		}
 	}
 	
+
 	private void rotateSelected(float paceangle) {
 		Shape shape = null;		
 		Iterator<Shape> itr = ((SCollection)model).iterator();
@@ -185,6 +209,42 @@ public class ShapesController extends Controller {
 					}
 				}
 		}
+
+	public void animatedSelected(ShapesView shapesView, int speed) {
+		this.timer = new Timer(speed, new ActionListener() {			
+		    public void actionPerformed(ActionEvent evt) {
+		    	Shape shape = null;		    	
+				Iterator<Shape> itr = ((SCollection)model).iterator();
+				while(itr.hasNext()) {
+					shape = itr.next();
+					if (shape != null) {
+						SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
+						if (sA != null && sA.isSelected()) {
+							if (shape.getBounds().x <= 0) {
+								vx = 1;
+							}
+							if (shape.getBounds().x + shape.getBounds().width >= shapesView.getWidth()) {
+								vx = -1;
+							}
+							if (shape.getBounds().y <= 0) {
+								vy = 1;
+							}
+							if (shape.getBounds().y + shape.getBounds().height >= shapesView.getHeight()) {
+								vy = -1;
+							}
+							shape.translate(vx, vy);
+						}				
+					}
+				}
+				shapesView.repaint();				
+		    }    
+		});
+		this.timer.start();
+	}
+	
+	//public void selectedInside()
+	
+
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Evenements Listeners
@@ -212,7 +272,7 @@ public class ShapesController extends Controller {
 		else {
 			this.unselectAll();
 		}
-		this.getView().repaint();
+		this.getView().repaint();		
 	}
 	
 	public void mouseDragged(MouseEvent evt)
@@ -228,8 +288,7 @@ public class ShapesController extends Controller {
 					containsSelected = true;
 				}
 			}
-		}
-		
+		}		
 		
 		//if (((SCollection) model).getCollection().contains(this.target)) {
 		if (containsSelected) {
@@ -239,6 +298,7 @@ public class ShapesController extends Controller {
 		}
 	}
 	
+
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		super.mouseWheelMoved(e);
 		
@@ -303,4 +363,54 @@ public class ShapesController extends Controller {
 			this.getView().repaint();
 	 }
 			
+
+	public void mouseReleased(MouseEvent e) {
+		if (e.isPopupTrigger()) {
+			mouseStart = new Point(e.getX(),e.getY());
+			this.target = getTarget();
+			
+			JPopupMenu jpm = new JPopupMenu();
+			if (this.target != null) {
+				System.out.println("forme");
+				
+				JMenuItem delShape = new JMenuItem("Delete");
+				delShape.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						System.out.println("Suppression de : " + target.getClass());						
+					}
+				});
+				jpm.add(delShape);
+				
+				JMenuItem copy = new JMenuItem("Copy");
+				copy.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						System.out.println("Copie de : " + target.getClass());						
+					}					
+				});
+				jpm.add(copy);
+				
+				JMenuItem cut = new JMenuItem("Cut");
+				cut.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						System.out.println("Coupage de : " + target.getClass());						
+					}					
+				});
+				jpm.add(cut);
+				
+				
+			}
+			else System.out.println("vide");
+			
+			
+			jpm.show(getView(), e.getX(), e.getY());			
+		}
+		
+	}
+
 }

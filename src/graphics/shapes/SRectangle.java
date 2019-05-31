@@ -9,6 +9,13 @@ public class SRectangle extends Shape {
 	private Point point;
 	private float rotation;
 	
+	public SRectangle() {
+		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
+		int rWidth = 20 + (int)(Math.random() * 100);
+		int rHeight = 20 + (int)(Math.random() * 100);
+		this.rect = new Rectangle((int)point.getX(), (int)point.getY(), rWidth, rHeight); // Utilisation de la classe java Rectangle
+	}
+	
 	public SRectangle(Point point, int rWidth, int rHeight) {
 		this.point = point;
 		this.rect = new Rectangle((int)point.getX(), (int)point.getY(), rWidth, rHeight); // Utilisation de la classe java Rectangle

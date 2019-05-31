@@ -13,8 +13,11 @@ public class ColorAttributes extends Attributes {
 		id = "colorAttributes";
 		this.filled = true;
 		this.stroked = true;
+		/*
 		this.filledColor = Color.blue;
-		this.strokedColor = Color.black;		
+		this.strokedColor = Color.black;*/
+		this.filledColor = randomColor();
+		this.strokedColor = randomColor();
 	}
 	
 	public ColorAttributes (boolean filled, boolean stroked, Color filledColor, Color strokedColor) {
@@ -43,6 +46,16 @@ public class ColorAttributes extends Attributes {
 	
 	public Color strokedColor() {
 		return this.strokedColor;
+	}
+	
+	public Color randomColor() {
+		int red = (int)(Math.random() * 256);
+		int green = (int)(Math.random()*256);
+		int blue = (int)(Math.random()*256);
+		
+		Color color = new Color(red,green,blue);
+		return color;		
+		
 	}
 
 }

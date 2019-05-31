@@ -14,15 +14,17 @@ import graphics.shapes.attributes.SelectionAttributes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class Editor extends JFrame
 {
 	
 	private ShapesView sview;
-	//Shape model;
-	private static SCollection model;
+	private SCollection model;
+	//private ControlPanel controlPanel;
 	private ControlPanel controlPanel;
 
 	
@@ -45,10 +47,11 @@ public class Editor extends JFrame
 		this.sview.setPreferredSize(new Dimension(300,300));
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
 		
-	    // Affichage Menu :
-		controlPanel = new ControlPanel();
+	    // Affichage Menu Principal :		
+		controlPanel = new ControlPanel(this.sview);
+		this.setJMenuBar(controlPanel.getMenuBar());
 	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);
-	    
+
 	}
 
 	
@@ -109,9 +112,6 @@ public class Editor extends JFrame
 		this.model.add(sc);
 	}
 	
-	public static SCollection getModel() {
-		return model;
-	}
 	
 	public static void main(String[] args)
 	{
