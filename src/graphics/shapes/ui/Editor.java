@@ -45,8 +45,7 @@ public class Editor extends JFrame
 	    // Affichage Menu Principal :		
 		controlPanel = new ControlPanel(this.sview);
 		this.setJMenuBar(controlPanel.getMenuBar());
-	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);	    
-	    this.setVisible(true);
+	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);
 	}
 
 	
