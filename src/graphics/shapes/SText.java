@@ -1,5 +1,6 @@
 package graphics.shapes;
 
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -49,14 +50,16 @@ public class SText extends Shape {
 	
 	@Override
 	public Rectangle getBounds() {
+		
 		FontAttributes fA = (FontAttributes) this.getAttributes("fontAttributes");
 		if (fA != null) {
-			Rectangle bounds = fA.getBounds(this.text);			
+			Rectangle bounds = fA.getBounds(this.text);		
 			return new Rectangle(point.x,point.y-bounds.height,bounds.width,bounds.height);
 		}
 		else return null;		
 	}
 
+	
 
 	@Override
 	public void accept(ShapeVisitor sVisitor) {
@@ -70,12 +73,5 @@ public class SText extends Shape {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
-
-	/*
-	@Override
-	public void rotate(int degree) {
-		// TODO Auto-generated method stub
-		
-	}*/
 	
 }

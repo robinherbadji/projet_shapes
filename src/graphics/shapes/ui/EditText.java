@@ -29,7 +29,7 @@ public class EditText extends JDialog {
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		this.initComponent();		
+		this.initComponent();
 		this.menu = menu;
 	}
 	
@@ -109,8 +109,9 @@ public class EditText extends JDialog {
 	    	}
 
 	    	private void collectInfos() {
+	    		
 	    		System.out.println(jText.getText());
-	    		menu.setText(jText.getText());	    	  
+	    		menu.setText(jText.getText());
 	    	}    
 	    });
 
