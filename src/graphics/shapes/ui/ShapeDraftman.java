@@ -4,10 +4,16 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
+
+import javax.imageio.ImageIO;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
@@ -152,7 +158,7 @@ public class ShapeDraftman implements ShapeVisitor {
 	
 	@Override
 	public void visitCollection(SCollection scollec) {
-		
+		Graphics2D g2d = (Graphics2D) g.create();
 		Shape shape;
 		if (scollec != null) {
 			Iterator<Shape> itr = scollec.iterator();
@@ -181,9 +187,9 @@ public class ShapeDraftman implements ShapeVisitor {
 			
 			AffineTransform affineT = g2d.getTransform();
 			
-			//affineT.translate(-sW/2, -sH/2);
+			affineT.translate(-sW, -sH);
 			affineT.scale(spolygone.getScale(), spolygone.getScale());
-			//affineT.translate(sW/(2*spolygone.getScale()),sH/(2*spolygone.getScale()));
+			affineT.translate(sW,sH);
 			
 			g2d.translate(sX+sW/2,sY+sH/2);
 			g2d.rotate(Math.toRadians(spolygone.getRotation()));
@@ -201,7 +207,6 @@ public class ShapeDraftman implements ShapeVisitor {
 				}
 			}
 			else {
-				
 				g2d.setColor(Color.BLACK);
 				g2d.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 			}
@@ -217,25 +222,27 @@ public class ShapeDraftman implements ShapeVisitor {
 	
 	@Override
 	public void visitImage(SPicture spicture) {
-		Graphics g1 = spicture.getPicture().getGraphics();
 		
-		ColorAttributes cA = (ColorAttributes) spicture.getAttributes("colorAttributes");
-		if (cA != null) {			
-			if (cA.stroked()) {
-				g.setColor(cA.strokedColor());
-				g1.drawImage(spicture.getPicture(), spicture.getLoc().x, spicture.getLoc().y, null);
-				g1.drawRect(spicture.getLoc().x, spicture.getLoc().y, spicture.getBounds().width,  spicture.getBounds().height);
-			}
+		Graphics2D g2d = (Graphics2D) g.create();
+		BufferedImage image;
+		File file = new File(spicture.getPath());
+        if (file.isFile()) {
+        	image = spicture.getPicture();
+        	int sX = spicture.getBounds().x;
+			int sY = spicture.getBounds().y;
+			int sW = spicture.getBounds().width;
+			int sH = spicture.getBounds().height;
 			
-		}
-		else {
-			g1.drawImage(spicture.getPicture(), spicture.getLoc().x, spicture.getLoc().y, null);
-		}
-		
-		SelectionAttributes sA = (SelectionAttributes) spicture.getAttributes("selectionAttributes");
+			g2d.translate(sX+sW/2,sY+sH/2);
+			g2d.rotate(Math.toRadians(spicture.getRotation()));
+			g2d.translate(-sX-sW/2,-sY-sH/2);
+			g2d.drawImage(image, spicture.getLoc().x, spicture.getLoc().y, null);
+        
+        }
+        SelectionAttributes sA = (SelectionAttributes) spicture.getAttributes("selectionAttributes");
 		if (sA != null && sA.isSelected()) {
 			drawSelectionShape(spicture.getBounds());
-		}			
+		}
 	}
 	
 	

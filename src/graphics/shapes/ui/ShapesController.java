@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
+import graphics.shapes.SPicture;
 import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
@@ -104,7 +105,7 @@ public class ShapesController extends Controller {
 		}
 		else if (shape instanceof SPolygone) {
 			//((SPolygone) shape).setDistanceBarycentre(-5, -5);
-			scalePolygone((SPolygone) shape, ((SPolygone) shape).getScale()-0.1);
+			((SPolygone) shape).setScale( ((SPolygone) shape).getScale()-0.1);
 		}
 		else if (shape instanceof SText) {
 			if(((SText) shape).getBounds().height> 5 && ((SText) shape).getBounds().width >5) {
@@ -114,6 +115,9 @@ public class ShapesController extends Controller {
 				actualFont.setFont(newFont);
 				((SText) shape).addAttributes(actualFont);
 			}
+		}
+		else if (shape instanceof SPicture) {
+			((SPicture) shape).setScale(0.5);
 		}
 	}
 
@@ -137,7 +141,7 @@ public class ShapesController extends Controller {
 				10,((SPolygone) shape).getnPoints());
 				*/
 			//((SPolygone) shape).setDistanceBarycentre(5,5);
-			scalePolygone((SPolygone) shape, ((SPolygone) shape).getScale()+0.1);
+			((SPolygone) shape).setScale( ((SPolygone) shape).getScale()+0.1);
 		}
 		else if (shape instanceof SText) {
 			
@@ -146,6 +150,9 @@ public class ShapesController extends Controller {
 			Font newFont = actualFont.font().deriveFont(growSize);
 			actualFont.setFont(newFont);
 			((SText) shape).addAttributes(actualFont);
+		}
+		else if (shape instanceof SPicture) {
+			((SPicture) shape).setScale(2);
 		}
 	}
 	
@@ -158,8 +165,8 @@ public class ShapesController extends Controller {
 			if (shp != null) {
 				SelectionAttributes sA = (SelectionAttributes) shp.getAttributes("selectionAttributes");
 				if (sA != null && sA.isSelected()) {
-					this.growShape(shp);
-					}				
+					growShape(shp);
+					}
 				}
 			}
 		}
@@ -173,16 +180,11 @@ public class ShapesController extends Controller {
 				if (shp != null) {
 					SelectionAttributes sA = (SelectionAttributes) shp.getAttributes("selectionAttributes");
 					if (sA != null && sA.isSelected()) {
-						this.reduceShape(shp);
+						reduceShape(shp);
 						}		
 					}
 				}
 		}
-	 
-	 
-	 private void scalePolygone(SPolygone polygone, double scale) {
-		 polygone.setScale(scale);
-	 }
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Evenements Listeners
@@ -241,29 +243,25 @@ public class ShapesController extends Controller {
 		super.mouseWheelMoved(e);
 		
 		if(e.getWheelRotation() > 0 && ! (this.target instanceof SCollection)){
-			System.out.println("zoom -10");
+			System.out.println("zoom -");
 			reduceShape(this.target);
 			
 		}else if(e.getWheelRotation() > 0 && (this.target instanceof SCollection)) {
-			System.out.println("zoom -10 for Collection");
+			System.out.println("zoom - for Collection");
 			reduceShapeCollection((SCollection) this.target);
 		}
 		
 		else if(e.getWheelRotation() < 0 && ! (this.target instanceof SCollection)) {
-			System.out.println("zoom +10");
+			System.out.println("zoom +");
 			growShape(this.target);
 		}
 		
 		else if (e.getWheelRotation() < 0 &&  (this.target instanceof SCollection)) {
-			System.out.println("zoom +10 for Collection");
+			System.out.println("zoom + for Collection");
 			growShapeCollection((SCollection) this.target);
 		}
 		this.getView().repaint();
 	}
-
-	public void keyTyped(KeyEvent evt) {
-		 
-	 }
 	 
 	 public void keyPressed(KeyEvent evt) {
 		 
@@ -276,7 +274,17 @@ public class ShapesController extends Controller {
 				if (shape != null) {
 					SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
 					if (sA != null && sA.isSelected() && shape == this.target) {
+						
 						containsSelected = true;
+						
+						if (evt.getKeyCode() == KeyEvent.VK_UP) {
+							System.out.println("zoom +");
+				            growShape(shape);
+				        }
+						if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
+							System.out.println("zoom -");
+				            reduceShape(shape);
+				        }
 					}
 				}
 			}
@@ -290,6 +298,7 @@ public class ShapesController extends Controller {
 					System.out.println("right rotation");
 		            rotateSelected(10);
 		        }
+				
 			}
 			this.getView().repaint();
 	 }

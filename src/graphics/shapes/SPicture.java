@@ -1,32 +1,39 @@
 package graphics.shapes;
 
 import javax.imageio.ImageIO;
+
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 
 public class SPicture extends Shape {
 
 	private BufferedImage picture;
 	private Point point;
 	private float rotation;
+	private String path;
 	
 	public SPicture(Point point, String path) {
 		this.point = point;
+		this.setPath(path);
 		try {
 			if(path.startsWith("http")) {
+				/*
 				URL url = new URL(path);
 				URLConnection urlc = url.openConnection();
 				HttpURLConnection httpURLCon = (HttpURLConnection) urlc;
 				httpURLCon.addRequestProperty("User-Agent", "Mozilla/4.76");
-				this.picture = ImageIO.read(httpURLCon.getInputStream());
-			}
-			else {
+				if( (ImageIO.read(httpURLCon.getInputStream())) != null){
+					this.picture = (ImageIO.read(httpURLCon.getInputStream()));
+					*/
+				
+				} else {
 				this.picture = ImageIO.read(new File(path));
 			}
 			
@@ -80,7 +87,35 @@ public class SPicture extends Shape {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public void setScale(double zoom) {
+		this.picture = scale(this.picture, zoom);
+	}
 	
+	public static BufferedImage scale(BufferedImage bImage, double factor) {
+		
+        int destWidth=(int) (bImage.getWidth() * factor);
+        int destHeight=(int) (bImage.getHeight() * factor);
+        //créer l'image de destination
+        GraphicsConfiguration configuration = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+        BufferedImage bImageNew = configuration.createCompatibleImage(destWidth, destHeight);
+        Graphics2D graphics = bImageNew.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        //dessiner l'image de destination
+        graphics.drawImage(bImage, 0, 0, destWidth, destHeight, 0, 0, bImage.getWidth(), bImage.getHeight(), null);
+        graphics.dispose();
+ 
+        return bImageNew;
+    }
 	
 }
 

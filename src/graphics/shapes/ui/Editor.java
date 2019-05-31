@@ -87,7 +87,9 @@ public class Editor extends JFrame
 		
 		
 		
-		SPicture sp = new SPicture(new Point(100,200), "C:\\Documentutile\\ENSISA-logo-base-droite-RVB.jpg");
+		SPicture sp = new SPicture(new Point(100,200), "C:\\Documentutile\\ensisa.png");
+		//SPicture sp = new SPicture(new Point(100,200), "https://www.google.com/search?q=ensisa&rlz=1C1CHBD_frFR759FR759&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiUzcq4_sTiAhV3A2MBHcIhCYcQ_AUIEigD&biw=1366&bih=625#imgrc=3ohVx8W0-6G0WM:");
+		sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
 		sp.addAttributes(new SelectionAttributes());
 		this.model.add(sp);
 		
@@ -98,10 +100,12 @@ public class Editor extends JFrame
 		r.addAttributes(new ColorAttributes(true,false,Color.MAGENTA,Color.BLUE));
 		r.addAttributes(new SelectionAttributes());
 		sc.add(r);
+		/*
 		c = new SCircle(new Point(150,100),20);
 		c.addAttributes(new ColorAttributes(false,true,Color.BLUE,Color.DARK_GRAY));
 		c.addAttributes(new SelectionAttributes());
 		sc.add(c);
+		*/
 		this.model.add(sc);
 	}
 	
@@ -114,5 +118,6 @@ public class Editor extends JFrame
 		Editor self = new Editor();
 		self.pack();
 		self.setVisible(true);
+		
 	}
 }

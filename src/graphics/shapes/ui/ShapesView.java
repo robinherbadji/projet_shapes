@@ -1,6 +1,11 @@
 package graphics.shapes.ui;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import graphics.shapes.Shape;
 import graphics.ui.Controller;
@@ -18,6 +23,7 @@ public class ShapesView extends View {
 		super.paintComponent(g);		
 		ShapeDraftman draftman = new ShapeDraftman(g);
 		((Shape) model).accept(draftman);
+		
 	}	
 	
 	public Controller defaultController(Object model) {
