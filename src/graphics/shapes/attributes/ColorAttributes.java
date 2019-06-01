@@ -13,9 +13,6 @@ public class ColorAttributes extends Attributes {
 		id = "colorAttributes";
 		this.filled = true;
 		this.stroked = true;
-		/*
-		this.filledColor = Color.blue;
-		this.strokedColor = Color.black;*/
 		this.filledColor = randomColor();
 		this.strokedColor = randomColor();
 	}

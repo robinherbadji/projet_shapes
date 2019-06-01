@@ -16,7 +16,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class Editor extends JFrame
@@ -50,8 +49,6 @@ public class Editor extends JFrame
 	    // Affichage Menu Principal :		
 		controlPanel = new ControlPanel(this.sview);
 		this.setJMenuBar(controlPanel.getMenuBar());
-	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);
-
 	}
 
 	
@@ -89,12 +86,13 @@ public class Editor extends JFrame
 		this.model.add(p);
 		
 		
-		
+		/*
 		SPicture sp = new SPicture(new Point(100,200), "C:\\Documentutile\\ensisa.png");
 		//SPicture sp = new SPicture(new Point(100,200), "https://www.google.com/search?q=ensisa&rlz=1C1CHBD_frFR759FR759&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiUzcq4_sTiAhV3A2MBHcIhCYcQ_AUIEigD&biw=1366&bih=625#imgrc=3ohVx8W0-6G0WM:");
 		sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
 		sp.addAttributes(new SelectionAttributes());
 		this.model.add(sp);
+		*/
 		
 		
 		SCollection sc = new SCollection();

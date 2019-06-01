@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
@@ -19,6 +20,7 @@ import javax.swing.KeyStroke;
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
 import graphics.shapes.SPicture;
+import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
 import graphics.shapes.attributes.ColorAttributes;
@@ -30,10 +32,8 @@ public class ControlPanel extends JPanel {
 	private ShapesView shapesView;
 	private ShapesController shapesController;
 	private JMenuBar menuBar;
-	private JMenu menuFile, menuShape, menuColor, menuAnim, menuHelp;
-	private String text;
-	private String path;
-	private String speed;
+	private JMenu menuFile, menuShape, menuColor, menuGrid, menuAnim, menuHelp;
+	private String sText, path, speed, gridState;
 	private Map<String,Integer> speedMap;
 	private boolean animationOn;
 	
@@ -124,43 +124,35 @@ public class ControlPanel extends JPanel {
 		mText.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EditText editText = new EditText(null, "Edit the Text", true, getMenu());
-				editText.setVisible(true);
-				
-				System.out.println("Création Texte");
-				SText t= new SText(text);
-				t.addAttributes(new ColorAttributes());
-				t.addAttributes(new FontAttributes());
-				t.addAttributes(new SelectionAttributes());
-				((SCollection) shapesView.getModel()).add(t);
-				shapesView.repaint();
-			}			
-		});
-		mText.setAccelerator(KeyStroke.getKeyStroke('t'));
-		menuShape.add(mText);
-		
-		
-		//------------  SPicture -------------
-		
-		JMenuItem mPathPicture = new JMenuItem("Picture");
-		mPathPicture.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				EditPathPicture setPath = new EditPathPicture(null, "Set the path picture to import", true, getMenu());
-				setPath.setVisible(true);
-				
-				System.out.println("Création Image");
-				if (path.length()>0) {
-					SPicture sp = new SPicture(new Point(400,200), path);
-					sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
-					sp.addAttributes(new SelectionAttributes());
-					((SCollection) shapesView.getModel()).add(sp);
+				sText = JOptionPane.showInputDialog(null, "set Text : ", "Text Creation", JOptionPane.QUESTION_MESSAGE);
+				if ((sText != null) && (sText.length() > 0)) {
+					System.out.println("Création Texte");
+					SText t= new SText(sText);
+					t.addAttributes(new ColorAttributes());
+					t.addAttributes(new FontAttributes());
+					t.addAttributes(new SelectionAttributes());
+					((SCollection) shapesView.getModel()).add(t);
 					shapesView.repaint();
 				}
 			}
 		});
-		mPathPicture.setAccelerator(KeyStroke.getKeyStroke('p'));
-		menuShape.add(mPathPicture);
+		mText.setAccelerator(KeyStroke.getKeyStroke('t'));
+		menuShape.add(mText);
+		
+		JMenuItem mPolygon = new JMenuItem("Polygon");
+		mPolygon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Création Polygone");
+				SPolygone p = new SPolygone();
+				p.addAttributes(new ColorAttributes());
+				p.addAttributes(new SelectionAttributes());
+				((SCollection) shapesView.getModel()).add(p);
+				shapesView.repaint();
+			}			
+		});
+		mPolygon.setAccelerator(KeyStroke.getKeyStroke('p'));
+		menuShape.add(mPolygon);
 		
 		/////////////////////////////////////////////////////////////
 		
@@ -185,6 +177,39 @@ public class ControlPanel extends JPanel {
 		
 		/////////////////////////////////////////////////////////////
 		
+		menuGrid = new JMenu("   Grid   ");		
+		JRadioButtonMenuItem mGridOn = new JRadioButtonMenuItem("ON");
+		JRadioButtonMenuItem mGridOff = new JRadioButtonMenuItem("OFF");
+		ButtonGroup bgGrid = new ButtonGroup();
+		bgGrid.add(mGridOn);
+		bgGrid.add(mGridOff);
+		
+		class GridListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gridState = ((JRadioButtonMenuItem)e.getSource()).getText();				
+				if (gridState == "ON") {
+					shapesView.setGridState(true);
+				}
+				else if (gridState == "OFF") {
+					shapesView.setGridState(false);
+				}
+				shapesView.repaint();
+			}
+		}
+		
+		GridListener gridLis = new GridListener();
+		mGridOn.addActionListener(gridLis);
+		mGridOn.setAccelerator(KeyStroke.getKeyStroke('/'));
+		mGridOff.addActionListener(gridLis);
+		mGridOff.setAccelerator(KeyStroke.getKeyStroke('*'));
+		
+		mGridOff.setSelected(true);		
+		menuGrid.add(mGridOn);
+		menuGrid.add(mGridOff);
+		
+		/////////////////////////////////////////////////////////////
+		
 		menuAnim = new JMenu("   Animation   ");
 		JMenuItem mStart = new JMenuItem(" Start ");
 		mStart.addActionListener(new ActionListener() {
@@ -196,7 +221,7 @@ public class ControlPanel extends JPanel {
 				animationOn = true;
 			}			
 		});
-		mStart.setAccelerator(KeyStroke.getKeyStroke('1'));
+		mStart.setAccelerator(KeyStroke.getKeyStroke('a'));
 		menuAnim.add(mStart);
 		
 		JMenuItem mStop = new JMenuItem(" Stop ");
@@ -209,18 +234,19 @@ public class ControlPanel extends JPanel {
 				animationOn = false;
 			}			
 		});
-		mStop.setAccelerator(KeyStroke.getKeyStroke('2'));
+		mStop.setAccelerator(KeyStroke.getKeyStroke('z'));
 		menuAnim.add(mStop);
 		menuAnim.addSeparator();
+		
 		JMenu mSpeed = new JMenu(" Speed ");
 		JRadioButtonMenuItem mSlow = new JRadioButtonMenuItem("Slow");
 		JRadioButtonMenuItem mNormal = new JRadioButtonMenuItem("Normal");
 		JRadioButtonMenuItem mFast = new JRadioButtonMenuItem("Fast");
 		JLabel speedInfo = new JLabel("   (Normal)");
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(mSlow);
-		bg.add(mNormal);
-		bg.add(mFast);
+		ButtonGroup bgSpeed = new ButtonGroup();
+		bgSpeed.add(mSlow);
+		bgSpeed.add(mNormal);
+		bgSpeed.add(mFast);
 		
 		class SpeedListener implements ActionListener {
 			@Override
@@ -232,29 +258,35 @@ public class ControlPanel extends JPanel {
 					shapesController.getTimer().stop();
 					shapesController.animatedSelected(shapesView,speedMap.get(speed));
 				}			
-			}			
+			}
 		}
+		
 		SpeedListener speedLis = new SpeedListener();
 		mSlow.addActionListener(speedLis);
+		mSlow.setAccelerator(KeyStroke.getKeyStroke('1'));
 		mNormal.addActionListener(speedLis);
-		mFast.addActionListener(speedLis);		
+		mNormal.setAccelerator(KeyStroke.getKeyStroke('2'));
+		mFast.addActionListener(speedLis);
+		mFast.setAccelerator(KeyStroke.getKeyStroke('3'));
 		mSpeed.add(mSlow);
 		mSpeed.add(mNormal);
 		mSpeed.add(mFast);
-		mNormal.setSelected(true);		
+		mNormal.setSelected(true);
 		menuAnim.add(mSpeed);
 		menuAnim.add(speedInfo);
 		
 		/////////////////////////////////////////////////////////////
 		
 		menuHelp = new JMenu("   Help   ");
-		JMenuItem mFunctions = new JMenuItem("How does it works ?");
+		JMenuItem mFunctions = new JMenuItem("How does it work ?");
 		mFunctions.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub				
+				FunctionsDialog fDialog = new FunctionsDialog(null, "How does it work ?", true);
+				fDialog.setVisible(true);
 			}			
 		});
+		mFunctions.setAccelerator(KeyStroke.getKeyStroke('?'));
 		menuHelp.add(mFunctions);
 		
 		JMenuItem mAbout = new JMenuItem(" About ");
@@ -270,6 +302,7 @@ public class ControlPanel extends JPanel {
 		menuBar.add(menuFile);		
 		menuBar.add(menuShape);
 		menuBar.add(menuColor);
+		menuBar.add(menuGrid);
 		menuBar.add(menuAnim);
 		menuBar.add(menuHelp);
 	}
@@ -284,7 +317,7 @@ public class ControlPanel extends JPanel {
 	}*/
 	
 	public void setText(String text) {
-		this.text = text;
+		this.sText = text;
 	}
 	
 	public void setPath(String path) {
