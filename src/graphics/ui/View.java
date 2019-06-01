@@ -25,23 +25,23 @@ public abstract class View extends JPanel implements ActionListener
 		this.addMouseWheelListener(this.controller);
 		setFocusable(true);
 	}
-	
+
 	public void setModel(Object model)
 	{
 		this.model = model;
 		this.controller.setModel(model);
 	}
-	
+
 	public Object getModel()
 	{
 		return this.model;
 	}
-	
+
 	public Controller defaultController(Object model)
 	{
 		return new Controller(model);
 	}
-	
+
 	final public Controller getController()
 	{
 		return this.controller;

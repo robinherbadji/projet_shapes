@@ -18,7 +18,7 @@ public class SPicture extends Shape {
 	private Point point;
 	private float rotation;
 	private String path;
-	
+
 	public SPicture(Point point, String path) {
 		this.point = point;
 		this.setPath(path);
@@ -32,13 +32,13 @@ public class SPicture extends Shape {
 				if( (ImageIO.read(httpURLCon.getInputStream())) != null){
 					this.picture = (ImageIO.read(httpURLCon.getInputStream()));
 					*/
-				
-				} else {
+
+			} else {
 				this.picture = ImageIO.read(new File(path));
 			}
-			
+
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
@@ -46,7 +46,7 @@ public class SPicture extends Shape {
 	public BufferedImage getPicture() {
 		return this.picture;
 	}
-	
+
 	@Override
 	public Point getLoc() {
 		return this.point;
@@ -55,7 +55,7 @@ public class SPicture extends Shape {
 	@Override
 	public void setLoc(Point point) {
 		this.point = point;
-		
+
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class SPicture extends Shape {
 		point.x += dx;
 		point.y += dy;
 		this.setLoc(point);
-		
+
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class SPicture extends Shape {
 		int height = this.picture.getHeight();
 		return new Rectangle(this.point.x, this.point.y , width, height);
 	}
-	
+
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitImage(this);
 	}
@@ -99,23 +99,23 @@ public class SPicture extends Shape {
 	public void setScale(double zoom) {
 		this.picture = scale(this.picture, zoom);
 	}
-	
+
 	public static BufferedImage scale(BufferedImage bImage, double factor) {
-		
-        int destWidth=(int) (bImage.getWidth() * factor);
-        int destHeight=(int) (bImage.getHeight() * factor);
-        //créer l'image de destination
-        GraphicsConfiguration configuration = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-        BufferedImage bImageNew = configuration.createCompatibleImage(destWidth, destHeight);
-        Graphics2D graphics = bImageNew.createGraphics();
-        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-        //dessiner l'image de destination
-        graphics.drawImage(bImage, 0, 0, destWidth, destHeight, 0, 0, bImage.getWidth(), bImage.getHeight(), null);
-        graphics.dispose();
- 
-        return bImageNew;
-    }
-	
+
+		int destWidth=(int) (bImage.getWidth() * factor);
+		int destHeight=(int) (bImage.getHeight() * factor);
+		//crï¿½er l'image de destination
+		GraphicsConfiguration configuration = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+		BufferedImage bImageNew = configuration.createCompatibleImage(destWidth, destHeight);
+		Graphics2D graphics = bImageNew.createGraphics();
+		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+		//dessiner l'image de destination
+		graphics.drawImage(bImage, 0, 0, destWidth, destHeight, 0, 0, bImage.getWidth(), bImage.getHeight(), null);
+		graphics.dispose();
+
+		return bImageNew;
+	}
+
 }
 

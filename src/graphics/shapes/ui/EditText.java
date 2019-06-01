@@ -20,9 +20,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class EditText extends JDialog {
-	private JTextField jText;// locX, locY, width, height;	
-	private ControlPanel menu;	  
-	
+	private JTextField jText;// locX, locY, width, height;
+	private ControlPanel menu;
+
 	public EditText(JFrame parent, String title, boolean modal, ControlPanel menu){
 		super(parent, title, modal);
 		this.setSize(300, 120);
@@ -32,21 +32,21 @@ public class EditText extends JDialog {
 		this.initComponent();
 		this.menu = menu;
 	}
-	
-	
+
+
 	private void initComponent(){
 		JPanel panText = new JPanel();
 		panText.setBackground(Color.white);
 		panText.setPreferredSize(new Dimension(180, 120));
 		//panText.setBorder(BorderFactory.createTitledBorder("Position"));
-	    JLabel xLabel = new JLabel("Text : ");
-	    
-	    jText = new JTextField();
-	    jText.setPreferredSize(new Dimension(100, 25));
-	    panText.add(xLabel);
-	    panText.add(jText);
-		
-	  //La position
+		JLabel xLabel = new JLabel("Text : ");
+
+		jText = new JTextField();
+		jText.setPreferredSize(new Dimension(100, 25));
+		panText.add(xLabel);
+		panText.add(jText);
+
+		//La position
 	    /*
 	    JPanel panPosition = new JPanel();
 	    panPosition.setBackground(Color.white);
@@ -59,7 +59,7 @@ public class EditText extends JDialog {
 	    panPosition.add(xLabel);
 	    panPosition.add(locX);
 	    panPosition.add(pxLabel1);
-	    
+
 	    JLabel yLabel = new JLabel("Axe Y : ");
 	    JLabel pxLabel2 = new JLabel(" px");
 	    locY = new JTextField("100");
@@ -67,8 +67,8 @@ public class EditText extends JDialog {
 	    panPosition.add(yLabel);
 	    panPosition.add(locY);
 	    panPosition.add(pxLabel2);
-	    
-	    
+
+
 	    //La dimension
 	    JPanel panTaille = new JPanel();
 	    panTaille.setBackground(Color.white);
@@ -81,7 +81,7 @@ public class EditText extends JDialog {
 	    panTaille.add(largeurLabel);
 	    panTaille.add(width);
 	    panTaille.add(pxLabel3);
-	    
+
 	    JLabel hauteurLabel = new JLabel("Hauteur : ");
 	    JLabel pxLabel4 = new JLabel(" px");
 	    height = new JTextField("100");
@@ -90,43 +90,43 @@ public class EditText extends JDialog {
 	    panTaille.add(height);
 	    panTaille.add(pxLabel4);
 	   */
-	    
-	    JPanel content = new JPanel();
-	    content.setBackground(Color.white);
-	   
-	    //content.add(panPosition);
-	    //content.add(panTaille);
-	    content.add(panText);
-	   
-	    JPanel control = new JPanel();
-	    JButton okButton = new JButton("OK");
-	    this.getRootPane().setDefaultButton(okButton);
-	    
-	    okButton.addActionListener(new ActionListener(){
-	    	public void actionPerformed(ActionEvent arg0) {
-	    		this.collectInfos();
-	    		setVisible(false);
-	    	}
 
-	    	private void collectInfos() {
-	    		
-	    		System.out.println(jText.getText());
-	    		menu.setText(jText.getText());
-	    	}    
-	    });
+		JPanel content = new JPanel();
+		content.setBackground(Color.white);
 
-	    JButton cancelBouton = new JButton("Annuler");
-	    cancelBouton.addActionListener(new ActionListener(){
-	    	public void actionPerformed(ActionEvent arg0) {
-	    		setVisible(false);
-	    	}
-	    });
-	    
-	    control.add(okButton);
-	    control.add(cancelBouton);
+		//content.add(panPosition);
+		//content.add(panTaille);
+		content.add(panText);
 
-	    this.getContentPane().add(content, BorderLayout.CENTER);
-	    this.getContentPane().add(control, BorderLayout.SOUTH);
-	  }
-	
+		JPanel control = new JPanel();
+		JButton okButton = new JButton("OK");
+		this.getRootPane().setDefaultButton(okButton);
+
+		okButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				this.collectInfos();
+				setVisible(false);
+			}
+
+			private void collectInfos() {
+
+				System.out.println(jText.getText());
+				menu.setText(jText.getText());
+			}
+		});
+
+		JButton cancelBouton = new JButton("Annuler");
+		cancelBouton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
+
+		control.add(okButton);
+		control.add(cancelBouton);
+
+		this.getContentPane().add(content, BorderLayout.CENTER);
+		this.getContentPane().add(control, BorderLayout.SOUTH);
+	}
+
 }
