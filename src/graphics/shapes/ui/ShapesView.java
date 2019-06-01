@@ -12,7 +12,7 @@ import graphics.ui.View;
 @SuppressWarnings("serial")
 public class ShapesView extends View {
 	private boolean gridState;
-	
+
 	public ShapesView(Object model) {
 		super(model);
 		this.gridState = false;
@@ -21,13 +21,14 @@ public class ShapesView extends View {
 	public void setGridState(boolean gridState) {
 		this.gridState = gridState;
 	}
-	
+
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);		
-		ShapeDraftman draftman = new ShapeDraftman(g);
-		((Shape) model).accept(draftman);
+		super.paintComponent(g);
 		if (this.gridState)	this.drawGrid(g);
-	}	
+		ShapeDraftman draftman = new ShapeDraftman(g);
+		((Shape) model).accept(draftman);		
+	}
+
 	
 	public Controller defaultController(Object model) {
 		return new ShapesController(model);

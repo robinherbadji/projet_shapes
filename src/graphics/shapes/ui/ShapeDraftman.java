@@ -29,24 +29,24 @@ import graphics.shapes.attributes.FontAttributes;
 import graphics.shapes.attributes.SelectionAttributes;
 
 public class ShapeDraftman implements ShapeVisitor {
-	private Graphics g;	
+	private Graphics g;
 	//private Shape shape;
 
 	public ShapeDraftman(Graphics g) {
 		this.g = g;
-	}	
-	
-	// Dessin du carré de Sélection
+	}
+
+	// Dessin du carrï¿½ de Sï¿½lection
 	public void drawSelectionShape(Rectangle rect) {
 		final int size = 5;
 		g.setColor(Color.black);
 		g.drawRect(rect.x-size+2, rect.y-size+2, size, size);
 	}
-	
+
 	// Visit Shapes
 	@Override
 	public void visitRectangle(SRectangle rect) {
-		 Graphics2D g2d = (Graphics2D) g.create();
+		Graphics2D g2d = (Graphics2D) g.create();
 		if (rect != null) {
 			int sX = rect.getRect().x; // ou sX = rect.getLoc().x;
 			int sY = rect.getRect().y; // ou sY = rect.getLoc().y;
@@ -60,42 +60,42 @@ public class ShapeDraftman implements ShapeVisitor {
 				if (cA.filled()) {
 					g2d.setColor(cA.filledColor());
 					g2d.fillRect(sX, sY, sW, sH);
-					
+
 				}
 				if (cA.stroked()) {
 					g2d.setColor(cA.strokedColor());
 					g2d.drawRect(sX, sY, sW, sH);
-					
-				}			
+
+				}
 			}
 			else {
 				g2d.setColor(Color.BLACK);
 				g2d.fillRect(sX, sY, sW, sH);
-				
+
 			}
-			
+
 			SelectionAttributes sA = (SelectionAttributes) rect.getAttributes("selectionAttributes");
 			if (sA != null && sA.isSelected()) {
-				drawSelectionShape(rect.getBounds());			
+				drawSelectionShape(rect.getBounds());
 			}
-		}		
+		}
 	}
-	
-	
+
+
 	@Override
 	public void visitCircle(SCircle scircle) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (scircle != null) {
 			int sX = scircle.getLoc().x;
-			int sY = scircle.getLoc().y;		
-			int diam = scircle.getRadius() * 2;			
-			
+			int sY = scircle.getLoc().y;
+			int diam = scircle.getRadius() * 2;
+
 			ColorAttributes cA = (ColorAttributes) scircle.getAttributes("colorAttributes");
 			if (cA != null) {
 				if (cA.filled()) {
 					g2d.setColor(cA.filledColor());
 					g2d.fillOval(sX, sY, diam, diam);
-				}				
+				}
 				if (cA.stroked()) {
 					g2d.setColor(cA.strokedColor());
 					g2d.drawOval(sX, sY, diam, diam);
@@ -105,22 +105,22 @@ public class ShapeDraftman implements ShapeVisitor {
 				g2d.setColor(Color.BLACK);
 				g2d.fillOval(sX, sY, diam, diam);
 			}
-			
+
 			SelectionAttributes sA = (SelectionAttributes) scircle.getAttributes("selectionAttributes");
 			if (sA != null && sA.isSelected()) {
-				drawSelectionShape(scircle.getBounds());			
-			}			
-		}		
+				drawSelectionShape(scircle.getBounds());
+			}
+		}
 	}
-	
-	
+
+
 	@Override
 	public void visitText(SText stext) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (stext != null) {
 			Point loc = stext.getLoc();
 			String text = stext.getText();
-			
+
 			FontAttributes fA = (FontAttributes) stext.getAttributes("fontAttributes");
 			if (fA != null) {
 				FontMetrics fMetrics = g.getFontMetrics(fA.font());
@@ -129,33 +129,33 @@ public class ShapeDraftman implements ShapeVisitor {
 				int sY = stext.getBounds().y;
 				int sW = stext.getBounds().width;
 				int sH = stext.getBounds().height;
-				
+
 				g2d.translate(sX+sW/2,sY+sH/2);
 				g2d.rotate(Math.toRadians(stext.getRotation()));
 				g2d.translate(-sX-sW/2,-sY-sH/2);
 				ColorAttributes cA = (ColorAttributes) stext.getAttributes("colorAttributes");
-				if (cA != null) {			
+				if (cA != null) {
 					if (cA.filled()) {
 						if (stext.getBounds() != null) {
 							g2d.setColor(cA.filledColor());
 							g2d.fillRect(sX, sY, sW, sH);
-						}				
-					}					
-					if (cA.stroked()) {	
+						}
+					}
+					if (cA.stroked()) {
 						g2d.setColor(cA.strokedColor());
 						g2d.drawString(text, loc.x, loc.y);
-					}						
+					}
 				}
-				
+
 				SelectionAttributes sA = (SelectionAttributes) stext.getAttributes("selectionAttributes");
 				if (sA != null && sA.isSelected()) {
-					drawSelectionShape(stext.getBounds());		
+					drawSelectionShape(stext.getBounds());
 				}
 			}
 		}
 	}
-	
-	
+
+
 	@Override
 	public void visitCollection(SCollection scollec) {
 		Graphics2D g2d = (Graphics2D) g.create();
@@ -170,27 +170,27 @@ public class ShapeDraftman implements ShapeVisitor {
 					drawSelectionShape(shape.getBounds());
 				}
 			}
-						
+
 		}
 	}
 
 	@Override
 	public void visitPolygone(SPolygone spolygone) {
-		
+
 		Graphics2D g2d = (Graphics2D) g.create();
-		if (spolygone != null) {			
-			
+		if (spolygone != null) {
+
 			int sX = spolygone.getBounds().x;
 			int sY = spolygone.getBounds().y;
 			int sW = spolygone.getBounds().width;
 			int sH = spolygone.getBounds().height;
-			
+
 			AffineTransform affineT = g2d.getTransform();
-			
+
 			affineT.translate(-sW, -sH);
 			affineT.scale(spolygone.getScale(), spolygone.getScale());
 			affineT.translate(sW,sH);
-			
+
 			g2d.translate(sX+sW/2,sY+sH/2);
 			g2d.rotate(Math.toRadians(spolygone.getRotation()));
 			g2d.translate(-sX-sW/2,-sY-sH/2);
@@ -210,40 +210,40 @@ public class ShapeDraftman implements ShapeVisitor {
 				g2d.setColor(Color.BLACK);
 				g2d.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 			}
-			
+
 			SelectionAttributes sA = (SelectionAttributes) spolygone.getAttributes("selectionAttributes");
 			if (sA != null && sA.isSelected()) {
-				drawSelectionShape(spolygone.getBounds());		
-			}	
+				drawSelectionShape(spolygone.getBounds());
+			}
 			g2d.setTransform(affineT);
-		}		
+		}
 	}
 
-	
+
 	@Override
 	public void visitImage(SPicture spicture) {
-		
+
 		Graphics2D g2d = (Graphics2D) g.create();
 		BufferedImage image;
 		File file = new File(spicture.getPath());
-        if (file.isFile()) {
-        	image = spicture.getPicture();
-        	int sX = spicture.getBounds().x;
+		if (file.isFile()) {
+			image = spicture.getPicture();
+			int sX = spicture.getBounds().x;
 			int sY = spicture.getBounds().y;
 			int sW = spicture.getBounds().width;
 			int sH = spicture.getBounds().height;
-			
+
 			g2d.translate(sX+sW/2,sY+sH/2);
 			g2d.rotate(Math.toRadians(spicture.getRotation()));
 			g2d.translate(-sX-sW/2,-sY-sH/2);
 			g2d.drawImage(image, spicture.getLoc().x, spicture.getLoc().y, null);
-        
-        }
-        SelectionAttributes sA = (SelectionAttributes) spicture.getAttributes("selectionAttributes");
+
+		}
+		SelectionAttributes sA = (SelectionAttributes) spicture.getAttributes("selectionAttributes");
 		if (sA != null && sA.isSelected()) {
 			drawSelectionShape(spicture.getBounds());
 		}
 	}
-	
-	
+
+
 }
