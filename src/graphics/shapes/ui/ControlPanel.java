@@ -1,5 +1,7 @@
 package graphics.shapes.ui;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
@@ -16,6 +18,7 @@ import javax.swing.KeyStroke;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
+import graphics.shapes.SPicture;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
 import graphics.shapes.attributes.ColorAttributes;
@@ -28,7 +31,7 @@ public class ControlPanel extends JPanel {
 	private ShapesController shapesController;
 	private JMenuBar menuBar;
 	private JMenu menuFile, menuShape, menuColor, menuGrid, menuAnim, menuHelp;
-	private String sText, speed, gridState;
+	private String sText, speed, gridState, path;
 	private Map<String,Integer> speedMap;
 	private boolean animationOn;
 	
@@ -132,6 +135,28 @@ public class ControlPanel extends JPanel {
 		});
 		mText.setAccelerator(KeyStroke.getKeyStroke('t'));
 		menuShape.add(mText);
+		
+		
+		//------------  SPicture -------------
+		
+		JMenuItem mPathPicture = new JMenuItem("Picture");
+		mPathPicture.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				EditPathPicture setPath = new EditPathPicture(null, "Set the path picture to import", true, getMenu());
+				setPath.setVisible(true);
+				
+				System.out.println("Création Image");
+				
+				SPicture sp = new SPicture(new Point(400,200), path);
+				sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
+				sp.addAttributes(new SelectionAttributes());
+				((SCollection) shapesView.getModel()).add(sp);
+				shapesView.repaint();
+			}
+		});
+		mPathPicture.setAccelerator(KeyStroke.getKeyStroke('p'));
+		menuShape.add(mPathPicture);
 		
 		/////////////////////////////////////////////////////////////
 		
@@ -289,6 +314,10 @@ public class ControlPanel extends JPanel {
 	
 	public void setText(String text) {
 		this.sText = text;
+	}
+	
+	public void setPath(String path) {
+		this.path = path; 
 	}
 	
 	public ControlPanel getMenu() {

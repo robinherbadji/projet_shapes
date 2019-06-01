@@ -2,6 +2,13 @@ package graphics.shapes.ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import java.awt.event.ActionEvent;
 
 import graphics.shapes.Shape;
@@ -25,7 +32,7 @@ public class ShapesView extends View {
 		super.paintComponent(g);		
 		ShapeDraftman draftman = new ShapeDraftman(g);
 		((Shape) model).accept(draftman);
-		if (this.gridState)	this.drawGrid(g);		
+		if (this.gridState)	this.drawGrid(g);
 	}	
 	
 	public Controller defaultController(Object model) {

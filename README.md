@@ -1,6 +1,21 @@
 # projet_shapes
 Projet Java Shapes
 
+<<<<<<< HEAD
+Grossissement:
+
+- Utilisation de l'attribut scale pour polygone
+- grossissement sur chaque forme de SCollection
+- Grossissement sur toutes les formes séléctionnées en même temps
+
+Rotation:
+
+Scollection 
+
+Image: 
+
+importer une image 
+=======
 
 Extensions :
 - Possibilité de faire nouvelles formes (Triangle, Polygône, Image, ...)
@@ -28,3 +43,4 @@ Notes :
 - Timer Swing pour l'anim (pas de Threads)
 - 
 
+>>>>>>> branch 'robin' of https://github.com/robinherbadji/projet_shapes.git
