@@ -7,29 +7,30 @@ import java.util.Iterator;
 
 public class SCollection extends Shape {
 	private ArrayList<Shape> collection;
-	
+	private float rotation;
+
 	public SCollection() {
 		collection = new ArrayList<Shape>();
 	}
-	
+
 	/*
 	public ArrayList<Shape> getCollection() {
 		return this.collection;
 	}
 	*/
-	
+
 	public void add(Shape shape) {
 		this.collection.add(shape);
 	}
-	
+
 	public Iterator<Shape> iterator() {
 		return collection.iterator();
 	}
-	
+
 	@Override
 	public Point getLoc() {
 		// On retourne la position de la 1ere forme
-		// A vérifier
+		// A vï¿½rifier
 		if (collection != null)
 			return collection.get(0).getLoc();
 		else return null;
@@ -37,11 +38,11 @@ public class SCollection extends Shape {
 
 	@Override
 	public void setLoc(Point point) {
-		// A vérifier aussi
+		// A vï¿½rifier aussi
 		Iterator<Shape> itr = collection.iterator();
 		while (itr.hasNext()) {
 			itr.next().setLoc(point);
-		}		
+		}
 	}
 
 	@Override
@@ -50,13 +51,13 @@ public class SCollection extends Shape {
 		while (itr.hasNext()) {
 			Shape shape = itr.next();
 			shape.translate(dx, dy);
-		}		
+		}
 	}
-	
+
 	@Override
 	public Rectangle getBounds() {
 		Iterator<Shape> itr = collection.iterator();
-		// Deux façons de faire pour déclarer bounds:		
+		// Deux faï¿½ons de faire pour dï¿½clarer bounds:
 		// 1
 		/*
 		Rectangle bounds = itr.next().getBounds();
@@ -64,15 +65,15 @@ public class SCollection extends Shape {
 			Shape shape = itr.next();
 			bounds = bounds.union(shape.getBounds());
 		}
-		*/		
+		*/
 		//2
-		Rectangle bounds = new Rectangle(-1,-1); // Rectangle traité comme non-existant (bounds = null ne fonctionnant pas)
+		Rectangle bounds = new Rectangle(-1,-1); // Rectangle traitï¿½ comme non-existant (bounds = null ne fonctionnant pas)
 		while (itr.hasNext()) {
 			Shape shape = itr.next();
 			bounds = bounds.union(shape.getBounds());
 		}
 		return bounds;
-		
+
 		//3 -> Bugs
 		/*
 		Rectangle bounds = new Rectangle();
@@ -82,10 +83,22 @@ public class SCollection extends Shape {
 		return bounds;
 		*/
 	}
-	
+
 
 	@Override
 	public void accept(ShapeVisitor sVisitor) {
-		sVisitor.visitCollection(this);		
-	}	
+		sVisitor.visitCollection(this);
+	}
+
+	public float getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
+
+	public ArrayList<Shape> getCollection() {
+		return this.collection;
+	}
 }
