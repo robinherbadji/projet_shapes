@@ -1,6 +1,5 @@
 package graphics.shapes;
 
-import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -59,7 +58,6 @@ public class SText extends Shape {
 		else return null;		
 	}
 
-	
 
 	@Override
 	public void accept(ShapeVisitor sVisitor) {

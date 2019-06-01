@@ -39,7 +39,7 @@ public class SPicture extends Shape {
 			
 		} catch (IOException e) {
 			
-			e.printStackTrace();
+			System.out.println("Erreur : Aucun path trouvé");
 		}
 	}
 

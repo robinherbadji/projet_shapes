@@ -150,12 +150,13 @@ public class ControlPanel extends JPanel {
 				setPath.setVisible(true);
 				
 				System.out.println("Création Image");
-				
-				SPicture sp = new SPicture(new Point(400,200), path);
-				sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
-				sp.addAttributes(new SelectionAttributes());
-				((SCollection) shapesView.getModel()).add(sp);
-				shapesView.repaint();
+				if (path.length()>0) {
+					SPicture sp = new SPicture(new Point(400,200), path);
+					sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
+					sp.addAttributes(new SelectionAttributes());
+					((SCollection) shapesView.getModel()).add(sp);
+					shapesView.repaint();
+				}
 			}
 		});
 		mPathPicture.setAccelerator(KeyStroke.getKeyStroke('p'));

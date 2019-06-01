@@ -58,19 +58,16 @@ public class EditPathPicture extends JDialog {
 	    
 	    okButton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent arg0) {
-	    		this.collectInfos();
+	    		menu.setPath(jPath.getText());
 	    		setVisible(false);
 	    	}
-
-	    	private void collectInfos() {
-	    		System.out.println(jPath.getText());
-	    		menu.setPath(jPath.getText());
-	    	}    
+  
 	    });
 
 	    JButton cancelBouton = new JButton("Annuler");
 	    cancelBouton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent arg0) {
+	    		menu.setPath("");
 	    		setVisible(false);
 	    	}
 	    });
