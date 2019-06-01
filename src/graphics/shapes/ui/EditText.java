@@ -3,22 +3,17 @@ package graphics.shapes.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class EditText extends JDialog {
 	private JTextField jText;// locX, locY, width, height;	
 	private ControlPanel menu;	  
@@ -104,19 +99,15 @@ public class EditText extends JDialog {
 	    
 	    okButton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent arg0) {
-	    		this.collectInfos();
+	    		menu.setText(jText.getText());
 	    		setVisible(false);
-	    	}
-
-	    	private void collectInfos() {
-	    		System.out.println(jText.getText());
-	    		menu.setText(jText.getText());	    	  
 	    	}    
 	    });
 
 	    JButton cancelBouton = new JButton("Annuler");
 	    cancelBouton.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent arg0) {
+	    		menu.setText("");
 	    		setVisible(false);
 	    	}
 	    });

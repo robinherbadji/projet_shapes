@@ -13,14 +13,12 @@ import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class Editor extends JFrame
 {
 	private ShapesView sview;
 	private SCollection model;
-	//private ControlPanel controlPanel;
 	private ControlPanel controlPanel;
 	
 	public Editor()
@@ -35,17 +33,18 @@ public class Editor extends JFrame
 			}
 		});
 		
-		this.buildModel(); 
+		this.buildModel();
+		
 		
 		// Affichage Modèle :
 		this.sview = new ShapesView(this.model);
-		this.sview.setPreferredSize(new Dimension(300,300));
+		this.sview.setPreferredSize(new Dimension(300,400));
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
 		
-	    // Affichage Menu Principal :		
+		// Affichage Menu Principal :		
 		controlPanel = new ControlPanel(this.sview);
 		this.setJMenuBar(controlPanel.getMenuBar());
-	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);
+		//this.sview.add(this.controlPanel, java.awt.BorderLayout.NORTH);
 	}
 
 	

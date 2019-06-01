@@ -27,9 +27,8 @@ public class ControlPanel extends JPanel {
 	private ShapesView shapesView;
 	private ShapesController shapesController;
 	private JMenuBar menuBar;
-	private JMenu menuFile, menuShape, menuColor, menuAnim, menuHelp;
-	private String text;
-	private String speed;
+	private JMenu menuFile, menuShape, menuColor, menuGrid, menuAnim, menuHelp;
+	private String sText, speed, gridState;
 	private Map<String,Integer> speedMap;
 	private boolean animationOn;
 	
@@ -37,11 +36,13 @@ public class ControlPanel extends JPanel {
 		this.shapesView = shapesView;
 		this.shapesController = (ShapesController) shapesView.defaultController(shapesView.getModel());
 		this.menuBar = new JMenuBar();
+		//this.menuBar.setBounds(0,0,this.shapesView.getWidth(),50);
+		this.menuBar.setSize(this.shapesView.getWidth(), 100);
 		this.animationOn = false;
 		this.speed = "Normal";
 		this.speedMap = new TreeMap<String,Integer>();
-		this.speedMap.put("Slow", 25);
-		this.speedMap.put("Normal", 10);
+		this.speedMap.put("Slow", 18);
+		this.speedMap.put("Normal", 8);
 		this.speedMap.put("Fast", 2);
 		initialisation();
 	}
@@ -82,12 +83,7 @@ public class ControlPanel extends JPanel {
 		JMenuItem mRectangle = new JMenuItem("Rectangle   ");
 		mRectangle.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				/*
-				EditRectangle editRectangle = new EditRectangle(null, "Editer le Rectangle", true, getMenu());
-				editRectangle.setVisible(true);
-				*/
-				//System.out.println("Création Rectangle : "+ width + ", " + height);				
+			public void actionPerformed(ActionEvent arg0) {		
 				SRectangle r = new SRectangle();
 				r.addAttributes(new ColorAttributes());
 				r.addAttributes(new SelectionAttributes());
@@ -123,13 +119,15 @@ public class ControlPanel extends JPanel {
 				EditText editText = new EditText(null, "Edit the Text", true, getMenu());
 				editText.setVisible(true);
 				
-				System.out.println("Création Texte");
-				SText t= new SText(text);
-				t.addAttributes(new ColorAttributes());
-				t.addAttributes(new FontAttributes());
-				t.addAttributes(new SelectionAttributes());
-				((SCollection) shapesView.getModel()).add(t);
-				shapesView.repaint();
+				if (sText.length() > 0) {
+					System.out.println("Création Texte");
+					SText t= new SText(sText);
+					t.addAttributes(new ColorAttributes());
+					t.addAttributes(new FontAttributes());
+					t.addAttributes(new SelectionAttributes());
+					((SCollection) shapesView.getModel()).add(t);
+					shapesView.repaint();
+				}				
 			}			
 		});
 		mText.setAccelerator(KeyStroke.getKeyStroke('t'));
@@ -137,7 +135,7 @@ public class ControlPanel extends JPanel {
 		
 		/////////////////////////////////////////////////////////////
 		
-		menuColor = new JMenu("   Color   ");
+		menuColor = new JMenu("  Color  ");
 		JMenuItem mFilled = new JMenuItem(" Filled ");
 		mFilled.addActionListener(new ActionListener() {
 			@Override
@@ -158,6 +156,41 @@ public class ControlPanel extends JPanel {
 		
 		/////////////////////////////////////////////////////////////
 		
+		menuGrid = new JMenu("   Grid   ");		
+		JRadioButtonMenuItem mGridOn = new JRadioButtonMenuItem("ON");
+		JRadioButtonMenuItem mGridOff = new JRadioButtonMenuItem("OFF");
+		ButtonGroup bgGrid = new ButtonGroup();
+		bgGrid.add(mGridOn);
+		bgGrid.add(mGridOff);
+		
+		class GridListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gridState = ((JRadioButtonMenuItem)e.getSource()).getText();				
+				if (gridState == "ON") {
+					shapesView.setGridState(true);
+				}
+				else if (gridState == "OFF") {
+					shapesView.setGridState(false);
+				}
+				else System.out.println("Shit");
+				shapesView.repaint();
+			}
+		}
+		
+		GridListener gridLis = new GridListener();
+		mGridOn.addActionListener(gridLis);
+		mGridOn.setAccelerator(KeyStroke.getKeyStroke('/'));
+		mGridOff.addActionListener(gridLis);
+		mGridOff.setAccelerator(KeyStroke.getKeyStroke('*'));
+		
+		mGridOff.setSelected(true);		
+		menuGrid.add(mGridOn);
+		menuGrid.add(mGridOff);
+		
+		
+		/////////////////////////////////////////////////////////////
+		
 		menuAnim = new JMenu("   Animation   ");
 		JMenuItem mStart = new JMenuItem(" Start ");
 		mStart.addActionListener(new ActionListener() {
@@ -169,7 +202,7 @@ public class ControlPanel extends JPanel {
 				animationOn = true;
 			}			
 		});
-		mStart.setAccelerator(KeyStroke.getKeyStroke('1'));
+		mStart.setAccelerator(KeyStroke.getKeyStroke('g'));
 		menuAnim.add(mStart);
 		
 		JMenuItem mStop = new JMenuItem(" Stop ");
@@ -182,18 +215,19 @@ public class ControlPanel extends JPanel {
 				animationOn = false;
 			}			
 		});
-		mStop.setAccelerator(KeyStroke.getKeyStroke('2'));
+		mStop.setAccelerator(KeyStroke.getKeyStroke('p'));
 		menuAnim.add(mStop);
 		menuAnim.addSeparator();
+		
 		JMenu mSpeed = new JMenu(" Speed ");
 		JRadioButtonMenuItem mSlow = new JRadioButtonMenuItem("Slow");
 		JRadioButtonMenuItem mNormal = new JRadioButtonMenuItem("Normal");
 		JRadioButtonMenuItem mFast = new JRadioButtonMenuItem("Fast");
 		JLabel speedInfo = new JLabel("   (Normal)");
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(mSlow);
-		bg.add(mNormal);
-		bg.add(mFast);
+		ButtonGroup bgSpeed = new ButtonGroup();
+		bgSpeed.add(mSlow);
+		bgSpeed.add(mNormal);
+		bgSpeed.add(mFast);
 		
 		class SpeedListener implements ActionListener {
 			@Override
@@ -205,16 +239,20 @@ public class ControlPanel extends JPanel {
 					shapesController.getTimer().stop();
 					shapesController.animatedSelected(shapesView,speedMap.get(speed));
 				}			
-			}			
+			}
 		}
+		
 		SpeedListener speedLis = new SpeedListener();
 		mSlow.addActionListener(speedLis);
+		mSlow.setAccelerator(KeyStroke.getKeyStroke('1'));
 		mNormal.addActionListener(speedLis);
-		mFast.addActionListener(speedLis);		
+		mNormal.setAccelerator(KeyStroke.getKeyStroke('2'));
+		mFast.addActionListener(speedLis);
+		mFast.setAccelerator(KeyStroke.getKeyStroke('3'));
 		mSpeed.add(mSlow);
 		mSpeed.add(mNormal);
 		mSpeed.add(mFast);
-		mNormal.setSelected(true);		
+		mNormal.setSelected(true);
 		menuAnim.add(mSpeed);
 		menuAnim.add(speedInfo);
 		
@@ -243,28 +281,19 @@ public class ControlPanel extends JPanel {
 		menuBar.add(menuFile);		
 		menuBar.add(menuShape);
 		menuBar.add(menuColor);
+		menuBar.add(menuGrid);
 		menuBar.add(menuAnim);
 		menuBar.add(menuHelp);
 	}
-		
-	/*
-	public void setWidth(int width) {
-		this.width = width;
-	}
 	
-	public void setHeight(int height) {
-		this.height = height;
-	}*/
 	
 	public void setText(String text) {
-		this.text = text;
+		this.sText = text;
 	}
-	
 	
 	public ControlPanel getMenu() {
 		return this;
 	}
-	
 	
 	public JMenuBar getMenuBar() {
 		return this.menuBar;
