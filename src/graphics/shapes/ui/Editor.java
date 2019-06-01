@@ -2,6 +2,9 @@ package graphics.shapes.ui;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
+import graphics.shapes.SPicture;
+//import graphics.shapes.SPicture;
+import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
 import graphics.shapes.attributes.ColorAttributes;
@@ -18,10 +21,12 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class Editor extends JFrame
 {
+	
 	private ShapesView sview;
 	private SCollection model;
 	//private ControlPanel controlPanel;
 	private ControlPanel controlPanel;
+
 	
 	public Editor()
 	{
@@ -46,6 +51,7 @@ public class Editor extends JFrame
 		controlPanel = new ControlPanel(this.sview);
 		this.setJMenuBar(controlPanel.getMenuBar());
 	    this.getContentPane().add(this.controlPanel, java.awt.BorderLayout.NORTH);
+
 	}
 
 	
@@ -70,16 +76,39 @@ public class Editor extends JFrame
 		t.addAttributes(new SelectionAttributes());
 		this.model.add(t);
 		
+		
+		int[] x={50,70,50,70,50};
+		int[] y={100,200,200,100,100};
+		int np = 4;
+		
+		//SPolygone p = new SPolygone(np,x,y);
+		SPolygone p = new SPolygone();
+		p.addAttributes(new ColorAttributes(true,true,Color.red,Color.green));
+		p.addAttributes(new SelectionAttributes());
+		//p.barycentre();
+		this.model.add(p);
+		
+		
+		
+		SPicture sp = new SPicture(new Point(100,200), "C:\\Documentutile\\ensisa.png");
+		//SPicture sp = new SPicture(new Point(100,200), "https://www.google.com/search?q=ensisa&rlz=1C1CHBD_frFR759FR759&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiUzcq4_sTiAhV3A2MBHcIhCYcQ_AUIEigD&biw=1366&bih=625#imgrc=3ohVx8W0-6G0WM:");
+		sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
+		sp.addAttributes(new SelectionAttributes());
+		this.model.add(sp);
+		
+		
 		SCollection sc = new SCollection();
 		sc.addAttributes(new SelectionAttributes());
 		r= new SRectangle(new Point(20,30),30,30);
 		r.addAttributes(new ColorAttributes(true,false,Color.MAGENTA,Color.BLUE));
 		r.addAttributes(new SelectionAttributes());
 		sc.add(r);
+		/*
 		c = new SCircle(new Point(150,100),20);
 		c.addAttributes(new ColorAttributes(false,true,Color.BLUE,Color.DARK_GRAY));
 		c.addAttributes(new SelectionAttributes());
 		sc.add(c);
+		*/
 		this.model.add(sc);
 	}
 	
@@ -89,5 +118,6 @@ public class Editor extends JFrame
 		Editor self = new Editor();
 		self.pack();
 		self.setVisible(true);
+		
 	}
 }

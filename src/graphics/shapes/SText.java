@@ -1,5 +1,6 @@
 package graphics.shapes;
 
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -7,6 +8,7 @@ import graphics.shapes.attributes.FontAttributes;
 
 public class SText extends Shape {
 	private String text;
+	private float rotation;
 	
 	public SText(String text) {
 		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
@@ -48,18 +50,28 @@ public class SText extends Shape {
 	
 	@Override
 	public Rectangle getBounds() {
+		
 		FontAttributes fA = (FontAttributes) this.getAttributes("fontAttributes");
 		if (fA != null) {
-			Rectangle bounds = fA.getBounds(this.text);			
+			Rectangle bounds = fA.getBounds(this.text);		
 			return new Rectangle(point.x,point.y-bounds.height,bounds.width,bounds.height);
 		}
 		else return null;		
 	}
 
+	
 
 	@Override
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitText(this);		
+	}
+
+	public float getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
 	}
 	
 }
