@@ -4,7 +4,17 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 public class SRectangle extends Shape {
+	
 	private Rectangle rect;	
+	private Point point;
+	private float rotation;
+	
+	public SRectangle() {
+		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
+		int rWidth = 20 + (int)(Math.random() * 100);
+		int rHeight = 20 + (int)(Math.random() * 100);
+		this.rect = new Rectangle((int)point.getX(), (int)point.getY(), rWidth, rHeight); // Utilisation de la classe java Rectangle
+	}
 	
 	public SRectangle(Point point, int rWidth, int rHeight) {
 		this.point = point;
@@ -44,5 +54,21 @@ public class SRectangle extends Shape {
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitRectangle(this);
 	}
+
+	public float getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
+
+	/*
+	@Override
+	public void rotate(int degree) {
+		// TODO Auto-generated method stub
+		
+	}*/
+
 	
 }
