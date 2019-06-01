@@ -19,6 +19,7 @@ import javax.swing.KeyStroke;
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
 import graphics.shapes.SPicture;
+import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
 import graphics.shapes.attributes.ColorAttributes;
@@ -137,6 +138,23 @@ public class ControlPanel extends JPanel {
 		menuShape.add(mText);
 		
 		
+		JMenuItem mPolygon = new JMenuItem("Polygon");
+		mPolygon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Création Polygone");
+				SPolygone p = new SPolygone();
+				p.addAttributes(new ColorAttributes());
+				p.addAttributes(new SelectionAttributes());
+				((SCollection) shapesView.getModel()).add(p);
+				shapesView.repaint();
+			}			
+		});
+		mPolygon.setAccelerator(KeyStroke.getKeyStroke('p'));
+		menuShape.add(mPolygon);
+		
+		
+		
 		//------------  SPicture -------------
 		
 		JMenuItem mPathPicture = new JMenuItem("Picture");
@@ -165,7 +183,7 @@ public class ControlPanel extends JPanel {
 		mFilled.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub				
+				// TODO Auto-generated method stub
 			}			
 		});
 		menuColor.add(mFilled);
@@ -227,7 +245,7 @@ public class ControlPanel extends JPanel {
 				animationOn = true;
 			}			
 		});
-		mStart.setAccelerator(KeyStroke.getKeyStroke('g'));
+		mStart.setAccelerator(KeyStroke.getKeyStroke('a'));
 		menuAnim.add(mStart);
 		
 		JMenuItem mStop = new JMenuItem(" Stop ");
@@ -240,7 +258,7 @@ public class ControlPanel extends JPanel {
 				animationOn = false;
 			}			
 		});
-		mStop.setAccelerator(KeyStroke.getKeyStroke('p'));
+		mStop.setAccelerator(KeyStroke.getKeyStroke('z'));
 		menuAnim.add(mStop);
 		menuAnim.addSeparator();
 		

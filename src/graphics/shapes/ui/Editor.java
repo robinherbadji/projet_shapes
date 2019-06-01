@@ -48,7 +48,6 @@ public class Editor extends JFrame
 		// Affichage Menu Principal :		
 		controlPanel = new ControlPanel(this.sview);
 		this.setJMenuBar(controlPanel.getMenuBar());
-		this.sview.add(this.controlPanel, java.awt.BorderLayout.NORTH);
 	}
 
 	
@@ -100,12 +99,10 @@ public class Editor extends JFrame
 		r.addAttributes(new ColorAttributes(true,false,Color.MAGENTA,Color.BLUE));
 		r.addAttributes(new SelectionAttributes());
 		sc.add(r);
-		/*
 		c = new SCircle(new Point(150,100),20);
 		c.addAttributes(new ColorAttributes(false,true,Color.BLUE,Color.DARK_GRAY));
 		c.addAttributes(new SelectionAttributes());
 		sc.add(c);
-		*/
 		this.model.add(sc);
 	}
 	
