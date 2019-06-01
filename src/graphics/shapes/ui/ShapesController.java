@@ -38,12 +38,14 @@ public class ShapesController extends Controller {
 	private Timer timer;
 	private int vx;
 	private int vy;
+	private double scale;
 	
 	public ShapesController(Object newModel) {
 		super(newModel);	
 		this.target = null;
 		this.vx = 1;
 		this.vy = 1;
+		this.scale = 1;
 	}
 	
 	// Accesseurs
@@ -141,7 +143,11 @@ public class ShapesController extends Controller {
 			}
 		}
 		else if (shape instanceof SPicture) {
-			((SPicture) shape).setScale(0.5);
+			
+			if(((SPicture) shape).getImageW() > 20) {
+				this.scale *= 0.9;
+				((SPicture) shape).setScale(this.scale);
+			}
 		}
 	}
 
@@ -176,7 +182,9 @@ public class ShapesController extends Controller {
 			((SText) shape).addAttributes(actualFont);
 		}
 		else if (shape instanceof SPicture) {
-			((SPicture) shape).setScale(2);
+				this.scale *= 1.1;
+				((SPicture) shape).setScale(this.scale);
+			
 		}
 	}
 	

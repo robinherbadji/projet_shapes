@@ -4,14 +4,19 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
@@ -146,16 +151,24 @@ public class ControlPanel extends JPanel {
 		mPathPicture.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EditPathPicture setPath = new EditPathPicture(null, "Set the path picture to import", true, getMenu());
-				setPath.setVisible(true);
 				
-				System.out.println("Création Image");
-				if (path.length()>0) {
-					SPicture sp = new SPicture(new Point(400,200), path);
-					sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
-					sp.addAttributes(new SelectionAttributes());
-					((SCollection) shapesView.getModel()).add(sp);
-					shapesView.repaint();
+				path = JOptionPane.showInputDialog(null,"Image Path: ","Image Importation",JOptionPane.QUESTION_MESSAGE);
+				
+				if ((path != null) && path.length()>0) {
+					
+					BufferedImage buffImage;
+					try {
+						buffImage = ImageIO.read(new File(path));
+						if(buffImage != null) {
+							System.out.println("Création Image");
+							SPicture sp = new SPicture(new Point(100,200), path);
+							sp.addAttributes(new SelectionAttributes());
+							((SCollection) shapesView.getModel()).add(sp);
+							shapesView.repaint();
+						}
+					} catch (IOException e) {
+						System.out.println("Invalid path for the picture");
+					}
 				}
 			}
 		});

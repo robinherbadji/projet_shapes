@@ -15,12 +15,12 @@ import java.io.IOException;
 public class SPicture extends Shape {
 
 	private BufferedImage picture;
+	private BufferedImage pictureRef;
 	private Point point;
-	private float rotation;
 	private String path;
 	
 	public SPicture(Point point, String path) {
-		this.point = point;
+		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
 		this.setPath(path);
 		try {
 			if(path.startsWith("http")) {
@@ -35,6 +35,7 @@ public class SPicture extends Shape {
 				
 				} else {
 				this.picture = ImageIO.read(new File(path));
+				this.pictureRef = ImageIO.read(new File(path));
 			}
 			
 		} catch (IOException e) {
@@ -69,23 +70,13 @@ public class SPicture extends Shape {
 
 	@Override
 	public Rectangle getBounds() {
-		int width = this.picture.getWidth();
-		int height = this.picture.getHeight();
-		return new Rectangle(this.point.x, this.point.y , width, height);
+			int width = this.picture.getWidth();
+			int height = this.picture.getHeight();
+			return new Rectangle(this.point.x, this.point.y , width, height);
 	}
 	
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitImage(this);
-	}
-
-	@Override
-	public float getRotation() {
-		return this.rotation;
-	}
-
-	@Override
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
 	}
 
 	public String getPath() {
@@ -97,7 +88,14 @@ public class SPicture extends Shape {
 	}
 
 	public void setScale(double zoom) {
-		this.picture = scale(this.picture, zoom);
+		this.picture = scale(this.pictureRef, zoom);
+	}
+	
+	public int getImageW() {
+		return this.picture.getWidth();
+	}
+	public int getImageH() {
+		return this.picture.getHeight();
 	}
 	
 	public static BufferedImage scale(BufferedImage bImage, double factor) {
@@ -108,8 +106,12 @@ public class SPicture extends Shape {
         GraphicsConfiguration configuration = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
         BufferedImage bImageNew = configuration.createCompatibleImage(destWidth, destHeight);
         Graphics2D graphics = bImageNew.createGraphics();
+        /*
         graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        */
+        
         //dessiner l'image de destination
         graphics.drawImage(bImage, 0, 0, destWidth, destHeight, 0, 0, bImage.getWidth(), bImage.getHeight(), null);
         graphics.dispose();

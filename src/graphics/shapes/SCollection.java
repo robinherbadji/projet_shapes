@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 public class SCollection extends Shape {
 	private ArrayList<Shape> collection;
-	private float rotation;
 	
 	public SCollection() {
 		collection = new ArrayList<Shape>();
@@ -88,13 +87,5 @@ public class SCollection extends Shape {
 	@Override
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitCollection(this);		
-	}
-
-	public float getRotation() {
-		return rotation;
-	}
-
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
 	}
 }

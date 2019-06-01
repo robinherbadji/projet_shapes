@@ -7,7 +7,6 @@ import graphics.shapes.attributes.FontAttributes;
 
 public class SText extends Shape {
 	private String text;
-	private float rotation;
 	
 	public SText(String text) {
 		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
@@ -62,14 +61,6 @@ public class SText extends Shape {
 	@Override
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitText(this);		
-	}
-
-	public float getRotation() {
-		return rotation;
-	}
-
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
 	}
 	
 }

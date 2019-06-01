@@ -14,7 +14,11 @@ import graphics.shapes.attributes.SelectionAttributes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -88,13 +92,19 @@ public class Editor extends JFrame
 		//p.barycentre();
 		this.model.add(p);
 		
+		String path = "C:\\Documentutile\\ensisa.png";
+		BufferedImage buffImage;
+		try {
+			buffImage = ImageIO.read(new File(path));
+			if(buffImage != null) {
+				SPicture sp = new SPicture(new Point(100,200), path);
+				sp.addAttributes(new SelectionAttributes());
+				this.model.add(sp);
+			}
+		} catch (IOException e) {
+			System.out.println("Invalid path for the picture");
+		}
 		
-		
-		SPicture sp = new SPicture(new Point(100,200), "C:\\Documentutile\\ensisa.png");
-		//SPicture sp = new SPicture(new Point(100,200), "https://www.google.com/search?q=ensisa&rlz=1C1CHBD_frFR759FR759&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiUzcq4_sTiAhV3A2MBHcIhCYcQ_AUIEigD&biw=1366&bih=625#imgrc=3ohVx8W0-6G0WM:");
-		sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
-		sp.addAttributes(new SelectionAttributes());
-		this.model.add(sp);
 		
 		
 		SCollection sc = new SCollection();
@@ -103,12 +113,12 @@ public class Editor extends JFrame
 		r.addAttributes(new ColorAttributes(true,false,Color.MAGENTA,Color.BLUE));
 		r.addAttributes(new SelectionAttributes());
 		sc.add(r);
-		/*
+		
 		c = new SCircle(new Point(150,100),20);
 		c.addAttributes(new ColorAttributes(false,true,Color.BLUE,Color.DARK_GRAY));
 		c.addAttributes(new SelectionAttributes());
 		sc.add(c);
-		*/
+		
 		this.model.add(sc);
 	}
 	

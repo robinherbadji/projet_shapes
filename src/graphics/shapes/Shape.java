@@ -37,6 +37,13 @@ public abstract class Shape {
 	
 	public abstract void accept(ShapeVisitor sVisitor);
 
-	public abstract float getRotation();
-	public abstract void setRotation(float rotation);
+
+	public float getRotation() {
+		return this.rotation;
+	}
+
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
 }

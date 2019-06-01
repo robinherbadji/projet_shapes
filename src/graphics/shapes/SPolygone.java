@@ -9,15 +9,17 @@ public class SPolygone extends Shape {
 	public int nPoints;
 	public int x[];
 	public int y[];
-	private float rotation;
 	private double scale;
 	
 	public SPolygone() {
 		this.nPoints = 5;
 		this.x = new int[nPoints];
 		this.y = new int[nPoints];
-		int x[] = {200, 300, 300, 250, 200, 200};
-		int y[] ={100, 100, 50, 30, 50, 100};
+		Point pointRef = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
+		int pointX= (int) pointRef.getX();
+		int pointY= (int) pointRef.getY();
+		int x[] = {pointX, pointX+100, pointX+100, pointX+50, pointX, pointX};
+		int y[] = {pointY, pointY, pointY-50, pointY-70, pointY-50, pointY};
 		this.x = x;
 		this.y = y;
 		this.scale = 1;
@@ -137,13 +139,6 @@ public class SPolygone extends Shape {
 	 }
 	 */
 	
-	public float getRotation() {
-		return rotation;
-	}
-
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
-	}
 	public double getScale() {
 		return this.scale;
 	}
