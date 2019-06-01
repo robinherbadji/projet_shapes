@@ -413,4 +413,19 @@ public class ShapesController extends Controller {
 
 	}
 
+	public void save(){
+
+		FilesManager xml = new FilesManager();
+		xml.enregistrer((SCollection) this.getModel());
+
+	}
+
+
+	public void open(){
+
+		FilesManager xml = new FilesManager();
+		xml.lecture();
+
+	}
+
 }

@@ -68,7 +68,9 @@ public class ControlPanel extends JPanel {
 		mOpen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+
+				shapesController.open();
+
 			}
 		});
 		menuFile.add(mOpen);
@@ -77,7 +79,7 @@ public class ControlPanel extends JPanel {
 		mSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				shapesController.save();
 			}
 		});
 		menuFile.add(mSave);
