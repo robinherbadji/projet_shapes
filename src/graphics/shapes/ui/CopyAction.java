@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Vector;
 import graphics.shapes.Shape;
 import graphics.shapes.ui.ShapeActionListener;
-import graphics.shapes.interpret.PasteAction;
+import graphics.shapes.ui.PasteAction;
 
 public class CopyAction extends ShapeActionListener {
 
