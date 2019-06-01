@@ -3,6 +3,8 @@ package graphics.shapes;
 import java.awt.Point;
 
 public abstract class Shape {
+	
+	private HashMap<String, Attributes> attributes;
 	// Attributs
 	protected Point loc;
 	
@@ -10,13 +12,22 @@ public abstract class Shape {
 		return this.attributes.get(s);
 	}
 	
+	public void addAttributes(Attributes a) {
+        this.attributes.put(a.getId(), a);
+    	}
+
+ 
+	
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Constructeur
 	public Shape() {
-		// Vide pour l'instant, on verra après
+		this.attributes = new HashMap<String, Attributes>();
 	}
 	
+	public SelectionAttributes getSelect() {
+		return (SelectionAttributes)this.getAttributes("Selection");
+	}
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Méthodes (celles dont nous avons besoin pour l'instant sont toutes abstraites)
