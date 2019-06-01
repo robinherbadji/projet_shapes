@@ -118,6 +118,7 @@ public class SPicture extends Shape {
  
         return bImageNew;
     }
+
 	
 }
 

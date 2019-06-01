@@ -83,7 +83,7 @@ public class ShapesController extends Controller {
 	}
 	
 	public void translateSelected(int posx, int posy) {
-		Shape shape = null;		
+		Shape shape = null;
 		Iterator<Shape> itr = ((SCollection)model).iterator();
 		while(itr.hasNext()) {
 			shape = itr.next();
@@ -149,6 +149,9 @@ public class ShapesController extends Controller {
 				((SPicture) shape).setScale(this.scale);
 			}
 		}
+		else if (shape instanceof SCollection) {
+			this.reduceShapeCollection((SCollection) shape);
+		}
 	}
 
 
@@ -185,6 +188,9 @@ public class ShapesController extends Controller {
 				this.scale *= 1.1;
 				((SPicture) shape).setScale(this.scale);
 			
+		}
+		else if (shape instanceof SCollection) {
+			this.growShapeCollection((SCollection) shape);
 		}
 	}
 	
@@ -309,7 +315,7 @@ public class ShapesController extends Controller {
 
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		super.mouseWheelMoved(e);
-		
+		/*
 		if(e.getWheelRotation() > 0 && ! (this.target instanceof SCollection)){
 			System.out.println("zoom -");
 			reduceShape(this.target);
@@ -327,6 +333,15 @@ public class ShapesController extends Controller {
 		else if (e.getWheelRotation() < 0 &&  (this.target instanceof SCollection)) {
 			System.out.println("zoom + for Collection");
 			growShapeCollection((SCollection) this.target);
+		}
+		*/
+		if(e.getWheelRotation() > 0){
+			reduceShape(this.target);
+			System.out.println("zoom -");
+			
+		}else if(e.getWheelRotation() < 0) {
+			growShape(this.target);
+			System.out.println("zoom +");
 		}
 		this.getView().repaint();
 	}

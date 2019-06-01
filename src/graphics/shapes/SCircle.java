@@ -4,8 +4,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 public class SCircle extends Shape {
+	
 	private int radius;
-
 	
 	public SCircle() {
 		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
@@ -54,12 +54,6 @@ public class SCircle extends Shape {
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitCircle(this);		
 	}
-
-	/*
-	@Override
-	public void rotate(int degree) {
-		// TODO Auto-generated method stub
-		
-	}*/
+	
 	
 }

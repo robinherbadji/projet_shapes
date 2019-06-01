@@ -7,6 +7,7 @@ import graphics.shapes.attributes.FontAttributes;
 
 public class SText extends Shape {
 	private String text;
+
 	
 	public SText(String text) {
 		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
@@ -43,7 +44,7 @@ public class SText extends Shape {
 		Point point = this.point;
 		point.x += dx;
 		point.y += dy;
-		this.setLoc(point);		
+		this.setLoc(point);
 	}
 	
 	@Override

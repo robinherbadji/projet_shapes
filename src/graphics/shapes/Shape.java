@@ -42,7 +42,6 @@ public abstract class Shape {
 		return this.rotation;
 	}
 
-
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}

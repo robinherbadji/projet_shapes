@@ -54,7 +54,6 @@ public class SRectangle extends Shape {
 		sVisitor.visitRectangle(this);
 	}
 
-
-
+	
 	
 }

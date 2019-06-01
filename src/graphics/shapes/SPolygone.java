@@ -146,4 +146,6 @@ public class SPolygone extends Shape {
 	public void setScale(double scale) {
 		this.scale = scale;
 	}
+
+
 }
