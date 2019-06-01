@@ -48,5 +48,4 @@ public class ShapesView extends View {
 			g.drawLine(0, i, this.getWidth(), i);
 		}
 	}
-	
 }

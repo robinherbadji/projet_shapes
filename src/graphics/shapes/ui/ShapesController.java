@@ -14,11 +14,15 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Iterator;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
 
 import graphics.shapes.SCircle;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
 
 import graphics.shapes.SCollection;
@@ -240,10 +244,7 @@ public class ShapesController extends Controller {
 		    }    
 		});
 		this.timer.start();
-	}
-	
-	//public void selectedInside()
-	
+	}	
 
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -371,11 +372,9 @@ public class ShapesController extends Controller {
 			
 			JPopupMenu jpm = new JPopupMenu();
 			if (this.target != null) {
-				System.out.println("forme");
-				
+				System.out.println("forme");				
 				JMenuItem delShape = new JMenuItem("Delete");
 				delShape.addActionListener(new ActionListener() {
-
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						System.out.println("Suppression de : " + target.getClass());						
@@ -401,12 +400,36 @@ public class ShapesController extends Controller {
 						System.out.println("Coupage de : " + target.getClass());						
 					}					
 				});
-				jpm.add(cut);
-				
-				
+				jpm.add(cut);				
 			}
-			else System.out.println("vide");
-			
+			else {
+				System.out.println("vide");
+				
+				/*
+				JRadioButtonMenuItem gridOn = new JRadioButtonMenuItem("ON");
+				JRadioButtonMenuItem gridOff = new JRadioButtonMenuItem("OFF");
+				ButtonGroup bg = new ButtonGroup();
+				gridOn.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						System.out.println("Grille On");
+						
+					}					
+				});
+				gridOff.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						System.out.println("Grille Off");						
+					}					
+				});
+				
+				bg.add(gridOn);
+				bg.add(gridOff);				
+				jpm.add(gridOn);
+				gridOff.setSelected(true);
+				jpm.add(gridOff);
+				*/				
+			}			
 			
 			jpm.show(getView(), e.getX(), e.getY());			
 		}

@@ -3,7 +3,6 @@ package graphics.shapes.ui;
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
 import graphics.shapes.SPicture;
-//import graphics.shapes.SPicture;
 import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
@@ -23,7 +22,6 @@ public class Editor extends JFrame
 	
 	private ShapesView sview;
 	private SCollection model;
-	//private ControlPanel controlPanel;
 	private ControlPanel controlPanel;
 
 	
@@ -39,14 +37,15 @@ public class Editor extends JFrame
 			}
 		});
 		
-		this.buildModel(); 
+		this.buildModel();
+		
 		
 		// Affichage Modèle :
 		this.sview = new ShapesView(this.model);
-		this.sview.setPreferredSize(new Dimension(300,300));
+		this.sview.setPreferredSize(new Dimension(300,400));
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
 		
-	    // Affichage Menu Principal :		
+		// Affichage Menu Principal :		
 		controlPanel = new ControlPanel(this.sview);
 		this.setJMenuBar(controlPanel.getMenuBar());
 	}
@@ -101,12 +100,10 @@ public class Editor extends JFrame
 		r.addAttributes(new ColorAttributes(true,false,Color.MAGENTA,Color.BLUE));
 		r.addAttributes(new SelectionAttributes());
 		sc.add(r);
-		/*
 		c = new SCircle(new Point(150,100),20);
 		c.addAttributes(new ColorAttributes(false,true,Color.BLUE,Color.DARK_GRAY));
 		c.addAttributes(new SelectionAttributes());
 		sc.add(c);
-		*/
 		this.model.add(sc);
 	}
 	

@@ -41,11 +41,13 @@ public class ControlPanel extends JPanel {
 		this.shapesView = shapesView;
 		this.shapesController = (ShapesController) shapesView.defaultController(shapesView.getModel());
 		this.menuBar = new JMenuBar();
+		//this.menuBar.setBounds(0,0,this.shapesView.getWidth(),50);
+		this.menuBar.setSize(this.shapesView.getWidth(), 100);
 		this.animationOn = false;
 		this.speed = "Normal";
 		this.speedMap = new TreeMap<String,Integer>();
-		this.speedMap.put("Slow", 25);
-		this.speedMap.put("Normal", 10);
+		this.speedMap.put("Slow", 18);
+		this.speedMap.put("Normal", 8);
 		this.speedMap.put("Fast", 2);
 		initialisation();
 	}
@@ -86,12 +88,7 @@ public class ControlPanel extends JPanel {
 		JMenuItem mRectangle = new JMenuItem("Rectangle   ");
 		mRectangle.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				/*
-				EditRectangle editRectangle = new EditRectangle(null, "Editer le Rectangle", true, getMenu());
-				editRectangle.setVisible(true);
-				*/
-				//System.out.println("Création Rectangle : "+ width + ", " + height);				
+			public void actionPerformed(ActionEvent arg0) {		
 				SRectangle r = new SRectangle();
 				r.addAttributes(new ColorAttributes());
 				r.addAttributes(new SelectionAttributes());
@@ -133,11 +130,13 @@ public class ControlPanel extends JPanel {
 					t.addAttributes(new SelectionAttributes());
 					((SCollection) shapesView.getModel()).add(t);
 					shapesView.repaint();
-				}
+				}				
 			}
 		});
 		mText.setAccelerator(KeyStroke.getKeyStroke('t'));
 		menuShape.add(mText);
+		
+		//////////////////////////////////////////////////////
 		
 		JMenuItem mPolygon = new JMenuItem("Polygon");
 		mPolygon.addActionListener(new ActionListener() {
@@ -154,14 +153,15 @@ public class ControlPanel extends JPanel {
 		mPolygon.setAccelerator(KeyStroke.getKeyStroke('p'));
 		menuShape.add(mPolygon);
 		
+		
 		/////////////////////////////////////////////////////////////
 		
-		menuColor = new JMenu("   Color   ");
+		menuColor = new JMenu("  Color  ");
 		JMenuItem mFilled = new JMenuItem(" Filled ");
 		mFilled.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub				
+				// TODO Auto-generated method stub
 			}			
 		});
 		menuColor.add(mFilled);
@@ -306,15 +306,7 @@ public class ControlPanel extends JPanel {
 		menuBar.add(menuAnim);
 		menuBar.add(menuHelp);
 	}
-		
-	/*
-	public void setWidth(int width) {
-		this.width = width;
-	}
 	
-	public void setHeight(int height) {
-		this.height = height;
-	}*/
 	
 	public void setText(String text) {
 		this.sText = text;
@@ -324,11 +316,9 @@ public class ControlPanel extends JPanel {
 		this.path = path; 
 	}
 	
-	
 	public ControlPanel getMenu() {
 		return this;
 	}
-	
 	
 	public JMenuBar getMenuBar() {
 		return this.menuBar;
