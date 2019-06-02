@@ -390,4 +390,9 @@ public class ShapesController extends Controller {
 		xml.lecture();
 	}
 
+	public void export(){
+
+		Export e = new Export();
+		e.takePicture((ShapesView) this.getView());
+	}
 }
