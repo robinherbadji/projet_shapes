@@ -84,6 +84,16 @@ public class ControlPanel extends JPanel {
 		});
 		menuFile.add(mSave);
 
+
+		JMenuItem mExport = new JMenuItem("Export");
+		mExport.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				shapesController.export();
+			}
+		});
+		menuFile.add(mExport);
+
 		////////////////////////////////////////////////////////
 
 		menuShape = new JMenu("  Shape  ");
