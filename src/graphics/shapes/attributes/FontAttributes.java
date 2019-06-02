@@ -8,20 +8,26 @@ import java.awt.Rectangle;
 public class FontAttributes extends Attributes {
 	private Font font;
 	private Color color;
-	private FontMetrics fontMetrics;	
-	
+	private FontMetrics fontMetrics;
+
 	public FontAttributes() {
 		// Utiliser le constructeur de Font
 		id = "fontAttributes";
-		//font = new Font("Arial", 0, 0);
+		// font = new Font("Arial", 0, 0);
 		font = Font.decode("Helvetica");
 		color = Color.BLUE;
 	}
-	
+
+	public FontAttributes(Font font) {
+		id = "fontAttributes";
+		this.font = font;
+		this.color = Color.BLUE;
+	}
+
 	public Font font() {
 		return this.font;
 	}
-	
+
 	public Color fontColor() {
 		return this.color;
 	}
@@ -30,17 +36,21 @@ public class FontAttributes extends Attributes {
 	public String getId() {
 		return id;
 	}
-	
-	// Méthode en plus par rapport au sujet
+
+	public void setFont(Font font) {
+		this.font = font;
+	}
+
+	// Mï¿½thode en plus par rapport au sujet
 	public void setFontMetrics(FontMetrics fMetrics) {
 		this.fontMetrics = fMetrics;
 	}
-	
-	public Rectangle getBounds(String str) {	
+
+	public Rectangle getBounds(String str) {
 		int width = this.fontMetrics.stringWidth(str);
-		int height = this.fontMetrics.getHeight();		
-		Rectangle bounds = new Rectangle(100,100,width,height);
+		int height = this.fontMetrics.getHeight();
+		Rectangle bounds = new Rectangle(100, 100, width, height);
 		return bounds;
 	}
-	
+
 }
