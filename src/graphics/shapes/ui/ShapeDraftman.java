@@ -1,6 +1,7 @@
 package graphics.shapes.ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -29,8 +30,8 @@ import graphics.shapes.attributes.FontAttributes;
 import graphics.shapes.attributes.SelectionAttributes;
 
 public class ShapeDraftman implements ShapeVisitor {
-	private Graphics g;	
-	//private Shape shape;
+	private Graphics g;
+	
 
 	public ShapeDraftman(Graphics g) {
 		this.g = g;
@@ -134,14 +135,20 @@ public class ShapeDraftman implements ShapeVisitor {
 				g2d.rotate(Math.toRadians(stext.getRotation()));
 				g2d.translate(-sX-sW/2,-sY-sH/2);
 				ColorAttributes cA = (ColorAttributes) stext.getAttributes("colorAttributes");
+				
+				Font fonte = new Font("Helvetica",Font.BOLD,stext.getSizeText());
+				g2d.setFont(fonte);
+				
 				if (cA != null) {			
 					if (cA.filled()) {
 						if (stext.getBounds() != null) {
+					
 							g2d.setColor(cA.filledColor());
 							g2d.fillRect(sX, sY, sW, sH);
 						}				
 					}					
-					if (cA.stroked()) {	
+					if (cA.stroked()) {
+						
 						g2d.setColor(cA.strokedColor());
 						g2d.drawString(text, loc.x, loc.y);
 					}						
@@ -184,17 +191,20 @@ public class ShapeDraftman implements ShapeVisitor {
 			int sY = spolygone.getBounds().y;
 			int sW = spolygone.getBounds().width;
 			int sH = spolygone.getBounds().height;
-			
+			/*
 			AffineTransform affineT = g2d.getTransform();
 			
 			affineT.translate(-sW, -sH);
 			affineT.scale(spolygone.getScale(), spolygone.getScale());
+			
 			affineT.translate(sW,sH);
+			*/
 			
 			g2d.translate(sX+sW/2,sY+sH/2);
 			g2d.rotate(Math.toRadians(spolygone.getRotation()));
-			g2d.translate(-sX-sW/2,-sY-sH/2);
-			//g2d.scale(spolygone.getScale(), spolygone.getScale());
+		    g2d.scale(spolygone.getScale(), spolygone.getScale());
+		    g2d.translate(-sX-sW/2,-sY-sH/2);
+		    
 			ColorAttributes cA = (ColorAttributes) spolygone.getAttributes("colorAttributes");
 			if (cA != null) {
 				if (cA.filled()) {
@@ -215,7 +225,7 @@ public class ShapeDraftman implements ShapeVisitor {
 			if (sA != null && sA.isSelected()) {
 				drawSelectionShape(spolygone.getBounds());		
 			}	
-			g2d.setTransform(affineT);
+			//g2d.setTransform(affineT);
 		}		
 	}
 
@@ -244,6 +254,5 @@ public class ShapeDraftman implements ShapeVisitor {
 			drawSelectionShape(spicture.getBounds());
 		}
 	}
-	
 	
 }

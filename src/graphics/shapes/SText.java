@@ -7,17 +7,21 @@ import graphics.shapes.attributes.FontAttributes;
 
 public class SText extends Shape {
 	private String text;
-
+	private int sizeText;
+	
 	
 	public SText(String text) {
 		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
 		this.setLoc(point);
 		this.setText(text);
+		
+		this.sizeText = 13;
 	}
 	
 	public SText(Point loc, String text) {
 		this.setLoc(loc);
 		this.setText(text);
+		this.sizeText = 13;
 	}
 	
 	@Override
@@ -62,6 +66,14 @@ public class SText extends Shape {
 	@Override
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitText(this);		
+	}
+
+	public int getSizeText() {
+		return sizeText;
+	}
+
+	public void setSizeText(int sizeText) {
+		this.sizeText = sizeText;
 	}
 	
 }

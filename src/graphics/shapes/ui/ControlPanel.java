@@ -24,6 +24,7 @@ import javax.swing.KeyStroke;
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
 import graphics.shapes.SPicture;
+import graphics.shapes.SPolygone;
 import graphics.shapes.SRectangle;
 import graphics.shapes.SText;
 import graphics.shapes.attributes.ColorAttributes;
@@ -108,6 +109,7 @@ public class ControlPanel extends JPanel {
 		mRectangle.setAccelerator(KeyStroke.getKeyStroke('r'));
 		menuShape.add(mRectangle);
 		
+		//------------  SCircle -------------
 		
 		JMenuItem mCircle = new JMenuItem("Circle");
 		mCircle.addActionListener(new ActionListener() {
@@ -124,6 +126,7 @@ public class ControlPanel extends JPanel {
 		mCircle.setAccelerator(KeyStroke.getKeyStroke('c'));
 		menuShape.add(mCircle);
 		
+		//------------  SText -------------
 		
 		JMenuItem mText = new JMenuItem("Text");
 		mText.addActionListener(new ActionListener() {
@@ -143,6 +146,54 @@ public class ControlPanel extends JPanel {
 		});
 		mText.setAccelerator(KeyStroke.getKeyStroke('t'));
 		menuShape.add(mText);
+		
+		//------------  SPolygone -------------
+		
+		JMenu mPolygon = new JMenu("Polygon");
+	
+		JMenuItem mPentagone = new JMenuItem("Pentagone");
+		JMenuItem mTriangle = new JMenuItem("Triangle");
+		JMenuItem mLosange = new JMenuItem("Losange");
+		
+		mPentagone.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Création Pentagone");
+				SPolygone p = new SPolygone("Pentagone");
+				p.addAttributes(new ColorAttributes());
+				p.addAttributes(new SelectionAttributes());
+				((SCollection) shapesView.getModel()).add(p);
+				shapesView.repaint();
+			}
+		});
+		
+		mTriangle.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Création Triangle");
+				SPolygone p = new SPolygone("Triangle");
+				p.addAttributes(new ColorAttributes());
+				p.addAttributes(new SelectionAttributes());
+				((SCollection) shapesView.getModel()).add(p);
+				shapesView.repaint();
+			}
+		});
+		
+		mLosange.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Création Losange");
+				SPolygone p = new SPolygone("Losange");
+				p.addAttributes(new ColorAttributes());
+				p.addAttributes(new SelectionAttributes());
+				((SCollection) shapesView.getModel()).add(p);
+				shapesView.repaint();
+			}
+		});
+		mPolygon.add(mPentagone);
+		mPolygon.add(mTriangle);
+		mPolygon.add(mLosange);
+		menuShape.add(mPolygon);
 		
 		
 		//------------  SPicture -------------
@@ -172,10 +223,10 @@ public class ControlPanel extends JPanel {
 				}
 			}
 		});
-		mPathPicture.setAccelerator(KeyStroke.getKeyStroke('p'));
+		mPathPicture.setAccelerator(KeyStroke.getKeyStroke('i'));
 		menuShape.add(mPathPicture);
 		
-		/////////////////////////////////////////////////////////////
+		//------------  Menu Color -------------
 		
 		menuColor = new JMenu("   Color   ");
 		JMenuItem mFilled = new JMenuItem(" Filled ");
@@ -196,7 +247,7 @@ public class ControlPanel extends JPanel {
 		});
 		menuColor.add(mStroked);
 		
-		/////////////////////////////////////////////////////////////
+		//------------  Menu Animation -------------
 		
 		menuAnim = new JMenu("   Animation   ");
 		JMenuItem mStart = new JMenuItem(" Start ");
@@ -244,7 +295,7 @@ public class ControlPanel extends JPanel {
 				if (animationOn) { // On relance l'animation pour que la vitesse soit prise en compte
 					shapesController.getTimer().stop();
 					shapesController.animatedSelected(shapesView,speedMap.get(speed));
-				}			
+				}
 			}			
 		}
 		SpeedListener speedLis = new SpeedListener();
@@ -258,7 +309,7 @@ public class ControlPanel extends JPanel {
 		menuAnim.add(mSpeed);
 		menuAnim.add(speedInfo);
 		
-		/////////////////////////////////////////////////////////////
+		//------------  Menu Help -------------
 		
 		menuHelp = new JMenu("   Help   ");
 		JMenuItem mFunctions = new JMenuItem("How does it works ?");
@@ -286,16 +337,8 @@ public class ControlPanel extends JPanel {
 		menuBar.add(menuAnim);
 		menuBar.add(menuHelp);
 	}
-		
-	/*
-	public void setWidth(int width) {
-		this.width = width;
-	}
 	
-	public void setHeight(int height) {
-		this.height = height;
-	}*/
-	
+	//------------  Setters -------------
 	public void setText(String text) {
 		this.text = text;
 	}
@@ -305,6 +348,7 @@ public class ControlPanel extends JPanel {
 	}
 	
 	
+	//------------  Getters -------------
 	public ControlPanel getMenu() {
 		return this;
 	}

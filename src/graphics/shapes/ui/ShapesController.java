@@ -39,6 +39,7 @@ public class ShapesController extends Controller {
 	private int vx;
 	private int vy;
 	private double scale;
+	private double scalePolygon;
 	
 	public ShapesController(Object newModel) {
 		super(newModel);	
@@ -46,6 +47,7 @@ public class ShapesController extends Controller {
 		this.vx = 1;
 		this.vy = 1;
 		this.scale = 1;
+		this.scalePolygon =1;
 	}
 	
 	// Accesseurs
@@ -130,8 +132,9 @@ public class ShapesController extends Controller {
 			
 		}
 		else if (shape instanceof SPolygone) {
-			//((SPolygone) shape).setDistanceBarycentre(-5, -5);
-			((SPolygone) shape).setScale( ((SPolygone) shape).getScale()-0.1);
+			this.scalePolygon *= 0.9;
+			((SPolygone) shape).setScale(this.scalePolygon);
+			//((SPolygone) shape).setBoundsPoly(((SPolygone) shape).getBounds(),this.scalePolygon);
 		}
 		else if (shape instanceof SText) {
 			if(((SText) shape).getBounds().height> 5 && ((SText) shape).getBounds().width >5) {
@@ -140,6 +143,7 @@ public class ShapesController extends Controller {
 				Font newFont = actualFont.font().deriveFont(reduceSize);
 				actualFont.setFont(newFont);
 				((SText) shape).addAttributes(actualFont);
+				((SText) shape).setSizeText(((SText) shape).getSizeText()-10);
 			}
 		}
 		else if (shape instanceof SPicture) {
@@ -167,14 +171,9 @@ public class ShapesController extends Controller {
 			((SCircle) shape).setRadius(radius+10);
 		}
 		else if (shape instanceof SPolygone) {
-			/*
-			AffineTransform affineTransform = new AffineTransform();
-			affineTransform.scale(10, 10);
-			affineTransform.deltaTransform(((SPolygone) shape).getX(), 10, ((SPolygone) shape).getY(),
-				10,((SPolygone) shape).getnPoints());
-				*/
-			//((SPolygone) shape).setDistanceBarycentre(5,5);
-			((SPolygone) shape).setScale( ((SPolygone) shape).getScale()+0.1);
+			this.scalePolygon *= 1.1;
+			((SPolygone) shape).setScale(this.scalePolygon);
+			//((SPolygone) shape).setBoundsPoly(((SPolygone) shape).getBounds(),this.scalePolygon);
 		}
 		else if (shape instanceof SText) {
 			
@@ -183,6 +182,7 @@ public class ShapesController extends Controller {
 			Font newFont = actualFont.font().deriveFont(growSize);
 			actualFont.setFont(newFont);
 			((SText) shape).addAttributes(actualFont);
+			((SText) shape).setSizeText(((SText) shape).getSizeText()+10);
 		}
 		else if (shape instanceof SPicture) {
 				this.scale *= 1.1;
@@ -388,6 +388,7 @@ public class ShapesController extends Controller {
 			
 
 	public void mouseReleased(MouseEvent e) {
+		
 		if (e.isPopupTrigger()) {
 			mouseStart = new Point(e.getX(),e.getY());
 			this.target = getTarget();
