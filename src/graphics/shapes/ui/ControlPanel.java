@@ -59,7 +59,7 @@ public class ControlPanel extends JPanel {
 		mNew.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				shapesController.blank();
 			}
 		});
 		menuFile.add(mNew);
@@ -105,7 +105,7 @@ public class ControlPanel extends JPanel {
 		mCircle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Création Cercle");
+				System.out.println("Crï¿½ation Cercle");
 				SCircle c = new SCircle();
 				c.addAttributes(new ColorAttributes());
 				c.addAttributes(new SelectionAttributes());
@@ -123,7 +123,7 @@ public class ControlPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				sText = JOptionPane.showInputDialog(null, "set Text : ", "Text Creation", JOptionPane.QUESTION_MESSAGE);
 				if ((sText != null) && (sText.length() > 0)) {
-					System.out.println("Création Texte");
+					System.out.println("Crï¿½ation Texte");
 					SText t= new SText(sText);
 					t.addAttributes(new ColorAttributes());
 					t.addAttributes(new FontAttributes());
@@ -135,21 +135,21 @@ public class ControlPanel extends JPanel {
 		});
 		mText.setAccelerator(KeyStroke.getKeyStroke('t'));
 		menuShape.add(mText);
-		
+
 		//////////////////////////////////////////////////////
-		
+
 		JMenuItem mPolygon = new JMenuItem("Polygon");
 		mPolygon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Création Polygone");
+				System.out.println("Crï¿½ation Polygone");
 				SPolygone p = new SPolygone();
 				p.addAttributes(new ColorAttributes());
 				p.addAttributes(new SelectionAttributes());
 				((SCollection) shapesView.getModel()).add(p);
 			}
 		});
-		
+
 		mPolygon.setAccelerator(KeyStroke.getKeyStroke('p'));
 		menuShape.add(mPolygon);
 
@@ -163,14 +163,14 @@ public class ControlPanel extends JPanel {
 				EditPathPicture setPath = new EditPathPicture(null, "Set the path picture to import", true, getMenu());
 				setPath.setVisible(true);
 
-				System.out.println("Création Image");
+				System.out.println("Crï¿½ation Image");
 
 				SPicture sp = new SPicture(new Point(400,200), path);
 				sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
 				sp.addAttributes(new SelectionAttributes());
 				((SCollection) shapesView.getModel()).add(sp);
 				shapesView.repaint();
-			}			
+			}
 		});
 		mPolygon.setAccelerator(KeyStroke.getKeyStroke('p'));
 		menuShape.add(mPolygon);
@@ -183,7 +183,7 @@ public class ControlPanel extends JPanel {
 		ColorAttributes colorAtt = new ColorAttributes();
 
 
-		JMenuItem vert = new JMenuItem("vert");
+		JMenuItem vert = new JMenuItem("Green");
 
 		vert.addActionListener(new ActionListener() {
 			@Override
@@ -209,7 +209,7 @@ public class ControlPanel extends JPanel {
 		mFilled.add(vert);
 
 
-		JMenuItem rouge = new JMenuItem("rouge");
+		JMenuItem rouge = new JMenuItem("Red");
 
 		rouge.addActionListener(new ActionListener() {
 			@Override
@@ -235,7 +235,7 @@ public class ControlPanel extends JPanel {
 		mFilled.add(rouge);
 
 
-		JMenuItem blue = new JMenuItem("blue");
+		JMenuItem blue = new JMenuItem("Blue");
 
 		blue.addActionListener(new ActionListener() {
 			@Override
@@ -261,7 +261,7 @@ public class ControlPanel extends JPanel {
 		mFilled.add(blue);
 
 
-		JMenuItem black = new JMenuItem("black");
+		JMenuItem black = new JMenuItem("Black");
 
 		black.addActionListener(new ActionListener() {
 			@Override
@@ -288,7 +288,7 @@ public class ControlPanel extends JPanel {
 
 
 
-		JMenuItem white = new JMenuItem("white");
+		JMenuItem white = new JMenuItem("White");
 
 		white.addActionListener(new ActionListener() {
 			@Override
@@ -313,7 +313,7 @@ public class ControlPanel extends JPanel {
 		});
 		mFilled.add(white);
 
-		JMenuItem yellow = new JMenuItem("yellow");
+		JMenuItem yellow = new JMenuItem("Yellow");
 
 		yellow.addActionListener(new ActionListener() {
 			@Override
@@ -339,7 +339,7 @@ public class ControlPanel extends JPanel {
 		mFilled.add(yellow);
 
 
-		JMenuItem gray = new JMenuItem("gray");
+		JMenuItem gray = new JMenuItem("Gray");
 
 		gray.addActionListener(new ActionListener() {
 			@Override
@@ -364,7 +364,7 @@ public class ControlPanel extends JPanel {
 		});
 		mFilled.add(gray);
 
-		JMenuItem orange = new JMenuItem("orange");
+		JMenuItem orange = new JMenuItem("Orange");
 
 		orange.addActionListener(new ActionListener() {
 			@Override
@@ -389,9 +389,9 @@ public class ControlPanel extends JPanel {
 		mFilled.add(orange);
 		menuColor.add(mFilled);
 
-		JMenu mStroked = new JMenu("stroked");
+		JMenu mStroked = new JMenu("Stroked");
 
-		JMenuItem svert = new JMenuItem("vert");
+		JMenuItem svert = new JMenuItem("Green");
 
 		svert.addActionListener(new ActionListener() {
 			@Override
@@ -417,7 +417,7 @@ public class ControlPanel extends JPanel {
 		mStroked.add(svert);
 
 
-		JMenuItem srouge = new JMenuItem("rouge");
+		JMenuItem srouge = new JMenuItem("Red");
 
 		srouge.addActionListener(new ActionListener() {
 			@Override
@@ -443,7 +443,7 @@ public class ControlPanel extends JPanel {
 		mStroked.add(srouge);
 
 
-		JMenuItem sblue = new JMenuItem("blue");
+		JMenuItem sblue = new JMenuItem("Blue");
 
 		sblue.addActionListener(new ActionListener() {
 			@Override
@@ -469,7 +469,7 @@ public class ControlPanel extends JPanel {
 		mStroked.add(sblue);
 
 
-		JMenuItem sblack = new JMenuItem("black");
+		JMenuItem sblack = new JMenuItem("Black");
 
 		sblack.addActionListener(new ActionListener() {
 			@Override
@@ -496,7 +496,7 @@ public class ControlPanel extends JPanel {
 
 
 
-		JMenuItem swhite = new JMenuItem("white");
+		JMenuItem swhite = new JMenuItem("White");
 
 		swhite.addActionListener(new ActionListener() {
 			@Override
@@ -521,7 +521,7 @@ public class ControlPanel extends JPanel {
 		});
 		mStroked.add(swhite);
 
-		JMenuItem syellow = new JMenuItem("yellow");
+		JMenuItem syellow = new JMenuItem("Yellow");
 
 		syellow.addActionListener(new ActionListener() {
 			@Override
@@ -547,7 +547,7 @@ public class ControlPanel extends JPanel {
 		mStroked.add(syellow);
 
 
-		JMenuItem sgray = new JMenuItem("gray");
+		JMenuItem sgray = new JMenuItem("Gray");
 
 		sgray.addActionListener(new ActionListener() {
 			@Override
@@ -572,7 +572,7 @@ public class ControlPanel extends JPanel {
 		});
 		mStroked.add(sgray);
 
-		JMenuItem sorange = new JMenuItem("orange");
+		JMenuItem sorange = new JMenuItem("Orange");
 
 		sorange.addActionListener(new ActionListener() {
 			@Override
@@ -601,18 +601,18 @@ public class ControlPanel extends JPanel {
 		menuColor.add(mStroked);
 
 		/////////////////////////////////////////////////////////////
-		
-		menuGrid = new JMenu("   Grid   ");		
+
+		menuGrid = new JMenu("   Grid   ");
 		JRadioButtonMenuItem mGridOn = new JRadioButtonMenuItem("ON");
 		JRadioButtonMenuItem mGridOff = new JRadioButtonMenuItem("OFF");
 		ButtonGroup bgGrid = new ButtonGroup();
 		bgGrid.add(mGridOn);
 		bgGrid.add(mGridOff);
-		
+
 		class GridListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gridState = ((JRadioButtonMenuItem)e.getSource()).getText();				
+				gridState = ((JRadioButtonMenuItem)e.getSource()).getText();
 				if (gridState == "ON") {
 					shapesView.setGridState(true);
 				}
@@ -622,19 +622,19 @@ public class ControlPanel extends JPanel {
 				shapesView.repaint();
 			}
 		}
-		
+
 		GridListener gridLis = new GridListener();
 		mGridOn.addActionListener(gridLis);
 		mGridOn.setAccelerator(KeyStroke.getKeyStroke('/'));
 		mGridOff.addActionListener(gridLis);
 		mGridOff.setAccelerator(KeyStroke.getKeyStroke('*'));
-		
-		mGridOff.setSelected(true);		
+
+		mGridOff.setSelected(true);
 		menuGrid.add(mGridOn);
 		menuGrid.add(mGridOff);
-		
+
 		/////////////////////////////////////////////////////////////
-		
+
 		menuAnim = new JMenu("   Animation   ");
 		JMenuItem mStart = new JMenuItem(" Start ");
 		mStart.addActionListener(new ActionListener() {
@@ -662,18 +662,18 @@ public class ControlPanel extends JPanel {
 		mStop.setAccelerator(KeyStroke.getKeyStroke('z'));
 		menuAnim.add(mStop);
 		menuAnim.addSeparator();
-		
+
 		JMenu mSpeed = new JMenu(" Speed ");
 		JRadioButtonMenuItem mSlow = new JRadioButtonMenuItem("Slow");
 		JRadioButtonMenuItem mNormal = new JRadioButtonMenuItem("Normal");
 		JRadioButtonMenuItem mFast = new JRadioButtonMenuItem("Fast");
 		JLabel speedInfo = new JLabel("   (Normal)");
-		
+
 		ButtonGroup bgSpeed = new ButtonGroup();
 		bgSpeed.add(mSlow);
 		bgSpeed.add(mNormal);
 		bgSpeed.add(mFast);
-		
+
 		class SpeedListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -686,7 +686,7 @@ public class ControlPanel extends JPanel {
 				}
 			}
 		}
-		
+
 		SpeedListener speedLis = new SpeedListener();
 		mSlow.addActionListener(speedLis);
 		mSlow.setAccelerator(KeyStroke.getKeyStroke('1'));
@@ -741,7 +741,7 @@ public class ControlPanel extends JPanel {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
+
 	public ControlPanel getMenu() {
 		return this;
 	}

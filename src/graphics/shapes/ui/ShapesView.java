@@ -17,7 +17,7 @@ public class ShapesView extends View {
 		super(model);
 		this.gridState = false;
 	}
-	
+
 	public void setGridState(boolean gridState) {
 		this.gridState = gridState;
 	}
@@ -26,19 +26,19 @@ public class ShapesView extends View {
 		super.paintComponent(g);
 		if (this.gridState)	this.drawGrid(g);
 		ShapeDraftman draftman = new ShapeDraftman(g);
-		((Shape) model).accept(draftman);		
+		((Shape) model).accept(draftman);
 	}
 
-	
+
 	public Controller defaultController(Object model) {
 		return new ShapesController(model);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
-	
+
 	public void drawGrid(Graphics g) {
 		g.setColor(Color.BLACK);
 		final int step = 50;
