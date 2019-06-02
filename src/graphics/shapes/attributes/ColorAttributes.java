@@ -9,7 +9,7 @@ public class ColorAttributes extends Attributes {
 	private Color filledColor;
 	private Color strokedColor;
 
-	// Constructeur par d�faut
+	// Constructeur par defaut
 	public ColorAttributes () {
 		id = "colorAttributes";
 		this.filled = true;
@@ -58,16 +58,16 @@ public class ColorAttributes extends Attributes {
 		this.filledColor = filledColor;
 	}
 
-	public void setStrokedColor(Color strokedColor) {this.strokedColor = strokedColor ; }
+	public void setStrokedColor(Color strokedColor) {
+		this.strokedColor = strokedColor ;
+	}
 
 	public Color randomColor() {
 		int red = (int)(Math.random() * 256);
 		int green = (int)(Math.random()*256);
 		int blue = (int)(Math.random()*256);
-
 		Color color = new Color(red,green,blue);
 		return color;
-
 	}
 
 }

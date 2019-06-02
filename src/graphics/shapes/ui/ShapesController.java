@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.ButtonGroup;
@@ -245,6 +246,23 @@ public class ShapesController extends Controller {
 		});
 		this.timer.start();
 	}
+	
+	
+	public SCollection getSelected() {
+		SCollection selectedShapes = new SCollection();
+		Shape shape = null;
+		Iterator<Shape> itr = ((SCollection)model).iterator();
+		while(itr.hasNext()) {
+			shape = itr.next();
+			if (shape != null) {
+				SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
+				if (sA != null && sA.isSelected()) {
+					selectedShapes.add(shape);
+				}
+			}
+		}
+		return selectedShapes;
+	}
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,8 +347,7 @@ public class ShapesController extends Controller {
 	}
 
 	public void keyPressed(KeyEvent evt) {
-
-		System.out.println("keyPressed");
+		//System.out.println("keyPressed");
 		Shape shape = null;
 		boolean containsSelected = false;
 		Iterator<Shape> itr = ((SCollection)model).iterator();

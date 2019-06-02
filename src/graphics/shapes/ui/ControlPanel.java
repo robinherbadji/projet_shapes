@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -17,12 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
-import graphics.shapes.SCircle;
-import graphics.shapes.SCollection;
-import graphics.shapes.SPicture;
-import graphics.shapes.SPolygone;
-import graphics.shapes.SRectangle;
-import graphics.shapes.SText;
 import graphics.shapes.*;
 import graphics.shapes.attributes.ColorAttributes;
 import graphics.shapes.attributes.FontAttributes;
@@ -54,7 +49,7 @@ public class ControlPanel extends JPanel {
 
 
 	public void initialisation() {
-		menuFile = new JMenu("   File   ");
+		menuFile = new JMenu("   File    ");
 		JMenuItem mNew = new JMenuItem(" New ");
 		mNew.addActionListener(new ActionListener() {
 			@Override
@@ -68,9 +63,7 @@ public class ControlPanel extends JPanel {
 		mOpen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
 				shapesController.open();
-
 			}
 		});
 		menuFile.add(mOpen);
@@ -115,7 +108,7 @@ public class ControlPanel extends JPanel {
 		mCircle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Cr�ation Cercle");
+				System.out.println("Creation Cercle");
 				SCircle c = new SCircle();
 				c.addAttributes(new ColorAttributes());
 				c.addAttributes(new SelectionAttributes());
@@ -133,7 +126,7 @@ public class ControlPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				sText = JOptionPane.showInputDialog(null, "set Text : ", "Text Creation", JOptionPane.QUESTION_MESSAGE);
 				if ((sText != null) && (sText.length() > 0)) {
-					System.out.println("Cr�ation Texte");
+					System.out.println("Creation Texte");
 					SText t= new SText(sText);
 					t.addAttributes(new ColorAttributes());
 					t.addAttributes(new FontAttributes());
@@ -152,7 +145,7 @@ public class ControlPanel extends JPanel {
 		mPolygon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Cr�ation Polygone");
+				System.out.println("Creation Polygone");
 				SPolygone p = new SPolygone();
 				p.addAttributes(new ColorAttributes());
 				p.addAttributes(new SelectionAttributes());
@@ -173,7 +166,7 @@ public class ControlPanel extends JPanel {
 				EditPathPicture setPath = new EditPathPicture(null, "Set the path picture to import", true, getMenu());
 				setPath.setVisible(true);
 
-				System.out.println("Cr�ation Image");
+				System.out.println("Creation Image");
 
 				SPicture sp = new SPicture(new Point(400,200), path);
 				sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
@@ -187,428 +180,140 @@ public class ControlPanel extends JPanel {
 
 		/////////////////////////////////////////////////////////////
 
-		menuColor = new JMenu("   Color   ");
+		menuColor = new JMenu("   Color    ");
 		JMenu mFilled = new JMenu(" Filled ");
-
-		ColorAttributes colorAtt = new ColorAttributes();
-
-
-		JMenuItem vert = new JMenuItem("Green");
-
-		vert.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setFilled(true);
-						c.setFilledColor(Color.GREEN);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setFilled(true);
-					c.setFilledColor(Color.GREEN);
-					shapesController.getView().repaint();
-				}
+		
+		class FillShapes implements ActionListener {
+			private Color fillColor;			
+			public FillShapes(Color fillColor) {
+				this.fillColor = fillColor;
 			}
-
-		});
-		mFilled.add(vert);
-
-
-		JMenuItem rouge = new JMenuItem("Red");
-
-		rouge.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setFilled(true);
-						c.setFilledColor(Color.red);
-						shapesController.getView().repaint();
+			public void actionPerformed(ActionEvent arg0) {
+				SCollection selectedShapes = shapesController.getSelected();
+				Iterator<Shape> itr = selectedShapes.iterator();
+				Shape shape = null;				
+				while(itr.hasNext()) {
+					shape = itr.next();					
+					if (shape != null) {
+						if (shape instanceof SCollection) {
+							for (Shape shapeOfCollec : ((SCollection) shape).getCollection()) {
+								ColorAttributes c = (ColorAttributes) shapeOfCollec.getAttributes("colorAttributes");
+								c.setFilled(true);
+								c.setFilledColor(fillColor);
+							}
+						}
+						else {					
+							ColorAttributes c = (ColorAttributes) shape.getAttributes("colorAttributes");
+							c.setFilled(true);
+							c.setFilledColor(fillColor);				
+						}
 					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setFilled(true);
-					c.setFilledColor(Color.red);
-					shapesController.getView().repaint();
 				}
-			}
-
-		});
-		mFilled.add(rouge);
-
-
-		JMenuItem blue = new JMenuItem("Blue");
-
-		blue.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setFilled(true);
-						c.setFilledColor(Color.BLUE);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setFilled(true);
-					c.setFilledColor(Color.BLUE);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mFilled.add(blue);
-
-
-		JMenuItem black = new JMenuItem("Black");
-
-		black.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setFilled(true);
-						c.setFilledColor(Color.BLACK);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setFilled(true);
-					c.setFilledColor(Color.BLACK);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mFilled.add(black);
-
-
-
-		JMenuItem white = new JMenuItem("White");
-
-		white.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setFilled(true);
-						c.setFilledColor(Color.WHITE);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setFilled(true);
-					c.setFilledColor(Color.WHITE);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mFilled.add(white);
-
-		JMenuItem yellow = new JMenuItem("Yellow");
-
-		yellow.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setFilled(true);
-						c.setFilledColor(Color.YELLOW);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setFilled(true);
-					c.setFilledColor(Color.YELLOW);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mFilled.add(yellow);
-
-
-		JMenuItem gray = new JMenuItem("Gray");
-
-		gray.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setFilled(true);
-						c.setFilledColor(Color.GRAY);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setFilled(true);
-					c.setFilledColor(Color.GRAY);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mFilled.add(gray);
-
-		JMenuItem orange = new JMenuItem("Orange");
-
-		orange.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setFilled(true);
-						c.setFilledColor(Color.ORANGE);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setFilled(true);
-					c.setFilledColor(Color.ORANGE);
-					shapesController.getView().repaint();
-				}
-			}
-		});
-		mFilled.add(orange);
+				shapesController.getView().repaint();				
+			}			
+		}
+		
+		JMenuItem fGreen = new JMenuItem("Green");
+		fGreen.addActionListener(new FillShapes(Color.GREEN));
+		mFilled.add(fGreen);
+		
+		JMenuItem fRed = new JMenuItem("Red");
+		fRed.addActionListener(new FillShapes(Color.RED));
+		mFilled.add(fRed);
+		
+		JMenuItem fBlue = new JMenuItem("Blue");
+		fBlue.addActionListener(new FillShapes(Color.BLUE));
+		mFilled.add(fBlue);
+		
+		JMenuItem fBlack = new JMenuItem("Black");
+		fBlack.addActionListener(new FillShapes(Color.BLACK));
+		mFilled.add(fBlack);
+		
+		JMenuItem fWhite = new JMenuItem("White");
+		fWhite.addActionListener(new FillShapes(Color.WHITE));
+		mFilled.add(fWhite);
+		
+		JMenuItem fYellow = new JMenuItem("Yellow");
+		fYellow.addActionListener(new FillShapes(Color.YELLOW));
+		mFilled.add(fYellow);
+		
+		JMenuItem fGray = new JMenuItem("Gray");
+		fGray.addActionListener(new FillShapes(Color.GRAY));
+		mFilled.add(fGray);		
+		
+		JMenuItem fOrange = new JMenuItem("Orange");
+		fOrange.addActionListener(new FillShapes(Color.ORANGE));
+		mFilled.add(fOrange);
 		menuColor.add(mFilled);
-
+		
+		
+		class StrokeShapes implements ActionListener {
+			private Color strokeColor;			
+			public StrokeShapes(Color strokeColor) {
+				this.strokeColor = strokeColor;
+			}
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				SCollection selectedShapes = shapesController.getSelected();
+				Iterator<Shape> itr = selectedShapes.iterator();
+				Shape shape = null;				
+				while(itr.hasNext()) {
+					shape = itr.next();					
+					if (shape != null) {
+						if (shape instanceof SCollection) {
+							for (Shape shapeOfCollec : ((SCollection) shape).getCollection()) {
+								ColorAttributes c = (ColorAttributes) shapeOfCollec.getAttributes("colorAttributes");
+								c.setStroked(true);
+								c.setStrokedColor(strokeColor);
+							}
+						}
+						else {					
+							ColorAttributes c = (ColorAttributes) shape.getAttributes("colorAttributes");
+							c.setStroked(true);
+							c.setStrokedColor(strokeColor);				
+						}
+					}
+				}
+				shapesController.getView().repaint();				
+			}			
+		}
+		
 		JMenu mStroked = new JMenu("Stroked");
-
-		JMenuItem svert = new JMenuItem("Green");
-
-		svert.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setStroked(true);
-						c.setStrokedColor(Color.GREEN);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setStroked(true);
-					c.setStrokedColor(Color.GREEN);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mStroked.add(svert);
-
-
-		JMenuItem srouge = new JMenuItem("Red");
-
-		srouge.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setStroked(true);
-						c.setStrokedColor(Color.red);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setStroked(true);
-					c.setStrokedColor(Color.red);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mStroked.add(srouge);
-
-
-		JMenuItem sblue = new JMenuItem("Blue");
-
-		sblue.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setStroked(true);
-						c.setStrokedColor(Color.BLUE);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setStroked(true);
-					c.setStrokedColor(Color.BLUE);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mStroked.add(sblue);
-
-
-		JMenuItem sblack = new JMenuItem("Black");
-
-		sblack.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setStroked(true);
-						c.setStrokedColor(Color.BLACK);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setStroked(true);
-					c.setStrokedColor(Color.BLACK);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mStroked.add(sblack);
-
-
-
-		JMenuItem swhite = new JMenuItem("White");
-
-		swhite.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setStroked(true);
-						c.setStrokedColor(Color.WHITE);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setStroked(true);
-					c.setStrokedColor(Color.WHITE);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mStroked.add(swhite);
-
-		JMenuItem syellow = new JMenuItem("Yellow");
-
-		syellow.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setStroked(true);
-						c.setStrokedColor(Color.YELLOW);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setStroked(true);
-					c.setStrokedColor(Color.YELLOW);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mStroked.add(syellow);
-
-
-		JMenuItem sgray = new JMenuItem("Gray");
-
-		sgray.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setStroked(true);
-						c.setStrokedColor(Color.GRAY);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setStroked(true);
-					c.setStrokedColor(Color.GRAY);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mStroked.add(sgray);
-
-		JMenuItem sorange = new JMenuItem("Orange");
-
-		sorange.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				Shape change = shapesController.getTarget();
-				if (change instanceof SCollection) {
-					for (Shape shape : ((SCollection) change).getCollection()) {
-						ColorAttributes c = ((ColorAttributes) shape.getAttributes(colorAtt.getId()));
-						c.setStroked(true);
-						c.setStrokedColor(Color.ORANGE);
-						shapesController.getView().repaint();
-					}
-				} else {
-					ColorAttributes c = ((ColorAttributes) change.getAttributes(colorAtt.getId()));
-					c.setStroked(true);
-					c.setStrokedColor(Color.ORANGE);
-					shapesController.getView().repaint();
-				}
-			}
-
-		});
-		mStroked.add(sorange);
-
-
+		
+		JMenuItem sGreen = new JMenuItem("Green");
+		sGreen.addActionListener(new StrokeShapes(Color.GREEN));
+		mStroked.add(sGreen);
+		
+		JMenuItem sRed = new JMenuItem("Red");
+		sRed.addActionListener(new StrokeShapes(Color.RED));
+		mStroked.add(sRed);
+		
+		JMenuItem sBlue = new JMenuItem("Blue");
+		sBlue.addActionListener(new StrokeShapes(Color.BLUE));
+		mStroked.add(sBlue);
+		
+		JMenuItem sBlack = new JMenuItem("Black");
+		sBlack.addActionListener(new StrokeShapes(Color.BLACK));
+		mStroked.add(sBlack);
+		
+		JMenuItem sWhite = new JMenuItem("White");
+		sWhite.addActionListener(new StrokeShapes(Color.WHITE));
+		mStroked.add(sWhite);
+		
+		JMenuItem sYellow = new JMenuItem("Yellow");
+		sYellow.addActionListener(new StrokeShapes(Color.YELLOW));
+		mStroked.add(sYellow);
+		
+		JMenuItem sGray = new JMenuItem("Gray");
+		sGray.addActionListener(new StrokeShapes(Color.GRAY));
+		mStroked.add(sGray);		
+		
+		JMenuItem sOrange = new JMenuItem("Orange");
+		sOrange.addActionListener(new StrokeShapes(Color.ORANGE));
+		mStroked.add(sOrange);
 		menuColor.add(mStroked);
+		
 
 		/////////////////////////////////////////////////////////////
 
@@ -687,7 +392,6 @@ public class ControlPanel extends JPanel {
 		class SpeedListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println(((JRadioButtonMenuItem)e.getSource()).getText());
 				speed = ((JRadioButtonMenuItem)e.getSource()).getText();
 				speedInfo.setText("   ("+((JRadioButtonMenuItem)e.getSource()).getText()+")");
 				if (animationOn) { // On relance l'animation pour que la vitesse soit prise en compte

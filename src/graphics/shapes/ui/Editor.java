@@ -39,10 +39,10 @@ public class Editor extends JFrame
 
 		this.buildModel();
 
-		// Affichage Mod�le :
+		// Affichage Modele :
 
 		this.sview = new ShapesView(this.model);
-		this.sview.setPreferredSize(new Dimension(300,400));
+		this.sview.setPreferredSize(new Dimension(300,300));
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
 
 
@@ -132,7 +132,6 @@ public class Editor extends JFrame
 		sc.add(r);
 		c = new SCircle(new Point(150,100),20);
 		c.addAttributes(new ColorAttributes(false,true,Color.BLUE,Color.DARK_GRAY));
-		c.addAttributes(new SelectionAttributes());
 		sc.add(c);
 		this.model.add(sc);
 	}

@@ -71,7 +71,6 @@ public class ShapeDraftman implements ShapeVisitor {
 			else {
 				g2d.setColor(Color.BLACK);
 				g2d.fillRect(sX, sY, sW, sH);
-
 			}
 
 			SelectionAttributes sA = (SelectionAttributes) rect.getAttributes("selectionAttributes");
