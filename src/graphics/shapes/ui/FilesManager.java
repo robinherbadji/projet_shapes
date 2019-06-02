@@ -136,18 +136,13 @@ public class FilesManager {
 
     private int[] toArray(String string){
 
-
         String part = string.substring(1);
 
         String[] parts ;
 
-
-
         parts =  part.split("]");
 
         string = parts[0];
-
-
 
         String[] strings = string.split(",");
 
@@ -169,10 +164,6 @@ public class FilesManager {
             }
 
         }
-
-
-
-
         //System.out.println(array);
         return res ;
     }
@@ -291,13 +282,10 @@ public class FilesManager {
         if (type == "polygone") {
 
 
-            //int x = Integer.parseInt(shape.getAttribute("x"));
-            //int y = Integer.parseInt(shape.getAttribute("y"));
+
 
             int np = Integer.parseInt(shape.getAttribute("np"));
 
-            //int[] x = toArray(shape.getAttribute("X")) ;
-            //int[] y = toArray(shape.getAttribute("Y")) ;
 
             int[] x = new int[np+1];
             int[] y = new int[np+1];
@@ -323,28 +311,16 @@ public class FilesManager {
 
         if (type == "picture") {
 
-
             int x = Integer.parseInt(shape.getAttribute("x"));
             int y = Integer.parseInt(shape.getAttribute("y"));
 
             String path = shape.getAttribute("path");
 
-
-
-
             SPicture pic = new SPicture( new Point(x,y), path );
-
-
-
-
-
 
 
             return (pic);
         }
-
-
-
 
 
         if (type == "text") {
@@ -389,8 +365,6 @@ public class FilesManager {
             }
             return (collection);
         }
-
-
         return null;
     }
 }

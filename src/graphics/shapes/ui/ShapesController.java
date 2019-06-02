@@ -58,7 +58,7 @@ public class ShapesController extends Controller {
 
 
 	// M�thodes
-    protected Shape getTarget() {
+	protected Shape getTarget() {
 		Shape shape = null;
 		Iterator<Shape> itr = ((SCollection)model).iterator();
 		boolean targeted = false;
@@ -256,24 +256,28 @@ public class ShapesController extends Controller {
 		// selection de la forme?
 	}
 
-	public void mouseClicked(MouseEvent e)
-	{
-		if (this.target != null) {
-			if (e.isShiftDown()) {
-			}
-			else {
+	public void mouseClicked(MouseEvent e) {
+		if (e.getButton() == 1) {
+			if (this.target != null) {
+				if (e.isShiftDown()) {
+				} else {
+					this.unselectAll();
+				}
+				///////////////////////////////////////
+				SelectionAttributes sA = (SelectionAttributes) target.getAttributes("selectionAttributes");
+				if (sA != null) {
+					sA.select();
+				}
+			} else {
 				this.unselectAll();
 			}
-			///////////////////////////////////////
-			SelectionAttributes sA = (SelectionAttributes) target.getAttributes("selectionAttributes");
-			if (sA != null) {
-				sA.select();
-			}
+			this.getView().repaint();
 		}
-		else {
-			this.unselectAll();
+		if (e.getButton() == 3) {
+			RightClick p = new RightClick(this);
+			p.click(e);
+
 		}
-		this.getView().repaint();
 	}
 
 	public void mouseDragged(MouseEvent evt)
@@ -362,6 +366,15 @@ public class ShapesController extends Controller {
 
 		}
 		this.getView().repaint();
+	}
+
+	public void blank(){
+
+		SCollection model = new SCollection();
+		Editor self = new Editor(model);
+		self.pack();
+		self.setVisible(true);
+
 	}
 
 

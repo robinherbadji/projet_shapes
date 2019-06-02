@@ -38,8 +38,8 @@ public class SPicture extends Shape {
 			}
 
 		} catch (IOException e) {
-			
-			System.out.println("Erreur : Aucun path trouvé");
+
+			System.out.println("Erreur : Aucun path trouvï¿½");
 
 			e.printStackTrace();
 		}

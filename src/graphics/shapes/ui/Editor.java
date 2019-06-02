@@ -39,14 +39,14 @@ public class Editor extends JFrame
 
 		this.buildModel();
 
-		// Affichage Modèle :
+		// Affichage Modï¿½le :
 
 		this.sview = new ShapesView(this.model);
 		this.sview.setPreferredSize(new Dimension(300,400));
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
 
-		
-		// Affichage Menu Principal :		
+
+		// Affichage Menu Principal :
 		controlPanel = new ControlPanel(this.sview);
 		this.setJMenuBar(controlPanel.getMenuBar());
 
@@ -112,7 +112,7 @@ public class Editor extends JFrame
 		p.addAttributes(new SelectionAttributes());
 		//p.barycentre();
 		this.model.add(p);
-		
+
 		/*
 		SPicture sp = new SPicture(new Point(100,200), "C:\\Documentutile\\ensisa.png");
 
@@ -123,7 +123,7 @@ public class Editor extends JFrame
 		this.model.add(sp);
 
 		*/
-		
+
 		SCollection sc = new SCollection();
 		sc.addAttributes(new SelectionAttributes());
 		r= new SRectangle(new Point(20,30),30,30);
