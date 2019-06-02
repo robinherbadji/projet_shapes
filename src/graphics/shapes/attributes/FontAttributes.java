@@ -41,7 +41,7 @@ public class FontAttributes extends Attributes {
 		this.font = font;
 	}
 
-	// M�thode en plus par rapport au sujet
+	// Methode en plus par rapport au sujet
 	public void setFontMetrics(FontMetrics fMetrics) {
 		this.fontMetrics = fMetrics;
 	}

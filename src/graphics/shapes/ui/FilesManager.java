@@ -156,7 +156,7 @@ public class FilesManager {
 
                 res[i] = Integer.parseInt(strings[i].substring(1));
 
-                System.out.println(res[i]);
+                //System.out.println(res[i]);
 
             }else {
 
@@ -183,7 +183,7 @@ public class FilesManager {
             final Element root = document.getDocumentElement();
 
 
-            System.out.println(root.getNodeName());
+            //System.out.println(root.getNodeName());
 
             final NodeList rootNodes = root.getChildNodes();
             final int nbRootNodes = rootNodes.getLength();
@@ -217,7 +217,7 @@ public class FilesManager {
         try{
             this.nomDuFichier = JOptionPane.showInputDialog("Enregistrer le fichier Sous (sans extension):");
             this.d = new PrintWriter(new BufferedOutputStream(new FileOutputStream(Chemin + nomDuFichier + ".xml")),true);
-            System.out.println("jj");
+            //System.out.println("jj");
             d.println("<shape>");
             for (Iterator<Shape> i = model.iterator(); i.hasNext();){
                 Shape shape = (Shape) i.next();

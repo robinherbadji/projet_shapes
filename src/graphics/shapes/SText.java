@@ -49,7 +49,6 @@ public class SText extends Shape {
 
 	@Override
 	public Rectangle getBounds() {
-
 		FontAttributes fA = (FontAttributes) this.getAttributes("fontAttributes");
 		if (fA != null) {
 			Rectangle bounds = fA.getBounds(this.text);

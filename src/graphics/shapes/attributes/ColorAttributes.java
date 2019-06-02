@@ -3,7 +3,6 @@ package graphics.shapes.attributes;
 import java.awt.Color;
 
 public class ColorAttributes extends Attributes {
-
 	private boolean filled;
 	private boolean stroked;
 	private Color filledColor;

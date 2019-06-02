@@ -100,13 +100,14 @@ public class Editor extends JFrame
 		t.addAttributes(new FontAttributes());
 		t.addAttributes(new SelectionAttributes());
 		this.model.add(t);
-
-
+		
+		/*
 		int[] x={50,70,50,70,50};
 		int[] y={100,200,200,100,100};
 		int np = 4;
-
-		//SPolygone p = new SPolygone(np,x,y);
+		SPolygone p = new SPolygone(np,x,y);
+		*/
+		
 		SPolygone p = new SPolygone();
 		p.addAttributes(new ColorAttributes(true,true,Color.red,Color.green));
 		p.addAttributes(new SelectionAttributes());

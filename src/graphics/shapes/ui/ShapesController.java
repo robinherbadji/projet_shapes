@@ -11,19 +11,10 @@ import java.awt.event.ActionListener;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 import java.util.Iterator;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
 
 import graphics.shapes.SCircle;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
 
 import graphics.shapes.SCollection;
@@ -37,7 +28,6 @@ import graphics.shapes.attributes.SelectionAttributes;
 import graphics.ui.Controller;
 
 public class ShapesController extends Controller {
-	// Impl�mente donc les Listeners via Controller
 	private Shape target;
 	private Point mouseStart;
 	private Timer timer;
@@ -58,7 +48,7 @@ public class ShapesController extends Controller {
 	}
 
 
-	// M�thodes
+	// Methodes
 	protected Shape getTarget() {
 		Shape shape = null;
 		Iterator<Shape> itr = ((SCollection)model).iterator();
@@ -359,7 +349,7 @@ public class ShapesController extends Controller {
 
 					containsSelected = true;
 
-					if (evt.getKeyCode() == KeyEvent.VK_UP) {
+					if (evt.getKeyCode() == KeyEvent.VK_PLUS) {
 						System.out.println("zoom +");
 						growShape(shape);
 					}

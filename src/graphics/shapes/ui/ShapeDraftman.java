@@ -4,16 +4,12 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
-
-import javax.imageio.ImageIO;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
@@ -30,13 +26,12 @@ import graphics.shapes.attributes.SelectionAttributes;
 
 public class ShapeDraftman implements ShapeVisitor {
 	private Graphics g;
-	//private Shape shape;
 
 	public ShapeDraftman(Graphics g) {
 		this.g = g;
 	}
 
-	// Dessin du carr� de S�lection
+	// Dessin du carre de Selection
 	public void drawSelectionShape(Rectangle rect) {
 		final int size = 5;
 		g.setColor(Color.black);
@@ -65,7 +60,6 @@ public class ShapeDraftman implements ShapeVisitor {
 				if (cA.stroked()) {
 					g2d.setColor(cA.strokedColor());
 					g2d.drawRect(sX, sY, sW, sH);
-
 				}
 			}
 			else {
@@ -157,7 +151,6 @@ public class ShapeDraftman implements ShapeVisitor {
 
 	@Override
 	public void visitCollection(SCollection scollec) {
-		Graphics2D g2d = (Graphics2D) g.create();
 		Shape shape;
 		if (scollec != null) {
 			Iterator<Shape> itr = scollec.iterator();
@@ -169,16 +162,13 @@ public class ShapeDraftman implements ShapeVisitor {
 					drawSelectionShape(shape.getBounds());
 				}
 			}
-
 		}
 	}
 
 	@Override
 	public void visitPolygone(SPolygone spolygone) {
-
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (spolygone != null) {
-
 			int sX = spolygone.getBounds().x;
 			int sY = spolygone.getBounds().y;
 			int sW = spolygone.getBounds().width;
@@ -221,7 +211,6 @@ public class ShapeDraftman implements ShapeVisitor {
 
 	@Override
 	public void visitImage(SPicture spicture) {
-
 		Graphics2D g2d = (Graphics2D) g.create();
 		BufferedImage image;
 		File file = new File(spicture.getPath());

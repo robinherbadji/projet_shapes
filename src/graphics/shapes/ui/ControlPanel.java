@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -159,24 +163,31 @@ public class ControlPanel extends JPanel {
 
 		//------------  SPicture -------------
 
-		JMenuItem mPathPicture = new JMenuItem("Picture");
+		JMenuItem mPathPicture = new JMenuItem("Image");
 		mPathPicture.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EditPathPicture setPath = new EditPathPicture(null, "Set the path picture to import", true, getMenu());
-				setPath.setVisible(true);
-
-				System.out.println("Creation Image");
-
-				SPicture sp = new SPicture(new Point(400,200), path);
-				sp.addAttributes(new ColorAttributes(false,false,Color.BLUE,Color.BLUE));
-				sp.addAttributes(new SelectionAttributes());
-				((SCollection) shapesView.getModel()).add(sp);
-				shapesView.repaint();
+				path = JOptionPane.showInputDialog(null, "Image Path: ", "Image Importation",
+						JOptionPane.QUESTION_MESSAGE);
+				if ((path != null) && path.length() > 0) {
+					BufferedImage buffImage;
+					try {
+						buffImage = ImageIO.read(new File(path));
+						if (buffImage != null) {
+							System.out.println("Création Image");
+							SPicture sp = new SPicture(new Point(100, 200), path);
+							sp.addAttributes(new SelectionAttributes());
+							((SCollection) shapesView.getModel()).add(sp);
+							shapesView.repaint();
+						}
+					} catch (IOException e) {
+						System.out.println("Invalid path for the picture");
+					}
+				}
 			}
 		});
-		mPolygon.setAccelerator(KeyStroke.getKeyStroke('p'));
-		menuShape.add(mPolygon);
+		mPathPicture.setAccelerator(KeyStroke.getKeyStroke('i'));
+		menuShape.add(mPathPicture);
 
 		/////////////////////////////////////////////////////////////
 
@@ -423,20 +434,22 @@ public class ControlPanel extends JPanel {
 		mFunctions.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				FunctionsDialog fDialog = new FunctionsDialog(null, "How does it work ?", true);
+				FunctionsDialog fDialog = new FunctionsDialog(null, "How does it work ?", false);
 				fDialog.setVisible(true);
 			}
 		});
-		mFunctions.setAccelerator(KeyStroke.getKeyStroke('?'));
+		mFunctions.setAccelerator(KeyStroke.getKeyStroke('h'));
 		menuHelp.add(mFunctions);
 
 		JMenuItem mAbout = new JMenuItem(" About ");
 		mAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				AboutDialog aDialog = new AboutDialog(null, "About", true);
+				aDialog.setVisible(true);
 			}
 		});
+		mAbout.setAccelerator(KeyStroke.getKeyStroke('?'));
 		menuHelp.add(mAbout);
 
 

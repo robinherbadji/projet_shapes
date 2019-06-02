@@ -1,10 +1,6 @@
 package graphics.ui;
 
-
-import java.awt.event.MouseWheelListener;
-
 import java.awt.event.ActionListener;
-
 
 import javax.swing.JPanel;
 
