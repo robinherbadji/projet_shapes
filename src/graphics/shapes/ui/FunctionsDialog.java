@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class FunctionsDialog extends JDialog {
 	
@@ -23,12 +24,21 @@ public class FunctionsDialog extends JDialog {
 		
 		JPanel panText = new JPanel();
 		panText.setBackground(Color.white);
-		panText.setPreferredSize(new Dimension(180, 120));
-		JLabel titleLabel = new JLabel("Functionalities : \n");
-		panText.add(titleLabel);
+		panText.setPreferredSize(new Dimension(500, 200));
 		
+		JTextArea textContent = new JTextArea("Functionalities : \n- Selection of Shape : Left Click");
+		textContent.setBounds(0, 0, this.getWidth(), this.getHeight());
+		panText.add(textContent);
+		
+		/*
+		JLabel titleLabel = new JLabel("Functionalities : \n- Selection of Shape : Left Click");
+		panText.add(titleLabel);
+		*/
+		
+		/*
 		JLabel function_1 = new JLabel("- Selection of Shape : Left Click");
 		panText.add(function_1);
+		*/
 		
 		this.getContentPane().add(panText, BorderLayout.CENTER);
 		
