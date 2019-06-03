@@ -58,8 +58,8 @@ public class SCollection extends Shape {
 	@Override
 	public Rectangle getBounds() {
 		Iterator<Shape> itr = collection.iterator();
-		Rectangle bounds = new Rectangle(-1, -1); // Rectangle traité comme non-existant (bounds = null ne fonctionnant
-													// pas)
+		Rectangle bounds = new Rectangle(-1, -1); // Rectangle traitï¿½ comme non-existant (bounds = null ne fonctionnant
+		// pas)
 		// Deux facons de faire pour declarer bounds:
 		// 1
 		/*

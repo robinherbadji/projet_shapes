@@ -16,9 +16,13 @@ import javax.swing.JPopupMenu;
 
 public class RightClick {
 
-	JPopupMenu menu = new JPopupMenu();
 
+	//fields
+	JPopupMenu menu = new JPopupMenu();
 	private ShapesController shapesController;
+
+
+	//constructor
 
 	public RightClick(ShapesController c) {
 		this.shapesController = c;
@@ -64,12 +68,18 @@ public class RightClick {
 		menu.add(del);
 
 		menu.addSeparator();
+
+
+		// Color menu in the popup
 		JMenu menuColor = new JMenu("   Color    ");
 		menu.add(menuColor);
 		JMenu mFilled = new JMenu(" Filled ");
 
 		class FillShapes implements ActionListener {
 			private Color fillColor;
+
+
+			// function that fills the selected shapes with the color ( avoid redundancy )
 
 			public FillShapes(Color fillColor) {
 				this.fillColor = fillColor;

@@ -33,7 +33,7 @@ public abstract class Shape implements Cloneable {
 	public void addAttributes(Attributes attribute) {
 		this.attributes.put(attribute.getId(), attribute);
 	}
-	
+
 	public void flushAttributes() {
 		this.attributes.clear();
 	}
@@ -51,7 +51,7 @@ public abstract class Shape implements Cloneable {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
-	
+
 	public Shape clone()  {
 		Shape newShape = null;
 		if (this instanceof SRectangle) {
@@ -95,9 +95,9 @@ public abstract class Shape implements Cloneable {
 				((SCollection)newShape).add(shape_n.clone());
 			}
 		}
-		
+
 		return newShape;
 	}
-	
-	
+
+
 }
