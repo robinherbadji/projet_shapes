@@ -176,7 +176,7 @@ public class FilesManager {
         try {
             final DocumentBuilder builder = factory.newDocumentBuilder();
 
-            this.nomDuFichier = JOptionPane.showInputDialog("Please enter file name : ");
+            this.nomDuFichier = JOptionPane.showInputDialog("Enter file name : ");
 
             final Document document = builder.parse(new File(Chemin + nomDuFichier + ".xml"));
 
@@ -215,9 +215,8 @@ public class FilesManager {
     public void enregistrer(SCollection model) {
 
         try{
-            this.nomDuFichier = JOptionPane.showInputDialog("Enregistrer le fichier Sous (sans extension):");
+            this.nomDuFichier = JOptionPane.showInputDialog("Save As (without extension) :");
             this.d = new PrintWriter(new BufferedOutputStream(new FileOutputStream(Chemin + nomDuFichier + ".xml")),true);
-            //System.out.println("jj");
             d.println("<shape>");
             for (Iterator<Shape> i = model.iterator(); i.hasNext();){
                 Shape shape = (Shape) i.next();
@@ -280,10 +279,6 @@ public class FilesManager {
 
 
         if (type == "polygone") {
-
-
-
-
             int np = Integer.parseInt(shape.getAttribute("np"));
 
 

@@ -29,14 +29,12 @@ public class RightClick {
 		JMenuItem cop = new JMenuItem("Copy");
 		cop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				/*
 				try {
 					shapesController.copy();
 				} catch (CloneNotSupportedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				*/
 			}
 		});
 		menu.add(cop);
@@ -44,10 +42,7 @@ public class RightClick {
 		JMenuItem cut = new JMenuItem("Cut");
 		cut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				/*
-				shapesController.copy();
-				shapesController.delete();
-				*/
+				shapesController.cut();
 			}
 		});
 		menu.add(cut);

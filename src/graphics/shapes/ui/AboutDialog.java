@@ -27,6 +27,7 @@ public class AboutDialog extends JDialog {
 		panText.setBackground(Color.white);
 
 		JTextArea textContent = new JTextArea();
+		textContent.setEditable(false);
 		textContent.setFont(new Font("Serif", Font.PLAIN, 18));
 		textContent.append("             JAVA PROJECT\n");
 	
