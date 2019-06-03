@@ -55,7 +55,7 @@ public class SCollection extends Shape {
 	@Override
 	public Rectangle getBounds() {
 		Iterator<Shape> itr = collection.iterator();
-		Rectangle bounds = new Rectangle(-1, -1); // Rectangle seen as non-existing		
+		Rectangle bounds = new Rectangle(-1, -1); // Rectangle seen as non-existing
 		while (itr.hasNext()) {
 			Shape shape = itr.next();
 			bounds = bounds.union(shape.getBounds());

@@ -342,17 +342,17 @@ public class ShapesController extends Controller {
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		super.mouseWheelMoved(e);
 		/*
-		 * 
+		 *
 		 * if(e.getWheelRotation() > 0 && ! (this.target instanceof SCollection)){
 		 * System.out.println("zoom -"); reduceShape(this.target);
-		 * 
+		 *
 		 * }else if(e.getWheelRotation() > 0 && (this.target instanceof SCollection)) {
 		 * System.out.println("zoom - for Collection");
 		 * reduceShapeCollection((SCollection) this.target); }
-		 * 
+		 *
 		 * else if(e.getWheelRotation() < 0 && ! (this.target instanceof SCollection)) {
 		 * System.out.println("zoom +"); growShape(this.target); }
-		 * 
+		 *
 		 * else if (e.getWheelRotation() < 0 && (this.target instanceof SCollection)) {
 		 * System.out.println("zoom + for Collection");
 		 * growShapeCollection((SCollection) this.target); }
@@ -447,17 +447,17 @@ public class ShapesController extends Controller {
 	}
 
 	public void delete() {
-		SCollection selectedShapes = this.getSelected(); // Création de la Collection des formes selectionnées
-		Iterator<Shape> itr = selectedShapes.iterator(); // Crréation d'un itérateur
+		SCollection selectedShapes = this.getSelected(); // Crï¿½ation de la Collection des formes selectionnï¿½es
+		Iterator<Shape> itr = selectedShapes.iterator(); // Crrï¿½ation d'un itï¿½rateur
 		Shape shape = null;
 		while (itr.hasNext()) { // On parcourt la collection
-			shape = itr.next(); // On itère
+			shape = itr.next(); // On itï¿½re
 			if (shape != null) {
 				((SCollection) model).delete(shape);
 				System.out.println("Deleted");
 			}
 		}
-		this.getView().repaint(); // Réactualise
+		this.getView().repaint(); // Rï¿½actualise
 	}
 
 	public void copy() throws CloneNotSupportedException {
