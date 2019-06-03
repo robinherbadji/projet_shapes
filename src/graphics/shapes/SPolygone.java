@@ -89,6 +89,11 @@ public class SPolygone extends Shape {
 				this.x = x3;
 				this.y = y3;
 				System.out.println("Losange");
+				break;
+				
+			default:
+				System.out.println("No match shape");
+				break;
 		}
 	}
 
