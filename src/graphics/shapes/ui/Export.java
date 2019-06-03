@@ -15,7 +15,7 @@ public class Export {
 		sview.print(img.getGraphics());
 		try {
 			String name = JOptionPane.showInputDialog("File Name  :  ");
-			ImageIO.write(img, "jpg", new File(name + ".jpg"));
+			ImageIO.write(img, "jpg", new File("Files/"+name + ".jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

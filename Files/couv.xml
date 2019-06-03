@@ -1,0 +1,12 @@
+<shape>
+ <rectangle x="86" y="328" height="60" width="50" filled="true" stroked="false" filledColor="-16776961" strokedColor="0"/>
+ <picture x="218" y="124" path="Files/ensisa.png"/>
+ <polygone np="5" X="[482, 582, 582, 532, 482, 200]" Y="[123, 123, 73, 53, 73, 250]" filled="true" stroked="true" filledColor="-65536" strokedColor="-16711936"/>
+ <text text="Robin" x="275" y="99" filled="true" stroked="true" filledColor="-1" strokedColor="-16776961" />
+ <text text="Khadija" x="33" y="276" filled="true" stroked="true" filledColor="-1" strokedColor="-8355712" />
+ <text text="Yassine" x="474" y="270" filled="true" stroked="true" filledColor="-1" strokedColor="-14336" />
+ <text text="Marie-Camille" x="196" y="441" filled="true" stroked="true" filledColor="-1" strokedColor="-3989232" />
+ <polygone np="3" X="[503, 603, 553, 77]" Y="[376, 376, 326, 53]" filled="true" stroked="true" filledColor="-10574745" strokedColor="-9436455"/>
+ <circle x="528" y= "402" radius ="32" filled="true" stroked="true" filledColor="-13161183" strokedColor="-6561589"/>
+ <circle x="97" y= "30" radius ="51" filled="true" stroked="true" filledColor="-14697522" strokedColor="-3062314"/>
+</shape>

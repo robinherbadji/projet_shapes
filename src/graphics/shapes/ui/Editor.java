@@ -94,13 +94,7 @@ public class Editor extends JFrame {
 		 * int[] x={50,70,50,70,50}; int[] y={100,200,200,100,100}; int np = 4;
 		 * SPolygone p = new SPolygone(np,x,y);
 		 */
-
-		SPolygone p = new SPolygone(new Point(200, 250));
-		p.addAttributes(new ColorAttributes(true, true, Color.red, Color.green));
-		p.addAttributes(new SelectionAttributes());
-		// p.barycentre();
-		this.model.add(p);
-
+		
 		String path = "Files/ensisa.png";
 		BufferedImage buffImage;
 		try {
@@ -113,7 +107,16 @@ public class Editor extends JFrame {
 		} catch (IOException e) {
 			System.out.println("Invalid path for the picture");
 		}
+		
 
+		SPolygone p = new SPolygone(new Point(200, 250));
+		p.addAttributes(new ColorAttributes(true, true, Color.red, Color.green));
+		p.addAttributes(new SelectionAttributes());
+		// p.barycentre();
+		this.model.add(p);
+
+		
+		/*
 		SCollection sc = new SCollection();
 		sc.addAttributes(new SelectionAttributes());
 		SRectangle r1 = new SRectangle(new Point(20, 30), 30, 30);
@@ -125,6 +128,7 @@ public class Editor extends JFrame {
 		c1.addAttributes(new SelectionAttributes());
 		sc.add(c1);
 		this.model.add(sc);
+		*/
 	}
 
 	public static void main(String[] args) {
