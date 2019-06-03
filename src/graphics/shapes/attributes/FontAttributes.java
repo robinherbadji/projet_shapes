@@ -17,12 +17,6 @@ public class FontAttributes extends Attributes {
 		font = Font.decode("Helvetica");
 		color = Color.BLUE;
 	}
-	
-	public FontAttributes(FontAttributes fA) {
-		id = "fontAttributes";
-		this.font = fA.font();
-		this.color = fA.fontColor();
-	}
 
 	public FontAttributes(Font font) {
 		id = "fontAttributes";

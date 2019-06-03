@@ -38,7 +38,7 @@ public class RightClick {
 			}
 		});
 		menu.add(cop);
-		
+
 		JMenuItem cut = new JMenuItem("Cut");
 		cut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -54,8 +54,7 @@ public class RightClick {
 			}
 		});
 		menu.add(pas);
-		
-		
+
 		JMenuItem del = new JMenuItem("Delete");
 		del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -63,9 +62,8 @@ public class RightClick {
 			}
 		});
 		menu.add(del);
-		
-		
-		menu.addSeparator();		
+
+		menu.addSeparator();
 		JMenu menuColor = new JMenu("   Color    ");
 		menu.add(menuColor);
 		JMenu mFilled = new JMenu(" Filled ");
@@ -201,8 +199,7 @@ public class RightClick {
 		sOrange.addActionListener(new StrokeShapes(Color.ORANGE));
 		mStroked.add(sOrange);
 		menuColor.add(mStroked);
-		
-		
+
 		this.menu.show(e.getComponent(), e.getX(), e.getY());
 		return this.menu;
 	}

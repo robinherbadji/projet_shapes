@@ -19,7 +19,7 @@ public class SCollection extends Shape {
 	public void add(Shape shape) {
 		this.collection.add(shape);
 	}
-	
+
 	public void delete(Shape shape) {
 		this.collection.remove(shape);
 	}
@@ -39,13 +39,11 @@ public class SCollection extends Shape {
 
 	@Override
 	public void setLoc(Point point) {
-		//collection.get(0).setLoc(point);
+		// collection.get(0).setLoc(point);
 		/*
-		Iterator<Shape> itr = collection.iterator();
-		while (itr.hasNext()) {
-			itr.next().setLoc(point);
-		}
-		*/
+		 * Iterator<Shape> itr = collection.iterator(); while (itr.hasNext()) {
+		 * itr.next().setLoc(point); }
+		 */
 	}
 
 	@Override
@@ -95,12 +93,9 @@ public class SCollection extends Shape {
 
 	public void setRotation(float rotation) {
 		/*
-		Iterator<Shape> itr = collection.iterator();
-		while (itr.hasNext()) {
-			Shape shape = itr.next();
-			shape.setRotation(rotation);
-		}
-		*/
+		 * Iterator<Shape> itr = collection.iterator(); while (itr.hasNext()) { Shape
+		 * shape = itr.next(); shape.setRotation(rotation); }
+		 */
 	}
 
 	public ArrayList<Shape> getCollection() {

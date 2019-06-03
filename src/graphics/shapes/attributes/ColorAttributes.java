@@ -24,19 +24,6 @@ public class ColorAttributes extends Attributes {
 		this.filledColor = filledColor;
 		this.strokedColor = strokedColor;
 	}
-	
-	public ColorAttributes(ColorAttributes cA) {
-		id = "colorAttributes";
-		if (cA != null) {
-			this.filled = cA.filled;
-			this.stroked = cA.stroked;
-			this.filledColor = cA.filledColor;
-			this.strokedColor = cA.strokedColor;
-		}
-		//else this
-		
-		
-	}
 
 	public String getId() {
 		return id;

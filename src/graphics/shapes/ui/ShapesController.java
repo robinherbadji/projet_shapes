@@ -362,14 +362,14 @@ public class ShapesController extends Controller {
 			this.cut();
 		}
 		if (evt.getKeyCode() == KeyEvent.VK_V && evt.isControlDown()) {
-			this.paste(new Point(200,200));
-			
+			this.paste(new Point(200, 200));
+
 		}
 		if (evt.getKeyCode() == KeyEvent.VK_A && evt.isControlDown()) {
 			System.out.println("selectall");
 			this.selectAll();
 		}
-		
+
 		Shape shape = null;
 		boolean containsSelected = false;
 		Iterator<Shape> itr = ((SCollection) model).iterator();
@@ -398,11 +398,10 @@ public class ShapesController extends Controller {
 						}
 					}
 					this.getView().repaint();
-				}				
-			}			
+				}
+			}
 		}
 	}
-	
 
 	public void blank() {
 		SCollection model = new SCollection();
@@ -425,7 +424,7 @@ public class ShapesController extends Controller {
 		Export e = new Export();
 		e.takePicture((ShapesView) this.getView());
 	}
-	
+
 	public void delete() {
 		SCollection selectedShapes = this.getSelected(); // Création de la Collection des formes selectionnées
 		Iterator<Shape> itr = selectedShapes.iterator(); // Crréation d'un itérateur
@@ -439,24 +438,23 @@ public class ShapesController extends Controller {
 		}
 		this.getView().repaint(); // Réactualise
 	}
-	
-	
+
 	public void copy() throws CloneNotSupportedException {
 		Iterator<Shape> itr = this.getSelected().iterator();
 		Shape shape;
 		Shape clone;
-		int i=1;
+		int i = 1;
 		this.shapeCopied = new ArrayList<Shape>();
 		while (itr.hasNext()) {
 			System.out.println(i);
 			shape = itr.next();
 			clone = shape.clone();
-			//System.out.println(clone);
+			// System.out.println(clone);
 			this.shapeCopied.add(clone);
 			i++;
 		}
 	}
-	
+
 	public void cut() {
 		try {
 			this.copy();
@@ -465,13 +463,12 @@ public class ShapesController extends Controller {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public void paste(Point mousePos) {
-		//this.shapeCopied.get(0).setLoc(mousePos);
+		// this.shapeCopied.get(0).setLoc(mousePos);
 		Iterator<Shape> itr = this.shapeCopied.iterator();
 		Shape shape;
-		int i=1;
+		int i = 1;
 		while (itr.hasNext()) {
 			System.out.println(i);
 			shape = itr.next();
@@ -481,8 +478,7 @@ public class ShapesController extends Controller {
 		System.out.println("Paste");
 		this.getView().repaint();
 	}
-	
-	
+
 	public void selectAll() {
 		Shape s;
 		SCollection sc = (SCollection) this.getModel();
@@ -492,6 +488,5 @@ public class ShapesController extends Controller {
 			sa.select();
 		}
 	}
-	
-	
+
 }

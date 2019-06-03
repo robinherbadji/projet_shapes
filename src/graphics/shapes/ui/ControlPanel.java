@@ -157,8 +157,8 @@ public class ControlPanel extends JPanel {
 		JMenuItem mPentagone = new JMenuItem("Pentagone");
 		JMenuItem mTriangle = new JMenuItem("Triangle");
 		JMenuItem mLosange = new JMenuItem("Losange");
-		//JMenuItem mMaison = new JMenuItem("Maison");
-		
+		// JMenuItem mMaison = new JMenuItem("Maison");
+
 		mPentagone.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -195,23 +195,19 @@ public class ControlPanel extends JPanel {
 			}
 		});
 		/*
-		mMaison.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Création Maison");
-				SPolygone p = new SPolygone("Maison");
-				p.addAttributes(new ColorAttributes());
-				p.addAttributes(new SelectionAttributes());
-				((SCollection) shapesView.getModel()).add(p);
-				shapesView.repaint();
-			}
-		});
-		*/
-		
+		 * mMaison.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent arg0) {
+		 * System.out.println("Création Maison"); SPolygone p = new SPolygone("Maison");
+		 * p.addAttributes(new ColorAttributes()); p.addAttributes(new
+		 * SelectionAttributes()); ((SCollection) shapesView.getModel()).add(p);
+		 * shapesView.repaint(); } });
+		 */
+
 		mPolygon.add(mPentagone);
 		mPolygon.add(mTriangle);
 		mPolygon.add(mLosange);
-		//mPolygon.add(mMaison);
+		// mPolygon.add(mMaison);
 		menuShape.add(mPolygon);
 
 		// ------------ SPicture -------------

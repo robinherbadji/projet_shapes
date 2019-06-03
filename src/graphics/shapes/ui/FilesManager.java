@@ -22,344 +22,320 @@ import java.util.Iterator;
 
 public class FilesManager {
 
-    //fields
-    private String nomDuFichier ;
-    private String Chemin ;
-    private PrintWriter d;
-
-    //constructor
-
-    public FilesManager(){
-        this.nomDuFichier="Monfichier.xml";
-        this.Chemin="Files/";
-    }
-
-
-
-    public void serialisation(Shape shape ){
-
-        ColorAttributes colorAttribute = new ColorAttributes();
-        FontAttributes fontAttribute = new FontAttributes();
-
-        if (shape instanceof SRectangle) {
-            SRectangle rectangle = (SRectangle) shape;
-            ColorAttributes colorAtt = (ColorAttributes) rectangle.getAttributes(colorAttribute.getId());
-            int f = 0;
-            int s = 0;
-            if (colorAtt.filled()) {
-                f = colorAtt.filledColor().getRGB();
-            }
-            if (colorAtt.stroked()) {
-                s = colorAtt.strokedColor().getRGB();
-            }
-            d.println(" <rectangle x=\"" + rectangle.getLoc().x + "\" y=\"" + rectangle.getLoc().y + "\"" + " height=\""
-                    + rectangle.getRect().height + "\"" + " width=\"" + rectangle.getRect().width + "\"" + " filled=\""
-                    + colorAtt.filled() + "\"" + " stroked=\"" + colorAtt.stroked() + "\"" + " filledColor=\"" + f
-                    + "\"" + " strokedColor=\"" + s + "\"/>");
-        }
+	// fields
+	private String nomDuFichier;
+	private String Chemin;
+	private PrintWriter d;
+
+	// constructor
+
+	public FilesManager() {
+		this.nomDuFichier = "Monfichier.xml";
+		this.Chemin = "Files/";
+	}
+
+	public void serialisation(Shape shape) {
+
+		ColorAttributes colorAttribute = new ColorAttributes();
+		FontAttributes fontAttribute = new FontAttributes();
+
+		if (shape instanceof SRectangle) {
+			SRectangle rectangle = (SRectangle) shape;
+			ColorAttributes colorAtt = (ColorAttributes) rectangle.getAttributes(colorAttribute.getId());
+			int f = 0;
+			int s = 0;
+			if (colorAtt.filled()) {
+				f = colorAtt.filledColor().getRGB();
+			}
+			if (colorAtt.stroked()) {
+				s = colorAtt.strokedColor().getRGB();
+			}
+			d.println(" <rectangle x=\"" + rectangle.getLoc().x + "\" y=\"" + rectangle.getLoc().y + "\"" + " height=\""
+					+ rectangle.getRect().height + "\"" + " width=\"" + rectangle.getRect().width + "\"" + " filled=\""
+					+ colorAtt.filled() + "\"" + " stroked=\"" + colorAtt.stroked() + "\"" + " filledColor=\"" + f
+					+ "\"" + " strokedColor=\"" + s + "\"/>");
+		}
+
+		if (shape instanceof SCircle) {
+			SCircle circle = (SCircle) shape;
+			ColorAttributes colorAttributes = (ColorAttributes) circle.getAttributes(colorAttribute.getId());
+			int f = 0;
+			int s = 0;
+			if (colorAttributes.filled()) {
+				f = colorAttributes.filledColor().getRGB();
+			}
+			if (colorAttributes.stroked()) {
+				s = colorAttributes.strokedColor().getRGB();
+			}
+			d.println(" <circle x=\"" + circle.getLoc().x + "\" y= \"" + circle.getLoc().y + "\"" + " radius =\""
+					+ circle.getRadius() + "\"" + " filled=\"" + colorAttributes.filled() + "\"" + " stroked=\""
+					+ colorAttributes.stroked() + "\"" + " filledColor=\"" + f + "\"" + " strokedColor=\"" + s
+					+ "\"/>");
+		}
+
+		if (shape instanceof SText) {
+
+			SText text = (SText) shape;
+			ColorAttributes colorAttributes = (ColorAttributes) text.getAttributes(colorAttribute.getId());
+			FontAttributes fontAttributes = (FontAttributes) text.getAttributes(fontAttribute.getId());
+			int f = 0;
+			int s = 0;
+
+			if (colorAttributes.filled())
+				f = colorAttributes.filledColor().getRGB();
+			if (colorAttributes.stroked())
+				s = colorAttributes.strokedColor().getRGB();
+			int t = fontAttributes.fontColor().getRGB();
+			d.println(" <text text=\"" + text.getText() + "\"" + " x=\"" + text.getLoc().x + "\" y=\"" + text.getLoc().y
+					+ "\"" + " filled=\"" + colorAttributes.filled() + "\"" + " stroked=\"" + colorAttributes.stroked()
+					+ "\"" + " filledColor=\"" + f + "\"" + " strokedColor=\"" + s + "\" />");
+		}
+		if (shape instanceof SCollection) {
+			SCollection collection = (SCollection) shape;
+			d.println("<collection>");
+			for (Iterator<Shape> it = collection.iterator(); it.hasNext();) {
+				Shape realShape = it.next();
+				serialisation(realShape);
+			}
+			d.println("</collection>");
+		}
+
+		if (shape instanceof SPolygone) {
+			SPolygone polygone = (SPolygone) shape;
+			ColorAttributes colorAttributes = (ColorAttributes) polygone.getAttributes(colorAttribute.getId());
+			int filled = 0;
+			int stroked = 0;
+			if (colorAttributes.filled()) {
+				filled = colorAttributes.filledColor().getRGB();
+			}
+			if (colorAttributes.stroked()) {
+				stroked = colorAttributes.strokedColor().getRGB();
+			}
+			d.println(" <polygone x=\"" + polygone.getLoc().x + "\" y=\"" + polygone.getLoc().y + "\"" + " np=\""
+					+ polygone.nPoints + "\"" + " X=\"" + toString(polygone.x) + "\"" + " Y=\"" + toString(polygone.y)
+					+ "\"" + " filled=\"" + colorAttributes.filled() + "\"" + " stroked=\"" + colorAttributes.stroked()
+					+ "\"" + " filledColor=\"" + filled + "\"" + " strokedColor=\"" + stroked + "\"/>");
+		}
+
+		if (shape instanceof SPicture) {
+			SPicture picture = (SPicture) shape;
+
+			d.println(" <picture x=\"" + picture.getLoc().x + "\" y=\"" + picture.getLoc().y + "\" path=\""
+					+ picture.getPath() + "\"/>");
+		}
 
-        if (shape instanceof SCircle) {
-            SCircle circle = (SCircle) shape ;
-            ColorAttributes colorAttributes = (ColorAttributes) circle.getAttributes(colorAttribute.getId());
-            int f = 0;
-            int s = 0;
-            if (colorAttributes.filled()){
-                f = colorAttributes.filledColor().getRGB();
-            }
-            if (colorAttributes.stroked()){
-                s = colorAttributes.strokedColor().getRGB();
-            }
-            d.println(" <circle x=\""+ circle.getLoc().x + "\" y= \"" + circle.getLoc().y + "\"" + " radius =\"" + circle.getRadius( ) + "\""  + " filled=\""
-                    + colorAttributes.filled() + "\"" + " stroked=\"" + colorAttributes.stroked() + "\"" + " filledColor=\"" + f
-                    + "\"" + " strokedColor=\"" + s + "\"/>");
-        }
+	}
 
+	private String toString(int[] x) {
+		return Arrays.toString(x);
+	}
 
-        if (shape instanceof SText){
+	private int[] toArray(String string) {
 
-            SText text = (SText) shape ;
-            ColorAttributes colorAttributes = (ColorAttributes) text.getAttributes(colorAttribute.getId()) ;
-            FontAttributes fontAttributes = (FontAttributes) text.getAttributes(fontAttribute.getId());
-            int f = 0;
-            int s = 0;
+		String part = string.substring(1);
 
-            if (colorAttributes.filled())
-                f = colorAttributes.filledColor().getRGB();
-            if (colorAttributes.stroked())
-                s = colorAttributes.strokedColor().getRGB();
-            int t = fontAttributes.fontColor().getRGB();
-            d.println(" <text text=\"" + text.getText() + "\"" + " x=\"" + text.getLoc().x + "\" y=\"" + text.getLoc().y
-                    + "\"" + " filled=\"" + colorAttributes.filled() + "\"" + " stroked=\"" + colorAttributes.stroked() + "\"" + " filledColor=\"" + f + "\"" + " strokedColor=\"" + s + "\" />");
-        }
-        if (shape instanceof SCollection) {
-            SCollection collection = (SCollection) shape;
-            d.println("<collection>");
-            for (Iterator<Shape> it = collection.iterator(); it.hasNext();) {
-                Shape realShape = it.next();
-                serialisation(realShape);
-            }
-            d.println("</collection>");
-        }
+		String[] parts;
 
+		parts = part.split("]");
 
+		string = parts[0];
 
-        if (shape instanceof SPolygone) {
-            SPolygone polygone = (SPolygone) shape;
-            ColorAttributes colorAttributes = (ColorAttributes) polygone.getAttributes(colorAttribute.getId());
-            int filled = 0;
-            int stroked = 0;
-            if (colorAttributes.filled()) {
-                filled = colorAttributes.filledColor().getRGB();
-            }
-            if (colorAttributes.stroked()) {
-                stroked = colorAttributes.strokedColor().getRGB();
-            }
-            d.println(" <polygone x=\"" + polygone.getLoc().x + "\" y=\"" + polygone.getLoc().y + "\"" + " np=\"" + polygone.nPoints + "\"" + " X=\"" + toString(polygone.x) +"\"" + " Y=\"" + toString(polygone.y) + "\"" + " filled=\""
-                    + colorAttributes.filled() + "\"" + " stroked=\"" + colorAttributes.stroked() + "\"" + " filledColor=\"" + filled
-                    + "\"" + " strokedColor=\"" + stroked + "\"/>");
-        }
+		String[] strings = string.split(",");
 
-        if (shape instanceof SPicture) {
-            SPicture picture = (SPicture) shape;
+		int[] res = new int[strings.length];
 
-            d.println(" <picture x=\"" + picture.getLoc().x + "\" y=\"" + picture.getLoc().y + "\" path=\"" + picture.getPath()  + "\"/>");
-        }
+		res[0] = Integer.parseInt(strings[0]);
 
+		for (int i = 1; i < strings.length; i++) {
 
+			if (strings[i].split(" ") instanceof String[]) {
 
-    }
+				res[i] = Integer.parseInt(strings[i].substring(1));
 
-    private String toString(int[] x) {
-        return Arrays.toString(x);
-    }
+				// System.out.println(res[i]);
 
+			} else {
 
-    private int[] toArray(String string){
+				res[i] = Integer.parseInt(strings[i]);
+			}
 
-        String part = string.substring(1);
+		}
+		// System.out.println(array);
+		return res;
+	}
 
-        String[] parts ;
+	public void lecture() {
+		SCollection model = new SCollection();
+		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-        parts =  part.split("]");
+		try {
+			final DocumentBuilder builder = factory.newDocumentBuilder();
 
-        string = parts[0];
+			this.nomDuFichier = JOptionPane.showInputDialog("Enter file name : ");
 
-        String[] strings = string.split(",");
+			final Document document = builder.parse(new File(Chemin + nomDuFichier + ".xml"));
 
-        int[] res = new int[strings.length];
+			final Element root = document.getDocumentElement();
 
-        res[0] = Integer.parseInt(strings[0]);
+			// System.out.println(root.getNodeName());
 
-        for(int i=1; i<strings.length; i++) {
+			final NodeList rootNodes = root.getChildNodes();
+			final int nbRootNodes = rootNodes.getLength();
 
-            if (strings[i].split(" ") instanceof String[]){
+			for (int i = 0; i < nbRootNodes; i++) {
+				if (rootNodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
+					final Element shape = (Element) rootNodes.item(i);
+					model.add(deserialisation(shape));
+				}
+			}
+		} catch (final ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (final SAXException e) {
+			e.printStackTrace();
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
 
-                res[i] = Integer.parseInt(strings[i].substring(1));
+		Editor self = new Editor(model);
+		self.pack();
+		self.setVisible(true);
 
-                //System.out.println(res[i]);
+	}
 
-            }else {
+	public void enregistrer(SCollection model) {
 
-                res[i] = Integer.parseInt(strings[i]);
-            }
+		try {
+			this.nomDuFichier = JOptionPane.showInputDialog("Save As (without extension) :");
+			this.d = new PrintWriter(new BufferedOutputStream(new FileOutputStream(Chemin + nomDuFichier + ".xml")),
+					true);
+			d.println("<shape>");
+			for (Iterator<Shape> i = model.iterator(); i.hasNext();) {
+				Shape shape = (Shape) i.next();
+				serialisation(shape);
+			}
+			d.println("</shape>");
+			d.close();
 
-        }
-        //System.out.println(array);
-        return res ;
-    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	public Shape deserialisation(Element shape) {
+		String type = shape.getNodeName();
 
-    public void lecture()  {
-        SCollection model = new SCollection();
-        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		if (type == "rectangle") {
 
-        try {
-            final DocumentBuilder builder = factory.newDocumentBuilder();
+			int x = Integer.parseInt(shape.getAttribute("x"));
+			int y = Integer.parseInt(shape.getAttribute("y"));
+			int height = Integer.parseInt(shape.getAttribute("height"));
+			int width = Integer.parseInt(shape.getAttribute("width"));
+			SRectangle r = new SRectangle(new Point(x, y), width, height);
 
-            this.nomDuFichier = JOptionPane.showInputDialog("Enter file name : ");
+			boolean filled = Boolean.parseBoolean(shape.getAttribute("filled"));
+			boolean stroked = Boolean.parseBoolean(shape.getAttribute("stroked"));
+			Color filledColor = Color.decode(shape.getAttribute("filledColor"));
+			Color strokedColor = Color.decode(shape.getAttribute("strokedColor"));
 
-            final Document document = builder.parse(new File(Chemin + nomDuFichier + ".xml"));
+			r.addAttributes(new ColorAttributes(filled, stroked, filledColor, strokedColor));
+			r.addAttributes(new SelectionAttributes());
 
-            final Element root = document.getDocumentElement();
+			return (r);
+		}
 
+		if (type == "circle") {
 
-            //System.out.println(root.getNodeName());
+			int x = Integer.parseInt(shape.getAttribute("x"));
 
-            final NodeList rootNodes = root.getChildNodes();
-            final int nbRootNodes = rootNodes.getLength();
+			int y = Integer.parseInt(shape.getAttribute("y"));
 
-            for (int i = 0; i < nbRootNodes; i++) {
-                if (rootNodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                    final Element shape = (Element) rootNodes.item(i);
-                    model.add(deserialisation(shape));
-                }
-            }
-        }catch (final ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (final SAXException e) {
-            e.printStackTrace();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
+			int radius = Integer.parseInt(shape.getAttribute("radius"));
 
+			SCircle c = new SCircle(new Point(x, y), radius);
 
-        Editor self = new Editor(model);
-        self.pack();
-        self.setVisible(true);
+			boolean filled = Boolean.parseBoolean(shape.getAttribute("filled"));
+			boolean stroked = Boolean.parseBoolean(shape.getAttribute("stroked"));
+			Color filledColor = Color.decode(shape.getAttribute("filledColor"));
+			Color strokedColor = Color.decode(shape.getAttribute("strokedColor"));
+			c.addAttributes(new ColorAttributes(filled, stroked, filledColor, strokedColor));
+			c.addAttributes(new SelectionAttributes());
 
-    }
+			return (c);
+		}
 
+		if (type == "polygone") {
+			int np = Integer.parseInt(shape.getAttribute("np"));
 
+			int[] x = new int[np + 1];
+			int[] y = new int[np + 1];
 
+			x = toArray(shape.getAttribute("X"));
+			y = toArray(shape.getAttribute("Y"));
+			SPolygone p = new SPolygone(np, x, y);
 
-    public void enregistrer(SCollection model) {
+			boolean filled = Boolean.parseBoolean(shape.getAttribute("filled"));
+			boolean stroked = Boolean.parseBoolean(shape.getAttribute("stroked"));
+			Color filledColor = Color.decode(shape.getAttribute("filledColor"));
+			Color strokedColor = Color.decode(shape.getAttribute("strokedColor"));
 
-        try{
-            this.nomDuFichier = JOptionPane.showInputDialog("Save As (without extension) :");
-            this.d = new PrintWriter(new BufferedOutputStream(new FileOutputStream(Chemin + nomDuFichier + ".xml")),true);
-            d.println("<shape>");
-            for (Iterator<Shape> i = model.iterator(); i.hasNext();){
-                Shape shape = (Shape) i.next();
-                serialisation(shape);
-            }
-            d.println("</shape>");
-            d.close();
+			p.addAttributes(new ColorAttributes(filled, stroked, filledColor, strokedColor));
+			p.addAttributes(new SelectionAttributes());
 
-        } catch (IOException e ){
-            e.printStackTrace();
-        }
-    }
+			return (p);
+		}
 
-    public Shape deserialisation(Element shape) {
-        String type = shape.getNodeName();
+		if (type == "picture") {
 
-        if (type == "rectangle") {
+			int x = Integer.parseInt(shape.getAttribute("x"));
+			int y = Integer.parseInt(shape.getAttribute("y"));
 
+			String path = shape.getAttribute("path");
 
-            int x = Integer.parseInt(shape.getAttribute("x"));
-            int y = Integer.parseInt(shape.getAttribute("y"));
-            int height = Integer.parseInt(shape.getAttribute("height"));
-            int width = Integer.parseInt(shape.getAttribute("width"));
-            SRectangle r = new SRectangle(new Point(x, y), width, height);
+			SPicture pic = new SPicture(new Point(x, y), path);
 
-            boolean filled = Boolean.parseBoolean(shape.getAttribute("filled"));
-            boolean stroked = Boolean.parseBoolean(shape.getAttribute("stroked"));
-            Color filledColor = Color.decode(shape.getAttribute("filledColor"));
-            Color strokedColor = Color.decode(shape.getAttribute("strokedColor"));
+			return (pic);
+		}
 
-            r.addAttributes(new ColorAttributes(filled, stroked, filledColor, strokedColor));
-            r.addAttributes(new SelectionAttributes());
+		if (type == "text") {
 
-            return (r);
-        }
+			int x = Integer.parseInt(shape.getAttribute("x"));
 
+			int y = Integer.parseInt(shape.getAttribute("y"));
 
+			String text = shape.getAttribute("text");
+			SText t = new SText(new Point(x, y), text);
 
-        if (type == "circle") {
+			t.addAttributes(new FontAttributes());
 
+			boolean filled = Boolean.parseBoolean(shape.getAttribute("filled"));
 
-            int x = Integer.parseInt(shape.getAttribute("x"));
+			boolean stroked = Boolean.parseBoolean(shape.getAttribute("stroked"));
 
-            int y = Integer.parseInt(shape.getAttribute("y"));
+			Color filledColor = Color.decode(shape.getAttribute("filledColor"));
 
-            int radius = Integer.parseInt(shape.getAttribute("radius"));
+			Color strokedColor = Color.decode(shape.getAttribute("strokedColor"));
 
-            SCircle c = new SCircle(new Point(x, y), radius);
+			t.addAttributes(new ColorAttributes(filled, stroked, filledColor, strokedColor));
+			t.addAttributes(new FontAttributes());
+			t.addAttributes(new SelectionAttributes());
 
-            boolean filled = Boolean.parseBoolean(shape.getAttribute("filled"));
-            boolean stroked = Boolean.parseBoolean(shape.getAttribute("stroked"));
-            Color filledColor = Color.decode(shape.getAttribute("filledColor"));
-            Color strokedColor = Color.decode(shape.getAttribute("strokedColor"));
-            c.addAttributes(new ColorAttributes(filled, stroked, filledColor, strokedColor));
-            c.addAttributes(new SelectionAttributes());
+			return (t);
+		}
 
-            return (c);
-        }
+		if (type == "collection") {
 
+			SCollection collection = new SCollection();
+			final NodeList collectionNodes = shape.getChildNodes();
+			final int nbColNodes = collectionNodes.getLength();
 
-
-        if (type == "polygone") {
-            int np = Integer.parseInt(shape.getAttribute("np"));
-
-
-            int[] x = new int[np+1];
-            int[] y = new int[np+1];
-
-            x = toArray(shape.getAttribute("X"));
-            y = toArray(shape.getAttribute("Y"));
-            SPolygone p = new SPolygone(np , x , y);
-
-
-
-            boolean filled = Boolean.parseBoolean(shape.getAttribute("filled"));
-            boolean stroked = Boolean.parseBoolean(shape.getAttribute("stroked"));
-            Color filledColor = Color.decode(shape.getAttribute("filledColor"));
-            Color strokedColor = Color.decode(shape.getAttribute("strokedColor"));
-
-            p.addAttributes(new ColorAttributes(filled, stroked, filledColor, strokedColor));
-            p.addAttributes(new SelectionAttributes());
-
-            return (p);
-        }
-
-
-
-        if (type == "picture") {
-
-            int x = Integer.parseInt(shape.getAttribute("x"));
-            int y = Integer.parseInt(shape.getAttribute("y"));
-
-            String path = shape.getAttribute("path");
-
-            SPicture pic = new SPicture( new Point(x,y), path );
-
-
-            return (pic);
-        }
-
-
-        if (type == "text") {
-
-            int x = Integer.parseInt(shape.getAttribute("x"));
-
-            int y = Integer.parseInt(shape.getAttribute("y"));
-
-            String text = shape.getAttribute("text");
-            SText t = new SText(new Point(x, y), text);
-
-            t.addAttributes(new FontAttributes());
-
-            boolean filled = Boolean.parseBoolean(shape.getAttribute("filled"));
-
-            boolean stroked = Boolean.parseBoolean(shape.getAttribute("stroked"));
-
-            Color filledColor = Color.decode(shape.getAttribute("filledColor"));
-
-            Color strokedColor = Color.decode(shape.getAttribute("strokedColor"));
-
-
-            t.addAttributes(new ColorAttributes(filled, stroked, filledColor, strokedColor));
-            t.addAttributes(new FontAttributes());
-            t.addAttributes(new SelectionAttributes());
-
-            return (t);
-        }
-
-
-        if (type == "collection") {
-
-            SCollection collection = new SCollection();
-            final NodeList collectionNodes = shape.getChildNodes();
-            final int nbColNodes = collectionNodes.getLength();
-
-            for (int i = 0; i < nbColNodes; i++) {
-                if (collectionNodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                    final Element realShape = (Element) collectionNodes.item(i);
-                    collection.add(deserialisation(realShape));
-                }
-            }
-            return (collection);
-        }
-        return null;
-    }
+			for (int i = 0; i < nbColNodes; i++) {
+				if (collectionNodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
+					final Element realShape = (Element) collectionNodes.item(i);
+					collection.add(deserialisation(realShape));
+				}
+			}
+			return (collection);
+		}
+		return null;
+	}
 }

@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 public class FunctionsDialog extends JDialog {
 
 	public FunctionsDialog(JFrame parent, String title, boolean modal) {
-		super (parent, title, modal);
+		super(parent, title, modal);
 		this.setSize(600, 850);
 		this.setLocationRelativeTo(null);
 		this.setResizable(true);
@@ -30,34 +30,34 @@ public class FunctionsDialog extends JDialog {
 		textContent.setEditable(false);
 		textContent.setFont(new Font("Serif", Font.PLAIN, 14));
 		textContent.append("\t\tFUNCTIONALITIES :\t\t\t\n");
-		
+
 		textContent.append("\n\n- Selection of Shape : Left Click");
 
 		textContent.append("\n\nFile : \t- New -> Create a new blank project");
 		textContent.append("\n\t- Open -> Open an existing project");
 		textContent.append("\n\t- Save -> Save the project in the current folder");
 		textContent.append("\n\t- Export -> Export the project as jpeg format");
-		
+
 		textContent.append("\n\nShape : \t- Rectangle -> Add a random colored Rectangle");
 		textContent.append("\n\t- Circle -> Add a random colored Circle");
 		textContent.append("\n\t- Text -> Add a random colored Text that the user edits");
 		textContent.append("\n\t- Polygon -> Add a random colored Polygon among a collection of polygons");
 		textContent.append("\n\t- Image -> Import an image");
-		
+
 		textContent.append("\n\nColor : \t- Filled -> Change the Filled Color of the selected shape(s)");
 		textContent.append("\n\t- Open -> Open an existing project");
 		textContent.append("\n\t- Save -> Save the project in the current folder");
 		textContent.append("\n\t- Export -> Export the project as Jpeg format");
-		
+
 		textContent.append("\n\nGird : \t- Activate/Desactivate the Grid display");
-		
+
 		textContent.append("\n\nAnimation : \t- Start -> Start the Animation for the selected shape(s)");
 		textContent.append("\n\t- Stop -> Stop the Animation");
 		textContent.append("\n\t- Speed -> Select the Animation speed");
-		
+
 		textContent.append("\n\nHelp : \t- How does it works ? -> this Help");
 		textContent.append("\n\t- About -> About the Project");
-		
+
 		textContent.append("\n\n-Raccourcis : \t'+' > Zoom the selected shape(s)");
 		textContent.append("\n\t'-' > About the Project");
 		textContent.append("\n\t'Left_Arrow' > Rotate in the trigonometric way");

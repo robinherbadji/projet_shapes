@@ -24,7 +24,7 @@ public class SPolygone extends Shape {
 		this.y = y;
 		this.scale = 1;
 	}
-	
+
 	public SPolygone(Point pointRef) {
 		this.nPoints = 5;
 		this.x = new int[nPoints];
@@ -82,7 +82,7 @@ public class SPolygone extends Shape {
 			this.x = x3;
 			this.y = y3;
 			System.out.println("Losange");
-			
+
 		case "Maison":
 			this.nPoints = 5;
 			this.x = new int[nPoints];

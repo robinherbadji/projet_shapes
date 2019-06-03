@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 public class AboutDialog extends JDialog {
 
 	public AboutDialog(JFrame parent, String title, boolean modal) {
-		super (parent, title, modal);
+		super(parent, title, modal);
 		this.setSize(350, 260);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -30,27 +30,27 @@ public class AboutDialog extends JDialog {
 		textContent.setEditable(false);
 		textContent.setFont(new Font("Serif", Font.PLAIN, 18));
 		textContent.append("             JAVA PROJECT\n");
-	
-		
+
 		textContent.append("\n\nAuthors : \t- Bahrallil Khadija");
 		textContent.append("\n\t- Brugger Marie-Camille");
 		textContent.append("\n\t- Herbadji Robin");
 		textContent.append("\n\t- Sameh Yassine");
-		
+
 		panText.add(textContent);
-		
+
 		/*
-		JLabel l = new JLabel("<html><a href=\"https://github.com/robinherbadji/projet_shapes\">Lien</a></html>");
-		panText.add(l);
-		*/
-		
+		 * JLabel l = new
+		 * JLabel("<html><a href=\"https://github.com/robinherbadji/projet_shapes\">Lien</a></html>"
+		 * ); panText.add(l);
+		 */
+
 		this.getContentPane().add(panText, BorderLayout.CENTER);
 
 		JPanel control = new JPanel();
 		JButton okButton = new JButton("OK");
 		this.getRootPane().setDefaultButton(okButton);
 
-		okButton.addActionListener(new ActionListener(){
+		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
 			}
