@@ -104,7 +104,7 @@ public class SPicture extends Shape {
 
 		int destWidth = (int) (bImage.getWidth() * factor);
 		int destHeight = (int) (bImage.getHeight() * factor);
-		// créer l'image de destination
+		// crÃ©er l'image de destination
 		GraphicsConfiguration configuration = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDefaultConfiguration();
 		BufferedImage bImageNew = configuration.createCompatibleImage(destWidth, destHeight);

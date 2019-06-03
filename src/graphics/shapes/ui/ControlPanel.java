@@ -162,7 +162,7 @@ public class ControlPanel extends JPanel {
 		mPentagone.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Création Pentagone");
+				System.out.println("Crï¿½ation Pentagone");
 				SPolygone p = new SPolygone("Pentagone");
 				p.addAttributes(new ColorAttributes());
 				p.addAttributes(new SelectionAttributes());
@@ -174,7 +174,7 @@ public class ControlPanel extends JPanel {
 		mTriangle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Création Triangle");
+				System.out.println("Crï¿½ation Triangle");
 				SPolygone p = new SPolygone("Triangle");
 				p.addAttributes(new ColorAttributes());
 				p.addAttributes(new SelectionAttributes());
@@ -186,7 +186,7 @@ public class ControlPanel extends JPanel {
 		mLosange.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Création Losange");
+				System.out.println("Crï¿½ation Losange");
 				SPolygone p = new SPolygone("Losange");
 				p.addAttributes(new ColorAttributes());
 				p.addAttributes(new SelectionAttributes());
@@ -196,9 +196,9 @@ public class ControlPanel extends JPanel {
 		});
 		/*
 		 * mMaison.addActionListener(new ActionListener() {
-		 * 
+		 *
 		 * @Override public void actionPerformed(ActionEvent arg0) {
-		 * System.out.println("Création Maison"); SPolygone p = new SPolygone("Maison");
+		 * System.out.println("Crï¿½ation Maison"); SPolygone p = new SPolygone("Maison");
 		 * p.addAttributes(new ColorAttributes()); p.addAttributes(new
 		 * SelectionAttributes()); ((SCollection) shapesView.getModel()).add(p);
 		 * shapesView.repaint(); } });
@@ -224,7 +224,7 @@ public class ControlPanel extends JPanel {
 					try {
 						buffImage = ImageIO.read(new File(path));
 						if (buffImage != null) {
-							System.out.println("Création Image");
+							System.out.println("Crï¿½ation Image");
 							SPicture sp = new SPicture(new Point(100, 200), path);
 							sp.addAttributes(new SelectionAttributes());
 							((SCollection) shapesView.getModel()).add(sp);
@@ -240,6 +240,7 @@ public class ControlPanel extends JPanel {
 		menuShape.add(mPathPicture);
 
 		// ------------ Menu Color -------------
+
 
 		menuColor = new JMenu("   Color    ");
 		JMenu mFilled = new JMenu(" Filled ");

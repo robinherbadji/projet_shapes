@@ -22,17 +22,43 @@ import java.util.Iterator;
 
 public class FilesManager {
 
+	//the class runs the data flow ; the data is stored as XML files .
+
 	// fields
-	private String nomDuFichier;
-	private String Chemin;
+	private String file;
+	private String path;
 	private PrintWriter d;
 
 	// constructor
 
 	public FilesManager() {
-		this.nomDuFichier = "Monfichier.xml";
-		this.Chemin = "Files/";
+		this.file = "Monfichier.xml";
+		this.path = "Files/";
 	}
+
+
+	//saves the files and writes the root node
+
+	public void enregistrer(SCollection model) {
+
+		try {
+			this.file = JOptionPane.showInputDialog("Save As (without extension) :");
+			this.d = new PrintWriter(new BufferedOutputStream(new FileOutputStream(path + file + ".xml")),
+					true);
+			d.println("<shape>");
+			for (Iterator<Shape> i = model.iterator(); i.hasNext();) {
+				Shape shape = (Shape) i.next();
+				serialisation(shape);
+			}
+			d.println("</shape>");
+			d.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	//serialize the data (model)
 
 	public void serialisation(Shape shape) {
 
@@ -111,8 +137,7 @@ public class FilesManager {
 			if (colorAttributes.stroked()) {
 				stroked = colorAttributes.strokedColor().getRGB();
 			}
-			d.println(" <polygone x=\"" + polygone.getLoc().x + "\" y=\"" + polygone.getLoc().y + "\"" + " np=\""
-					+ polygone.nPoints + "\"" + " X=\"" + toString(polygone.x) + "\"" + " Y=\"" + toString(polygone.y)
+			d.println(" <polygone np=\"" + polygone.nPoints + "\"" + " X=\"" + toString(polygone.x) + "\"" + " Y=\"" + toString(polygone.y)
 					+ "\"" + " filled=\"" + colorAttributes.filled() + "\"" + " stroked=\"" + colorAttributes.stroked()
 					+ "\"" + " filledColor=\"" + filled + "\"" + " strokedColor=\"" + stroked + "\"/>");
 		}
@@ -125,7 +150,7 @@ public class FilesManager {
 		}
 
 	}
-
+	//used in the deserialization process of the polygon
 	private String toString(int[] x) {
 		return Arrays.toString(x);
 	}
@@ -160,9 +185,13 @@ public class FilesManager {
 			}
 
 		}
-		// System.out.println(array);
 		return res;
 	}
+
+
+	///
+
+	//opens the file that needs to be readand deserialized ;
 
 	public void lecture() {
 		SCollection model = new SCollection();
@@ -171,13 +200,11 @@ public class FilesManager {
 		try {
 			final DocumentBuilder builder = factory.newDocumentBuilder();
 
-			this.nomDuFichier = JOptionPane.showInputDialog("Enter file name : ");
+			this.file = JOptionPane.showInputDialog("Enter file name : ");
 
-			final Document document = builder.parse(new File(Chemin + nomDuFichier + ".xml"));
+			final Document document = builder.parse(new File(path + file + ".xml"));
 
 			final Element root = document.getDocumentElement();
-
-			// System.out.println(root.getNodeName());
 
 			final NodeList rootNodes = root.getChildNodes();
 			final int nbRootNodes = rootNodes.getLength();
@@ -202,24 +229,8 @@ public class FilesManager {
 
 	}
 
-	public void enregistrer(SCollection model) {
 
-		try {
-			this.nomDuFichier = JOptionPane.showInputDialog("Save As (without extension) :");
-			this.d = new PrintWriter(new BufferedOutputStream(new FileOutputStream(Chemin + nomDuFichier + ".xml")),
-					true);
-			d.println("<shape>");
-			for (Iterator<Shape> i = model.iterator(); i.hasNext();) {
-				Shape shape = (Shape) i.next();
-				serialisation(shape);
-			}
-			d.println("</shape>");
-			d.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	//data deserialization from the xml file previously encoded.
 
 	public Shape deserialisation(Element shape) {
 		String type = shape.getNodeName();
