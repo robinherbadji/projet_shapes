@@ -7,41 +7,41 @@ import java.util.Iterator;
 
 public class SCollection extends Shape {
 	private ArrayList<Shape> collection;
-	
+	private float rotation;
+	private int scale;
+
 	public SCollection() {
-		collection = new ArrayList<Shape>();
+		this.collection = new ArrayList<Shape>();
+		this.rotation = 0;
 	}
-	
-	/*
-	public ArrayList<Shape> getCollection() {
-		return this.collection;
-	}
-	*/
-	
+
 	public void add(Shape shape) {
 		this.collection.add(shape);
 	}
-	
+
+	public void delete(Shape shape) {
+		this.collection.remove(shape);
+	}
+
 	public Iterator<Shape> iterator() {
 		return collection.iterator();
 	}
-	
+
 	@Override
 	public Point getLoc() {
-		// On retourne la position de la 1ere forme
-		// A vérifier
 		if (collection != null)
-			return collection.get(0).getLoc();
-		else return null;
+			return collection.get(0).getLoc(); // Position of the first shape
+		else
+			return null;
 	}
 
 	@Override
 	public void setLoc(Point point) {
-		// A vérifier aussi
-		Iterator<Shape> itr = collection.iterator();
-		while (itr.hasNext()) {
-			itr.next().setLoc(point);
-		}		
+		collection.get(0).setLoc(point);
+		/*
+		 * Iterator<Shape> itr = collection.iterator(); while (itr.hasNext()) {
+		 * itr.next().setLoc(point); }
+		 */
 	}
 
 	@Override
@@ -50,42 +50,40 @@ public class SCollection extends Shape {
 		while (itr.hasNext()) {
 			Shape shape = itr.next();
 			shape.translate(dx, dy);
-		}		
+		}
 	}
-	
+
 	@Override
 	public Rectangle getBounds() {
 		Iterator<Shape> itr = collection.iterator();
-		// Deux façons de faire pour déclarer bounds:		
-		// 1
-		/*
-		Rectangle bounds = itr.next().getBounds();
-		while (itr.hasNext()) {
-			Shape shape = itr.next();
-			bounds = bounds.union(shape.getBounds());
-		}
-		*/		
-		//2
-		Rectangle bounds = new Rectangle(-1,-1); // Rectangle traité comme non-existant (bounds = null ne fonctionnant pas)
+		Rectangle bounds = new Rectangle(-1, -1); // Rectangle seen as non-existing
 		while (itr.hasNext()) {
 			Shape shape = itr.next();
 			bounds = bounds.union(shape.getBounds());
 		}
 		return bounds;
-		
-		//3 -> Bugs
-		/*
-		Rectangle bounds = new Rectangle();
-		for (Iterator<Shape> itr = collection.iterator(); itr.hasNext();) {
-			bounds.union(((Shape) itr.next()).getBounds());
-		}
-		return bounds;
-		*/
 	}
-	
 
 	@Override
 	public void accept(ShapeVisitor sVisitor) {
-		sVisitor.visitCollection(this);		
-	}	
+		sVisitor.visitCollection(this);
+	}
+
+	public double getRotation() {
+		return collection.get(0).getRotation();
+	}
+
+	public void setRotation(double rotation) {
+		Iterator<Shape> itr = collection.iterator();
+		while (itr.hasNext()) {
+			Shape shape = itr.next();
+			shape.setRotation(rotation);
+		}
+	}
+
+
+	public ArrayList<Shape> getCollection() {
+		return this.collection;
+	}
+
 }
