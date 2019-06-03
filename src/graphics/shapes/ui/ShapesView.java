@@ -34,11 +34,6 @@ public class ShapesView extends View {
 		return new ShapesController(model);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-	}
-
 	public void drawGrid(Graphics g) {
 		g.setColor(Color.BLACK);
 		final int step = 50;
@@ -48,5 +43,11 @@ public class ShapesView extends View {
 		for (int i = step; i < this.getHeight(); i += step) {
 			g.drawLine(0, i, this.getWidth(), i);
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

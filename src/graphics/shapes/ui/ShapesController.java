@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import graphics.shapes.SCircle;
@@ -35,7 +36,7 @@ public class ShapesController extends Controller {
 	private int vy;
 	private double scale;
 	private double scalePolygon;
-	private Shape shapeCopied;
+	private ArrayList<Shape> shapeCopied;
 
 	public ShapesController(Object newModel) {
 		super(newModel);
@@ -44,13 +45,6 @@ public class ShapesController extends Controller {
 		this.vy = 1;
 		this.scale = 1;
 		this.scalePolygon = 1;
-		Iterator<Shape> itr = ((SCollection) model).iterator();
-		try {
-			this.shapeCopied = itr.next().clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	// Accesseurs
@@ -296,8 +290,8 @@ public class ShapesController extends Controller {
 			this.getView().repaint();
 		}
 		if (e.getButton() == 3) {
-			RightClick p = new RightClick(this);
-			p.click(e);
+			RightClick rightClick = new RightClick(this);
+			rightClick.click(e);
 
 		}
 	}
@@ -354,7 +348,28 @@ public class ShapesController extends Controller {
 	}
 
 	public void keyPressed(KeyEvent evt) {
-		// System.out.println("keyPressed");
+		if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+			this.delete();
+		}
+		if (evt.getKeyCode() == KeyEvent.VK_C && evt.isControlDown()) {
+			try {
+				this.copy();
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+		}
+		if (evt.getKeyCode() == KeyEvent.VK_X && evt.isControlDown()) {
+			this.cut();
+		}
+		if (evt.getKeyCode() == KeyEvent.VK_V && evt.isControlDown()) {
+			this.paste(new Point(200,200));
+			
+		}
+		if (evt.getKeyCode() == KeyEvent.VK_A && evt.isControlDown()) {
+			System.out.println("selectall");
+			this.selectAll();
+		}
+		
 		Shape shape = null;
 		boolean containsSelected = false;
 		Iterator<Shape> itr = ((SCollection) model).iterator();
@@ -372,37 +387,33 @@ public class ShapesController extends Controller {
 						System.out.println("zoom -");
 						reduceShape(shape);
 					}
-				}
-			}
-
-			if (containsSelected) {
-				if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
-					System.out.println("left rotation");
-					rotateSelected(-10);
-				}
-				if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
-					System.out.println("right rotation");
-					rotateSelected(10);
-				}
-			}
-			this.getView().repaint();
+					if (containsSelected) {
+						if (evt.getKeyCode() == KeyEvent.VK_LEFT) {
+							System.out.println("left rotation");
+							rotateSelected(-10);
+						}
+						if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+							System.out.println("right rotation");
+							rotateSelected(10);
+						}
+					}
+					this.getView().repaint();
+				}				
+			}			
 		}
 	}
 	
 
 	public void blank() {
-
 		SCollection model = new SCollection();
 		Editor self = new Editor(model);
 		self.pack();
 		self.setVisible(true);
-
 	}
 
 	public void save() {
 		FilesManager xml = new FilesManager();
 		xml.enregistrer((SCollection) this.getModel());
-
 	}
 
 	public void open() {
@@ -411,40 +422,76 @@ public class ShapesController extends Controller {
 	}
 
 	public void export() {
-
 		Export e = new Export();
 		e.takePicture((ShapesView) this.getView());
 	}
 	
 	public void delete() {
-		SCollection selectedShapes = this.getSelected();
-		Iterator<Shape> itr = selectedShapes.iterator();
+		SCollection selectedShapes = this.getSelected(); // Création de la Collection des formes selectionnées
+		Iterator<Shape> itr = selectedShapes.iterator(); // Crréation d'un itérateur
 		Shape shape = null;
-		while (itr.hasNext()) {
-			shape = itr.next();
+		while (itr.hasNext()) { // On parcourt la collection
+			shape = itr.next(); // On itère
 			if (shape != null) {
 				((SCollection) model).delete(shape);
 				System.out.println("Deleted");
 			}
 		}
-		this.getView().repaint();
+		this.getView().repaint(); // Réactualise
 	}
 	
 	
 	public void copy() throws CloneNotSupportedException {
-		this.shapeCopied = new SCollection(this.getSelected());
-		System.out.println("Copied : "+this.getSelected()+ " dans "+this.shapeCopied);
+		Iterator<Shape> itr = this.getSelected().iterator();
+		Shape shape;
+		Shape clone;
+		int i=1;
+		this.shapeCopied = new ArrayList<Shape>();
+		while (itr.hasNext()) {
+			System.out.println(i);
+			shape = itr.next();
+			clone = shape.clone();
+			//System.out.println(clone);
+			this.shapeCopied.add(clone);
+			i++;
+		}
+	}
+	
+	public void cut() {
+		try {
+			this.copy();
+			this.delete();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	public void paste(Point mousePos) {
-		this.shapeCopied.setLoc(mousePos);
-		((SCollection) model).add(this.shapeCopied);
+		//this.shapeCopied.get(0).setLoc(mousePos);
+		Iterator<Shape> itr = this.shapeCopied.iterator();
+		Shape shape;
+		int i=1;
+		while (itr.hasNext()) {
+			System.out.println(i);
+			shape = itr.next();
+			((SCollection) model).add(shape);
+			i++;
+		}
 		System.out.println("Paste");
 		this.getView().repaint();
 	}
 	
 	
+	public void selectAll() {
+		Shape s;
+		SCollection sc = (SCollection) this.getModel();
+		for (Iterator<Shape> i = sc.iterator(); i.hasNext();) {
+			s = (Shape) i.next();
+			SelectionAttributes sa = (SelectionAttributes) s.getAttributes("selectionAttributes");
+			sa.select();
+		}
+	}
 	
 	
 }

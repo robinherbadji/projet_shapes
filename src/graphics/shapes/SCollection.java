@@ -15,21 +15,6 @@ public class SCollection extends Shape {
 		this.collection = new ArrayList<Shape>();
 		this.rotation = 0;
 	}
-	
-	public SCollection(SCollection sCollection) throws CloneNotSupportedException {
-		super(sCollection);
-		this.collection = new ArrayList<Shape>();
-		Iterator<Shape> itr = sCollection.iterator();
-		Shape shape;
-		while (itr.hasNext()) {
-			this.collection.add(itr.next().clone());
-		}
-		
-	}
-
-	/*
-	 * public ArrayList<Shape> getCollection() { return this.collection; }
-	 */
 
 	public void add(Shape shape) {
 		this.collection.add(shape);
@@ -40,13 +25,11 @@ public class SCollection extends Shape {
 	}
 
 	public Iterator<Shape> iterator() {
-		System.out.println(collection);
 		return collection.iterator();
 	}
 
 	@Override
 	public Point getLoc() {
-
 		// On retourne la position de la 1ere forme
 		if (collection != null)
 			return collection.get(0).getLoc();
@@ -79,7 +62,7 @@ public class SCollection extends Shape {
 		Iterator<Shape> itr = collection.iterator();
 		Rectangle bounds = new Rectangle(-1, -1); // Rectangle traité comme non-existant (bounds = null ne fonctionnant
 													// pas)
-		// Deux faï¿½ons de faire pour dï¿½clarer bounds:
+		// Deux facons de faire pour declarer bounds:
 		// 1
 		/*
 		 * Rectangle bounds = itr.next().getBounds(); while (itr.hasNext()) { Shape

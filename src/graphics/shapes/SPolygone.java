@@ -110,7 +110,6 @@ public class SPolygone extends Shape {
 		for (int i = 0; i < nPoints; i++) {
 			this.x[i] = x[i];
 			this.y[i] = y[i];
-
 		}
 	}
 

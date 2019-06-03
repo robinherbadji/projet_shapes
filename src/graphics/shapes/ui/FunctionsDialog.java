@@ -27,6 +27,7 @@ public class FunctionsDialog extends JDialog {
 		// panText.setPreferredSize(new Dimension(500, 500));
 
 		JTextArea textContent = new JTextArea();
+		textContent.setEditable(false);
 		textContent.setFont(new Font("Serif", Font.PLAIN, 14));
 		textContent.append("\t\tFUNCTIONALITIES :\t\t\t\n");
 		

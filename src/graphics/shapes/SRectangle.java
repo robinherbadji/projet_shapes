@@ -29,7 +29,7 @@ public class SRectangle extends Shape {
 	@Override
 	public Point getLoc() {
 		// return point;
-		return this.rect.getLocation(); // Si on utilise les m�thodes de la classe java Point
+		return this.rect.getLocation(); // Si on utilise les methodes de la classe java Point
 	}
 
 	@Override
