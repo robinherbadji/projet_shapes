@@ -35,6 +35,10 @@ import graphics.shapes.attributes.FontAttributes;
 import graphics.shapes.attributes.SelectionAttributes;
 
 @SuppressWarnings("serial")
+/**
+ * A JPanel dedicated to the JMenuBar on the top of the window
+ *
+ */
 public class ControlPanel extends JPanel {
 	private ShapesView shapesView;
 	private ShapesController shapesController;
@@ -51,14 +55,14 @@ public class ControlPanel extends JPanel {
 		this.menuBar.setSize(this.shapesView.getWidth(), 100);
 		this.animationOn = false;
 		this.speed = "Normal";
-		this.speedMap = new TreeMap<String, Integer>();
+		this.speedMap = new TreeMap<String, Integer>(); // Associate a String speed to an int speed
 		this.speedMap.put("Slow", 18);
 		this.speedMap.put("Normal", 8);
 		this.speedMap.put("Fast", 2);
-		initialisation();
+		this.buildMenu();
 	}
 
-	public void initialisation() {
+	public void buildMenu() {
 		menuFile = new JMenu("   File    ");
 		JMenuItem mNew = new JMenuItem(" New ");
 		mNew.addActionListener(new ActionListener() {
@@ -154,14 +158,15 @@ public class ControlPanel extends JPanel {
 
 		JMenu mPolygon = new JMenu("Polygon");
 
-		JMenuItem mPentagone = new JMenuItem("Pentagone");
+		JMenuItem mPentagone = new JMenuItem("Maison");
 		JMenuItem mTriangle = new JMenuItem("Triangle");
 		JMenuItem mLosange = new JMenuItem("Losange");
+		// JMenuItem mMaison = new JMenuItem("Maison");
 
 		mPentagone.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Création Pentagone");
+				System.out.println("Crï¿½ation Pentagone");
 				SPolygone p = new SPolygone("Pentagone");
 				p.addAttributes(new ColorAttributes());
 				p.addAttributes(new SelectionAttributes());
@@ -173,7 +178,7 @@ public class ControlPanel extends JPanel {
 		mTriangle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Création Triangle");
+				System.out.println("Crï¿½ation Triangle");
 				SPolygone p = new SPolygone("Triangle");
 				p.addAttributes(new ColorAttributes());
 				p.addAttributes(new SelectionAttributes());
@@ -185,7 +190,7 @@ public class ControlPanel extends JPanel {
 		mLosange.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Création Losange");
+				System.out.println("Crï¿½ation Losange");
 				SPolygone p = new SPolygone("Losange");
 				p.addAttributes(new ColorAttributes());
 				p.addAttributes(new SelectionAttributes());
@@ -193,9 +198,20 @@ public class ControlPanel extends JPanel {
 				shapesView.repaint();
 			}
 		});
+		/*
+		 * mMaison.addActionListener(new ActionListener() {
+		 *
+		 * @Override public void actionPerformed(ActionEvent arg0) {
+		 * System.out.println("Crï¿½ation Maison"); SPolygone p = new SPolygone("Maison");
+		 * p.addAttributes(new ColorAttributes()); p.addAttributes(new
+		 * SelectionAttributes()); ((SCollection) shapesView.getModel()).add(p);
+		 * shapesView.repaint(); } });
+		 */
+
 		mPolygon.add(mPentagone);
 		mPolygon.add(mTriangle);
 		mPolygon.add(mLosange);
+		// mPolygon.add(mMaison);
 		menuShape.add(mPolygon);
 
 		// ------------ SPicture -------------
@@ -204,17 +220,15 @@ public class ControlPanel extends JPanel {
 		mPathPicture.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
 				path = JOptionPane.showInputDialog(null, "Image Path: ", "Image Importation",
 						JOptionPane.QUESTION_MESSAGE);
-
 				if ((path != null) && path.length() > 0) {
 
 					BufferedImage buffImage;
 					try {
 						buffImage = ImageIO.read(new File(path));
 						if (buffImage != null) {
-							System.out.println("Création Image");
+							System.out.println("Crï¿½ation Image");
 							SPicture sp = new SPicture(new Point(100, 200), path);
 							sp.addAttributes(new SelectionAttributes());
 							((SCollection) shapesView.getModel()).add(sp);
@@ -230,6 +244,7 @@ public class ControlPanel extends JPanel {
 		menuShape.add(mPathPicture);
 
 		// ------------ Menu Color -------------
+
 
 		menuColor = new JMenu("   Color    ");
 		JMenu mFilled = new JMenu(" Filled ");
@@ -442,12 +457,13 @@ public class ControlPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				speed = ((JRadioButtonMenuItem) e.getSource()).getText();
 				speedInfo.setText("   (" + ((JRadioButtonMenuItem) e.getSource()).getText() + ")");
-				if (animationOn) { // On relance l'animation pour que la vitesse soit prise en compte
+				
+				// Restart Animation to take the new speed account
+				if (animationOn) {
 					shapesController.getTimer().stop();
 					shapesController.animatedSelected(shapesView, speedMap.get(speed));
 				}
 			}
-
 		}
 
 		SpeedListener speedLis = new SpeedListener();
@@ -472,20 +488,22 @@ public class ControlPanel extends JPanel {
 		mFunctions.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				FunctionsDialog fDialog = new FunctionsDialog(null, "How does it work ?", true);
+				FunctionsDialog fDialog = new FunctionsDialog(null, "How does it work ?", false);
 				fDialog.setVisible(true);
 			}
 		});
-		mFunctions.setAccelerator(KeyStroke.getKeyStroke('?'));
+		mFunctions.setAccelerator(KeyStroke.getKeyStroke('h'));
 		menuHelp.add(mFunctions);
 
 		JMenuItem mAbout = new JMenuItem(" About ");
 		mAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				AboutDialog aDialog = new AboutDialog(null, "About", true);
+				aDialog.setVisible(true);
 			}
 		});
+		mAbout.setAccelerator(KeyStroke.getKeyStroke('?'));
 		menuHelp.add(mAbout);
 
 		menuBar.add(menuFile);
@@ -496,21 +514,8 @@ public class ControlPanel extends JPanel {
 		menuBar.add(menuHelp);
 	}
 
-	// ------------ Setters -------------
-
-	public void setText(String text) {
-		this.sText = text;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
+	
 	// ------------ Getters -------------
-
-	public ControlPanel getMenu() {
-		return this;
-	}
 
 	public JMenuBar getMenuBar() {
 		return this.menuBar;

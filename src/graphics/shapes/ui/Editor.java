@@ -39,7 +39,6 @@ public class Editor extends JFrame {
 		this.buildModel();
 
 		// Affichage Modele :
-
 		this.sview = new ShapesView(this.model);
 		this.sview.setPreferredSize(new Dimension(300, 300));
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
@@ -61,7 +60,7 @@ public class Editor extends JFrame {
 
 		this.buildModel();
 
-		// Affichage Mod�le :
+		// Affichage Modele :
 		this.sview = new ShapesView(model);
 		this.sview.setPreferredSize(new Dimension(300, 300));
 		this.getContentPane().add(this.sview, java.awt.BorderLayout.CENTER);
@@ -91,18 +90,18 @@ public class Editor extends JFrame {
 		t.addAttributes(new SelectionAttributes());
 		this.model.add(t);
 
-		int[] x = { 50, 70, 50, 70, 50 };
-		int[] y = { 100, 200, 200, 100, 100 };
-		int np = 4;
+		/*
+		 * int[] x={50,70,50,70,50}; int[] y={100,200,200,100,100}; int np = 4;
+		 * SPolygone p = new SPolygone(np,x,y);
+		 */
 
-		// SPolygone p = new SPolygone(np,x,y);
-		SPolygone p = new SPolygone();
+		SPolygone p = new SPolygone(new Point(200, 250));
 		p.addAttributes(new ColorAttributes(true, true, Color.red, Color.green));
 		p.addAttributes(new SelectionAttributes());
 		// p.barycentre();
 		this.model.add(p);
 
-		String path = "C:\\Documentutile\\ensisa.png";
+		String path = "Files/ensisa.png";
 		BufferedImage buffImage;
 		try {
 			buffImage = ImageIO.read(new File(path));
@@ -117,13 +116,14 @@ public class Editor extends JFrame {
 
 		SCollection sc = new SCollection();
 		sc.addAttributes(new SelectionAttributes());
-		r = new SRectangle(new Point(20, 30), 30, 30);
-		r.addAttributes(new ColorAttributes(true, false, Color.MAGENTA, Color.BLUE));
-		r.addAttributes(new SelectionAttributes());
-		sc.add(r);
-		c = new SCircle(new Point(150, 100), 20);
-		c.addAttributes(new ColorAttributes(false, true, Color.BLUE, Color.DARK_GRAY));
-		sc.add(c);
+		SRectangle r1 = new SRectangle(new Point(20, 30), 30, 30);
+		r1.addAttributes(new ColorAttributes(true, false, Color.MAGENTA, Color.BLUE));
+		r1.addAttributes(new SelectionAttributes());
+		sc.add(r1);
+		SCircle c1 = new SCircle(new Point(150, 100), 20);
+		c1.addAttributes(new ColorAttributes(false, true, Color.BLUE, Color.DARK_GRAY));
+		c1.addAttributes(new SelectionAttributes());
+		sc.add(c1);
 		this.model.add(sc);
 	}
 

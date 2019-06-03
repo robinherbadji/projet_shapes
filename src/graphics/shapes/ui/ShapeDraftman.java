@@ -5,16 +5,11 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
-
-import javax.imageio.ImageIO;
 
 import graphics.shapes.SCircle;
 import graphics.shapes.SCollection;
@@ -36,15 +31,22 @@ public class ShapeDraftman implements ShapeVisitor {
 		this.g = g;
 	}
 
-	// Dessin du carr� de S�lection
-	public void drawSelectionShape(Rectangle rect) {
+	/**
+	 * Draw a small square indicating whereas a shape is selected or not
+	 * 
+	 * @param bounds : The getBounds of the concerned shape
+	 */
+	public void drawSelectionShape(Rectangle bounds) {
 		final int size = 5;
 		g.setColor(Color.black);
-		g.drawRect(rect.x - size + 2, rect.y - size + 2, size, size);
+		g.drawRect(bounds.x - size + 2, bounds.y - size + 2, size, size);
 	}
-
-	// Visit Shapes
+	
+		
 	@Override
+	/**
+	 * Draw a Rectangle
+	 */
 	public void visitRectangle(SRectangle rect) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (rect != null) {
@@ -65,7 +67,6 @@ public class ShapeDraftman implements ShapeVisitor {
 				if (cA.stroked()) {
 					g2d.setColor(cA.strokedColor());
 					g2d.drawRect(sX, sY, sW, sH);
-
 				}
 			} else {
 				g2d.setColor(Color.BLACK);
@@ -80,6 +81,9 @@ public class ShapeDraftman implements ShapeVisitor {
 	}
 
 	@Override
+	/**
+	 * Draw a Circle
+	 */
 	public void visitCircle(SCircle scircle) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (scircle != null) {
@@ -110,6 +114,9 @@ public class ShapeDraftman implements ShapeVisitor {
 	}
 
 	@Override
+	/**
+	 * Draw a Text
+	 */
 	public void visitText(SText stext) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (stext != null) {
@@ -134,17 +141,13 @@ public class ShapeDraftman implements ShapeVisitor {
 				g2d.setFont(fonte);
 
 				if (cA != null) {
-
 					if (cA.filled()) {
 						if (stext.getBounds() != null) {
-
 							g2d.setColor(cA.filledColor());
 							g2d.fillRect(sX, sY, sW, sH);
-
 						}
 					}
 					if (cA.stroked()) {
-
 						g2d.setColor(cA.strokedColor());
 						g2d.drawString(text, loc.x, loc.y);
 					}
@@ -159,8 +162,10 @@ public class ShapeDraftman implements ShapeVisitor {
 	}
 
 	@Override
+	/**
+	 * Draw a Collection
+	 */
 	public void visitCollection(SCollection scollec) {
-		Graphics2D g2d = (Graphics2D) g.create();
 		Shape shape;
 		if (scollec != null) {
 			Iterator<Shape> itr = scollec.iterator();
@@ -172,16 +177,16 @@ public class ShapeDraftman implements ShapeVisitor {
 					drawSelectionShape(shape.getBounds());
 				}
 			}
-
 		}
 	}
 
 	@Override
+	/**
+	 * Draw a Polygon
+	 */
 	public void visitPolygone(SPolygone spolygone) {
-
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (spolygone != null) {
-
 			int sX = spolygone.getBounds().x;
 			int sY = spolygone.getBounds().y;
 			int sW = spolygone.getBounds().width;
@@ -217,8 +222,10 @@ public class ShapeDraftman implements ShapeVisitor {
 	}
 
 	@Override
+	/**
+	 * Draw an Image
+	 */
 	public void visitImage(SPicture spicture) {
-
 		Graphics2D g2d = (Graphics2D) g.create();
 		BufferedImage image;
 		File file = new File(spicture.getPath());

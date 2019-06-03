@@ -3,7 +3,6 @@ package graphics.shapes.attributes;
 import java.awt.Color;
 
 public class ColorAttributes extends Attributes {
-
 	private boolean filled;
 	private boolean stroked;
 	private Color filledColor;
@@ -61,7 +60,11 @@ public class ColorAttributes extends Attributes {
 	public void setStrokedColor(Color strokedColor) {
 		this.strokedColor = strokedColor;
 	}
-
+	
+	/**
+	 * 
+	 * @return A random RGB generated Color
+	 */
 	public Color randomColor() {
 		int red = (int) (Math.random() * 256);
 		int green = (int) (Math.random() * 256);

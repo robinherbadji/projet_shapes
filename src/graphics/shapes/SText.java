@@ -11,11 +11,13 @@ public class SText extends Shape {
 	private int sizeText;
 	private double rotation;
 
+	/**
+	 * Constructor of a random positioned SText
+	 */
 	public SText(String text) {
 		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
 		this.setLoc(point);
 		this.setText(text);
-
 		this.sizeText = 13;
 	}
 
@@ -53,7 +55,6 @@ public class SText extends Shape {
 
 	@Override
 	public Rectangle getBounds() {
-
 		FontAttributes fA = (FontAttributes) this.getAttributes("fontAttributes");
 		if (fA != null) {
 			Rectangle bounds = fA.getBounds(this.text);

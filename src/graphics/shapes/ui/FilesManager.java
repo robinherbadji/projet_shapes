@@ -22,22 +22,47 @@ import java.util.Iterator;
 
 public class FilesManager {
 
+	//the class runs the data flow ; the data is stored as XML files .
+
 	// fields
-	private String nomDuFichier;
-	private String Chemin;
+	private String file;
+	private String path;
 	private PrintWriter d;
 
 	// constructor
 
 	public FilesManager() {
-		this.nomDuFichier = "Monfichier.xml";
-		this.Chemin = "Files/";
+		this.file = "Monfichier.xml";
+		this.path = "Files/";
 	}
+
+
+	//saves the files and writes the root node
+
+	public void enregistrer(SCollection model) {
+
+		try {
+			this.file = JOptionPane.showInputDialog("Save As (without extension) :");
+			this.d = new PrintWriter(new BufferedOutputStream(new FileOutputStream(path + file + ".xml")),
+					true);
+			d.println("<shape>");
+			for (Iterator<Shape> i = model.iterator(); i.hasNext();) {
+				Shape shape = (Shape) i.next();
+				serialisation(shape);
+			}
+			d.println("</shape>");
+			d.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	//serialize the data (model)
 
 	public void serialisation(Shape shape) {
 
 		ColorAttributes colorAttribute = new ColorAttributes();
-		FontAttributes fontAttribute = new FontAttributes();
 
 		if (shape instanceof SRectangle) {
 			SRectangle rectangle = (SRectangle) shape;
@@ -77,7 +102,6 @@ public class FilesManager {
 
 			SText text = (SText) shape;
 			ColorAttributes colorAttributes = (ColorAttributes) text.getAttributes(colorAttribute.getId());
-			FontAttributes fontAttributes = (FontAttributes) text.getAttributes(fontAttribute.getId());
 			int f = 0;
 			int s = 0;
 
@@ -85,7 +109,6 @@ public class FilesManager {
 				f = colorAttributes.filledColor().getRGB();
 			if (colorAttributes.stroked())
 				s = colorAttributes.strokedColor().getRGB();
-			int t = fontAttributes.fontColor().getRGB();
 			d.println(" <text text=\"" + text.getText() + "\"" + " x=\"" + text.getLoc().x + "\" y=\"" + text.getLoc().y
 					+ "\"" + " filled=\"" + colorAttributes.filled() + "\"" + " stroked=\"" + colorAttributes.stroked()
 					+ "\"" + " filledColor=\"" + f + "\"" + " strokedColor=\"" + s + "\" />");
@@ -111,8 +134,7 @@ public class FilesManager {
 			if (colorAttributes.stroked()) {
 				stroked = colorAttributes.strokedColor().getRGB();
 			}
-			d.println(" <polygone x=\"" + polygone.getLoc().x + "\" y=\"" + polygone.getLoc().y + "\"" + " np=\""
-					+ polygone.nPoints + "\"" + " X=\"" + toString(polygone.x) + "\"" + " Y=\"" + toString(polygone.y)
+			d.println(" <polygone np=\"" + polygone.nPoints + "\"" + " X=\"" + toString(polygone.x) + "\"" + " Y=\"" + toString(polygone.y)
 					+ "\"" + " filled=\"" + colorAttributes.filled() + "\"" + " stroked=\"" + colorAttributes.stroked()
 					+ "\"" + " filledColor=\"" + filled + "\"" + " strokedColor=\"" + stroked + "\"/>");
 		}
@@ -125,7 +147,7 @@ public class FilesManager {
 		}
 
 	}
-
+	//used in the deserialization process of the polygon
 	private String toString(int[] x) {
 		return Arrays.toString(x);
 	}
@@ -152,7 +174,7 @@ public class FilesManager {
 
 				res[i] = Integer.parseInt(strings[i].substring(1));
 
-				System.out.println(res[i]);
+				// System.out.println(res[i]);
 
 			} else {
 
@@ -160,9 +182,13 @@ public class FilesManager {
 			}
 
 		}
-		// System.out.println(array);
 		return res;
 	}
+
+
+	///
+
+	//opens the file that needs to be readand deserialized ;
 
 	public void lecture() {
 		SCollection model = new SCollection();
@@ -171,14 +197,11 @@ public class FilesManager {
 		try {
 			final DocumentBuilder builder = factory.newDocumentBuilder();
 
-			// this.nomDuFichier = JOptionPane.showInputDialog("Please enter file name : ");
-			this.nomDuFichier = JOptionPane.showInputDialog(null, "Please enter file name : ", "Import File",
-					JOptionPane.QUESTION_MESSAGE);
-			final Document document = builder.parse(new File(Chemin + nomDuFichier + ".xml"));
+			this.file = JOptionPane.showInputDialog("Enter file name : ");
+
+			final Document document = builder.parse(new File(path + file + ".xml"));
 
 			final Element root = document.getDocumentElement();
-
-			System.out.println(root.getNodeName());
 
 			final NodeList rootNodes = root.getChildNodes();
 			final int nbRootNodes = rootNodes.getLength();
@@ -203,27 +226,8 @@ public class FilesManager {
 
 	}
 
-	public void enregistrer(SCollection model) {
 
-		try {
-			// Enregistrer le fichier Sous (sans extension)
-			this.nomDuFichier = JOptionPane.showInputDialog(null, "File name.*: ", "Save As",
-					JOptionPane.QUESTION_MESSAGE);
-			this.d = new PrintWriter(new BufferedOutputStream(new FileOutputStream(Chemin + nomDuFichier + ".xml")),
-					true);
-			System.out.println("jj");
-			d.println("<shape>");
-			for (Iterator<Shape> i = model.iterator(); i.hasNext();) {
-				Shape shape = (Shape) i.next();
-				serialisation(shape);
-			}
-			d.println("</shape>");
-			d.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	//data deserialization from the xml file previously encoded.
 
 	public Shape deserialisation(Element shape) {
 		String type = shape.getNodeName();
@@ -268,7 +272,6 @@ public class FilesManager {
 		}
 
 		if (type == "polygone") {
-
 			int np = Integer.parseInt(shape.getAttribute("np"));
 
 			int[] x = new int[np + 1];

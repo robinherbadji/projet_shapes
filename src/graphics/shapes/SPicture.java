@@ -7,7 +7,6 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +20,34 @@ public class SPicture extends Shape {
 	private double rotation;
 
 	public SPicture(Point point, String path) {
+		this.point = point;
+		this.setPath(path);
+		try {
+			if (path.startsWith("http")) {
+				/*
+				 * URL url = new URL(path); URLConnection urlc = url.openConnection();
+				 * HttpURLConnection httpURLCon = (HttpURLConnection) urlc;
+				 * httpURLCon.addRequestProperty("User-Agent", "Mozilla/4.76"); if(
+				 * (ImageIO.read(httpURLCon.getInputStream())) != null){ this.picture =
+				 * (ImageIO.read(httpURLCon.getInputStream()));
+				 */
+
+			} else {
+				this.picture = ImageIO.read(new File(path));
+				this.pictureRef = ImageIO.read(new File(path));
+			}
+
+		} catch (IOException e) {
+			System.out.println("Error : No Path Found");
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Constructor of a random positioned SPicture
+	 */
+	public SPicture(String path) {
 		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
 		this.setPath(path);
 		this.rotation=0;
@@ -40,9 +67,7 @@ public class SPicture extends Shape {
 			}
 
 		} catch (IOException e) {
-
-			System.out.println("Erreur : Aucun path trouvï¿½");
-
+			System.out.println("Error : No Path Found");
 			e.printStackTrace();
 		}
 	}
@@ -106,7 +131,7 @@ public class SPicture extends Shape {
 
 		int destWidth = (int) (bImage.getWidth() * factor);
 		int destHeight = (int) (bImage.getHeight() * factor);
-		// créer l'image de destination
+		// crÃ©er l'image de destination
 		GraphicsConfiguration configuration = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 				.getDefaultConfiguration();
 		BufferedImage bImageNew = configuration.createCompatibleImage(destWidth, destHeight);

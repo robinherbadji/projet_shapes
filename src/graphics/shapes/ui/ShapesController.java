@@ -11,19 +11,11 @@ import java.awt.event.ActionListener;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-
 import graphics.shapes.SCircle;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.Timer;
 
 import graphics.shapes.SCollection;
@@ -37,20 +29,19 @@ import graphics.shapes.attributes.SelectionAttributes;
 import graphics.ui.Controller;
 
 public class ShapesController extends Controller {
-	// Impl�mente donc les Listeners via Controller
-	private Shape target;
-	private Point mouseStart;
-	private Timer timer;
-	private int vx;
-	private int vy;
+	private Shape target; // The targeted shape
+	private Point mouseStart; // The last Mouse position memorised
+	private Timer timer; // The Timer used for the animation
+	private int vx, vy; // The vertical and horizontal speed used for the animation
 	private double scale;
 	private double scalePolygon;
+	private ArrayList<Shape> shapeCopied; // A List of the Copied shapes
 
 	public ShapesController(Object newModel) {
 		super(newModel);
 		this.target = null;
-		this.vx = 1;
-		this.vy = 1;
+		this.vx = 1; // Standard Animation speed (x)
+		this.vy = 1; // Standard Animation speed (y)
 		this.scale = 1;
 		this.scalePolygon = 1;
 	}
@@ -61,7 +52,12 @@ public class ShapesController extends Controller {
 		return this.timer;
 	}
 
-	// M�thodes
+	// Methodes
+
+	/**
+	 * 
+	 * @return The focusing shape
+	 */
 	protected Shape getTarget() {
 		Shape shape = null;
 		Iterator<Shape> itr = ((SCollection) model).iterator();
@@ -77,6 +73,9 @@ public class ShapesController extends Controller {
 			return null;
 	}
 
+	/**
+	 * Unselect all the shapes
+	 */
 	private void unselectAll() {
 		Shape shape = null;
 		Iterator<Shape> itr = ((SCollection) model).iterator();
@@ -91,6 +90,13 @@ public class ShapesController extends Controller {
 		}
 	}
 
+	/**
+	 * 
+	 * @param posx
+	 *            : New position of the MouseX
+	 * @param posy
+	 *            : New position of the MouseY
+	 */
 	public void translateSelected(int posx, int posy) {
 		Shape shape = null;
 		Iterator<Shape> itr = ((SCollection) model).iterator();
@@ -109,19 +115,13 @@ public class ShapesController extends Controller {
 
 	private void rotateSelected(float paceangle) {
 		/*
-		Shape shape = null;
-		Iterator<Shape> itr = ((SCollection) model).iterator();
-		while (itr.hasNext()) {
-			shape = itr.next();
-			//System.out.println(shape);
-			if (shape != null) {
-				SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
-				if (sA != null && sA.isSelected()) {
-					shape.setRotation(shape.getRotation() + paceangle);
-					System.out.println(shape.getRotation());
-				}
-			}
-		}*/
+		 * Shape shape = null; Iterator<Shape> itr = ((SCollection) model).iterator();
+		 * while (itr.hasNext()) { shape = itr.next(); //System.out.println(shape); if
+		 * (shape != null) { SelectionAttributes sA = (SelectionAttributes)
+		 * shape.getAttributes("selectionAttributes"); if (sA != null &&
+		 * sA.isSelected()) { shape.setRotation(shape.getRotation() + paceangle);
+		 * System.out.println(shape.getRotation()); } } }
+		 */
 		getSelected().setRotation(getSelected().getRotation() + paceangle);
 		System.out.println(getSelected().getRotation());
 	}
@@ -146,7 +146,7 @@ public class ShapesController extends Controller {
 			// ((SPolygone) shape).setBoundsPoly(((SPolygone)
 			// shape).getBounds(),this.scalePolygon);
 		} else if (shape instanceof SText) {
-			if (((SText) shape).getBounds().height >5 && ((SText) shape).getBounds().width > 5) {
+			if (((SText) shape).getBounds().height > 5 && ((SText) shape).getBounds().width > 5) {
 				FontAttributes actualFont = (FontAttributes) shape.getAttributes("fontAttributes");
 				float reduceSize = actualFont.font().getSize() - 5;
 				Font newFont = actualFont.font().deriveFont(reduceSize);
@@ -225,6 +225,14 @@ public class ShapesController extends Controller {
 		}
 	}
 
+	/**
+	 * Animate the selected shapes (Moving + Bounce on a border)
+	 * 
+	 * @param shapesView
+	 *            : The main JPanel used for display
+	 * @param speed
+	 *            : The speed of the moving Shapes
+	 */
 	public void animatedSelected(ShapesView shapesView, int speed) {
 		this.timer = new Timer(speed, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -257,6 +265,10 @@ public class ShapesController extends Controller {
 		this.timer.start();
 	}
 
+	/**
+	 * 
+	 * @return An SCollection of the selected shapes
+	 */
 	public SCollection getSelected() {
 		SCollection selectedShapes = new SCollection();
 		Shape shape = null;
@@ -274,18 +286,19 @@ public class ShapesController extends Controller {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	// Evenements Listeners
+
 	public void mousePressed(MouseEvent e) {
-		mouseStart = new Point(e.getX(), e.getY());
-		this.target = getTarget();
-		// selection de la forme?
+		mouseStart = new Point(e.getX(), e.getY()); // Save the mouse position
+		this.target = getTarget(); // Keep the last focused shape
 	}
 
 	public void mouseClicked(MouseEvent e) {
+		// If Left Click
 		if (e.getButton() == 1) {
 			if (this.target != null) {
-				if (e.isShiftDown()) {
-				} else {
+				if (!e.isShiftDown()) {
 					this.unselectAll();
 				}
 				///////////////////////////////////////
@@ -298,10 +311,10 @@ public class ShapesController extends Controller {
 			}
 			this.getView().repaint();
 		}
+		// If Right Click
 		if (e.getButton() == 3) {
-			RightClick p = new RightClick(this);
-			p.click(e);
-
+			RightClick rightClick = new RightClick(this); // Initialize a RightClight class Object
+			rightClick.click(e); // Call its method
 		}
 	}
 
@@ -318,29 +331,28 @@ public class ShapesController extends Controller {
 				}
 			}
 		}
-
-		// if (((SCollection) model).getCollection().contains(this.target)) {
+		// If the click is on the correct selected shape(s)
 		if (containsSelected) {
 			this.translateSelected(evt.getX(), evt.getY());
 			mouseStart.setLocation(evt.getX(), evt.getY());
-			this.getView().repaint();
+			this.getView().repaint(); // Refresh the view
 		}
 	}
 
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		super.mouseWheelMoved(e);
 		/*
-		 * 
+		 *
 		 * if(e.getWheelRotation() > 0 && ! (this.target instanceof SCollection)){
 		 * System.out.println("zoom -"); reduceShape(this.target);
-		 * 
+		 *
 		 * }else if(e.getWheelRotation() > 0 && (this.target instanceof SCollection)) {
 		 * System.out.println("zoom - for Collection");
 		 * reduceShapeCollection((SCollection) this.target); }
-		 * 
+		 *
 		 * else if(e.getWheelRotation() < 0 && ! (this.target instanceof SCollection)) {
 		 * System.out.println("zoom +"); growShape(this.target); }
-		 * 
+		 *
 		 * else if (e.getWheelRotation() < 0 && (this.target instanceof SCollection)) {
 		 * System.out.println("zoom + for Collection");
 		 * growShapeCollection((SCollection) this.target); }
@@ -357,7 +369,28 @@ public class ShapesController extends Controller {
 	}
 
 	public void keyPressed(KeyEvent evt) {
-		// System.out.println("keyPressed");
+		if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+			this.delete();
+		}
+		if (evt.getKeyCode() == KeyEvent.VK_C && evt.isControlDown()) {
+			try {
+				this.copy();
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+		}
+		if (evt.getKeyCode() == KeyEvent.VK_X && evt.isControlDown()) {
+			this.cut();
+		}
+		if (evt.getKeyCode() == KeyEvent.VK_V && evt.isControlDown()) {
+			this.paste(new Point(200, 200));
+
+		}
+		if (evt.getKeyCode() == KeyEvent.VK_A && evt.isControlDown()) {
+			System.out.println("selectall");
+			this.selectAll();
+		}
+
 		Shape shape = null;
 		boolean containsSelected = false;
 		Iterator<Shape> itr = ((SCollection) model).iterator();
@@ -366,9 +399,7 @@ public class ShapesController extends Controller {
 			if (shape != null) {
 				SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
 				if (sA != null && sA.isSelected() && shape == this.target) {
-
 					containsSelected = true;
-
 					if (evt.getKeyCode() == KeyEvent.VK_P) {
 						System.out.println("zoom +");
 						growShape(shape);
@@ -386,76 +417,23 @@ public class ShapesController extends Controller {
 							System.out.println("right rotation");
 							rotateSelected(10);
 						}
-
+						this.getView().repaint();
 					}
-					this.getView().repaint();
 				}
 			}
 		}
 	}
 
-	public void mouseReleased(MouseEvent e) {
-
-		if (e.isPopupTrigger()) {
-			mouseStart = new Point(e.getX(), e.getY());
-			this.target = getTarget();
-
-			JPopupMenu jpm = new JPopupMenu();
-			if (this.target != null) {
-				System.out.println("forme");
-
-				JMenuItem delShape = new JMenuItem("Delete");
-				delShape.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						System.out.println("Suppression de : " + target.getClass());
-					}
-				});
-				jpm.add(delShape);
-
-				JMenuItem copy = new JMenuItem("Copy");
-				copy.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						System.out.println("Copie de : " + target.getClass());
-					}
-				});
-				jpm.add(copy);
-
-				JMenuItem cut = new JMenuItem("Cut");
-				cut.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						System.out.println("Coupage de : " + target.getClass());
-					}
-				});
-				jpm.add(cut);
-
-			} else
-				System.out.println("vide");
-
-			jpm.show(getView(), e.getX(), e.getY());
-
-		}
-		this.getView().repaint();
-	}
-
 	public void blank() {
-
 		SCollection model = new SCollection();
 		Editor self = new Editor(model);
 		self.pack();
 		self.setVisible(true);
-
 	}
 
 	public void save() {
 		FilesManager xml = new FilesManager();
 		xml.enregistrer((SCollection) this.getModel());
-
 	}
 
 	public void open() {
@@ -464,8 +442,64 @@ public class ShapesController extends Controller {
 	}
 
 	public void export() {
-
 		Export e = new Export();
 		e.takePicture((ShapesView) this.getView());
 	}
+
+	public void delete() {
+		SCollection selectedShapes = this.getSelected(); // Cr�ation de la Collection des formes selectionn�es
+		Iterator<Shape> itr = selectedShapes.iterator(); // Crr�ation d'un it�rateur
+		Shape shape = null;
+		while (itr.hasNext()) { // On parcourt la collection
+			shape = itr.next(); // On it�re
+			if (shape != null) {
+				((SCollection) model).delete(shape);
+				System.out.println("Deleted");
+			}
+		}
+		this.getView().repaint(); // R�actualise
+	}
+
+	public void copy() throws CloneNotSupportedException {
+		Iterator<Shape> itr = this.getSelected().iterator();
+		Shape shape;
+		Shape clone;
+		this.shapeCopied = new ArrayList<Shape>();
+		while (itr.hasNext()) {
+			shape = itr.next();
+			clone = shape.clone();
+			this.shapeCopied.add(clone);
+		}
+	}
+
+	public void cut() {
+		try {
+			this.copy();
+			this.delete();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void paste(Point mousePos) {
+		// this.shapeCopied.get(0).setLoc(mousePos);
+		Iterator<Shape> itr = this.shapeCopied.iterator();
+		Shape shape;
+		while (itr.hasNext()) {
+			shape = itr.next();
+			((SCollection) model).add(shape);
+		}
+		this.getView().repaint();
+	}
+
+	public void selectAll() {
+		Shape s;
+		SCollection sc = (SCollection) this.getModel();
+		for (Iterator<Shape> i = sc.iterator(); i.hasNext();) {
+			s = (Shape) i.next();
+			SelectionAttributes sa = (SelectionAttributes) s.getAttributes("selectionAttributes");
+			sa.select();
+		}
+	}
+
 }

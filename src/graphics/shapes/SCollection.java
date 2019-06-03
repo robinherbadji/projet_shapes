@@ -11,16 +11,16 @@ public class SCollection extends Shape {
 	private int scale;
 
 	public SCollection() {
-		collection = new ArrayList<Shape>();
+		this.collection = new ArrayList<Shape>();
 		this.rotation = 0;
 	}
 
-	/*
-	 * public ArrayList<Shape> getCollection() { return this.collection; }
-	 */
-
 	public void add(Shape shape) {
 		this.collection.add(shape);
+	}
+
+	public void delete(Shape shape) {
+		this.collection.remove(shape);
 	}
 
 	public Iterator<Shape> iterator() {
@@ -29,21 +29,19 @@ public class SCollection extends Shape {
 
 	@Override
 	public Point getLoc() {
-
-		// On retourne la position de la 1ere forme
 		if (collection != null)
-			return collection.get(0).getLoc();
+			return collection.get(0).getLoc(); // Position of the first shape
 		else
 			return null;
 	}
 
 	@Override
 	public void setLoc(Point point) {
-
-		Iterator<Shape> itr = collection.iterator();
-		while (itr.hasNext()) {
-			itr.next().setLoc(point);
-		}
+		collection.get(0).setLoc(point);
+		/*
+		 * Iterator<Shape> itr = collection.iterator(); while (itr.hasNext()) {
+		 * itr.next().setLoc(point); }
+		 */
 	}
 
 	@Override
@@ -58,28 +56,12 @@ public class SCollection extends Shape {
 	@Override
 	public Rectangle getBounds() {
 		Iterator<Shape> itr = collection.iterator();
-		Rectangle bounds = new Rectangle(-1, -1); // Rectangle traité comme non-existant (bounds = null ne fonctionnant
-													// pas)
-		// Deux faï¿½ons de faire pour dï¿½clarer bounds:
-		// 1
-		/*
-		 * Rectangle bounds = itr.next().getBounds(); while (itr.hasNext()) { Shape
-		 * shape = itr.next(); bounds = bounds.union(shape.getBounds()); }
-		 */
-		// 2
+		Rectangle bounds = new Rectangle(-1, -1); // Rectangle seen as non-existing
 		while (itr.hasNext()) {
 			Shape shape = itr.next();
 			bounds = bounds.union(shape.getBounds());
 		}
 		return bounds;
-
-		// 3 -> Bugs
-		/*
-		 * Rectangle bounds = new Rectangle(); for (Iterator<Shape> itr =
-		 * collection.iterator(); itr.hasNext();) { bounds.union(((Shape)
-		 * itr.next()).getBounds()); } return bounds;
-		 */
-
 	}
 
 	@Override
@@ -98,6 +80,7 @@ public class SCollection extends Shape {
 			shape.setRotation(rotation);
 		}
 	}
+
 
 	public ArrayList<Shape> getCollection() {
 		return this.collection;
