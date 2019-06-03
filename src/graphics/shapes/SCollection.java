@@ -8,6 +8,7 @@ import java.util.Iterator;
 public class SCollection extends Shape {
 	private ArrayList<Shape> collection;
 	private float rotation;
+	private int scale;
 
 	public SCollection() {
 		collection = new ArrayList<Shape>();
@@ -86,11 +87,11 @@ public class SCollection extends Shape {
 		sVisitor.visitCollection(this);
 	}
 
-	public float getRotation() {
+	public double getRotation() {
 		return collection.get(0).getRotation();
 	}
 
-	public void setRotation(float rotation) {
+	public void setRotation(double rotation) {
 		Iterator<Shape> itr = collection.iterator();
 		while (itr.hasNext()) {
 			Shape shape = itr.next();
@@ -101,4 +102,5 @@ public class SCollection extends Shape {
 	public ArrayList<Shape> getCollection() {
 		return this.collection;
 	}
+
 }

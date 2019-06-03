@@ -18,10 +18,12 @@ public class SPicture extends Shape {
 	private BufferedImage pictureRef;
 	private Point point;
 	private String path;
+	private double rotation;
 
 	public SPicture(Point point, String path) {
 		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
 		this.setPath(path);
+		this.rotation=0;
 		try {
 			if (path.startsWith("http")) {
 				/*
@@ -125,4 +127,13 @@ public class SPicture extends Shape {
 		return bImageNew;
 	}
 
+	@Override
+	public double getRotation() {
+		return this.rotation;
+	}
+
+	@Override
+	public void setRotation(double rotation) {
+		this.rotation = rotation;
+	}
 }

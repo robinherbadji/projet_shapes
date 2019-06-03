@@ -10,6 +10,7 @@ public class SPolygone extends Shape {
 	public int x[];
 	public int y[];
 	private double scale;
+	private double rotation;
 
 	public SPolygone() {
 		this.nPoints = 5;
@@ -23,11 +24,13 @@ public class SPolygone extends Shape {
 		this.x = x;
 		this.y = y;
 		this.scale = 1;
+		this.rotation=0;
 	}
 
 	public SPolygone(String typePolygon) {
 		Point pointRef;
 		this.scale = 1;
+		this.rotation=0;
 		switch (typePolygon) {
 		case "Pentagone":
 			this.nPoints = 5;
@@ -66,7 +69,7 @@ public class SPolygone extends Shape {
 			int pointX3 = (int) pointRef.getX();
 			int pointY3 = (int) pointRef.getY();
 			int x3[] = { pointX3, pointX3 + 50, pointX3 + 100, pointX3 + 50, pointX3 };
-			int y3[] = { pointY3, pointY3 + 110, pointY3, pointY3 - 110, pointY3 };
+			int y3[] = { pointY3, pointY3 + 80, pointY3, pointY3 - 80, pointY3 };
 			this.x = x3;
 			this.y = y3;
 			System.out.println("Losange");
@@ -159,6 +162,16 @@ public class SPolygone extends Shape {
 
 	public void setScale(double scale) {
 		this.scale = scale;
+	}
+
+	@Override
+	public double getRotation() {
+		return this.rotation;
+	}
+
+	@Override
+	public void setRotation(double rotation) {
+		this.rotation = rotation;
 	}
 
 }

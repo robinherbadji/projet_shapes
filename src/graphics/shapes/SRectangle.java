@@ -7,6 +7,7 @@ public class SRectangle extends Shape {
 
 	private Rectangle rect;
 	private Point point;
+	private double rotation;
 
 	public SRectangle() {
 		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
@@ -14,12 +15,14 @@ public class SRectangle extends Shape {
 		int rHeight = 20 + (int) (Math.random() * 100);
 		this.rect = new Rectangle((int) point.getX(), (int) point.getY(), rWidth, rHeight); // Utilisation de la classe
 																							// java Rectangle
+		this.rotation=0;
 	}
 
 	public SRectangle(Point point, int rWidth, int rHeight) {
 		this.point = point;
 		this.rect = new Rectangle((int) point.getX(), (int) point.getY(), rWidth, rHeight); // Utilisation de la classe
 																							// java Rectangle
+		this.rotation=0;
 	}
 
 	public Rectangle getRect() {
@@ -55,5 +58,16 @@ public class SRectangle extends Shape {
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitRectangle(this);
 	}
+
+	@Override
+	public double getRotation() {
+		return this.rotation;
+	}
+
+	@Override
+	public void setRotation(double rotation) {
+		this.rotation = rotation;
+	}
+
 
 }

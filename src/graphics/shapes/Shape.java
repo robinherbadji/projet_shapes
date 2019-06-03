@@ -10,11 +10,10 @@ import graphics.shapes.attributes.Attributes;
 public abstract class Shape {
 	protected Point point;
 	private Map<String, Attributes> attributes;
-	private float rotation;
+	
 
 	public Shape() {
 		attributes = new TreeMap<String, Attributes>();
-		this.rotation = 0;
 	}
 
 	public abstract Point getLoc();
@@ -36,11 +35,7 @@ public abstract class Shape {
 
 	public abstract void accept(ShapeVisitor sVisitor);
 
-	public float getRotation() {
-		return this.rotation;
-	}
+	public abstract double getRotation();
 
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
-	}
+	public abstract void setRotation(double rotation);
 }

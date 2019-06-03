@@ -7,7 +7,7 @@ public class SCircle extends Shape {
 
 	private int radius;
 
-	private float rotation;
+	private double rotation;
 
 	public SCircle() {
 		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
@@ -57,11 +57,11 @@ public class SCircle extends Shape {
 		sVisitor.visitCircle(this);
 	}
 
-	public float getRotation() {
+	public double getRotation() {
 		return rotation;
 	}
 
-	public void setRotation(float rotation) {
+	public void setRotation(double rotation) {
 		this.rotation = rotation;
 	}
 
