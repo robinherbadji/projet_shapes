@@ -31,15 +31,22 @@ public class ShapeDraftman implements ShapeVisitor {
 		this.g = g;
 	}
 
-	// Dessin du carre de Selection
-	public void drawSelectionShape(Rectangle rect) {
+	/**
+	 * Draw a small square indicating whereas a shape is selected or not
+	 * 
+	 * @param bounds : The getBounds of the concerned shape
+	 */
+	public void drawSelectionShape(Rectangle bounds) {
 		final int size = 5;
 		g.setColor(Color.black);
-		g.drawRect(rect.x - size + 2, rect.y - size + 2, size, size);
+		g.drawRect(bounds.x - size + 2, bounds.y - size + 2, size, size);
 	}
-
-	// Visit Shapes
+	
+		
 	@Override
+	/**
+	 * Draw a Rectangle
+	 */
 	public void visitRectangle(SRectangle rect) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (rect != null) {
@@ -74,6 +81,9 @@ public class ShapeDraftman implements ShapeVisitor {
 	}
 
 	@Override
+	/**
+	 * Draw a Circle
+	 */
 	public void visitCircle(SCircle scircle) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (scircle != null) {
@@ -104,6 +114,9 @@ public class ShapeDraftman implements ShapeVisitor {
 	}
 
 	@Override
+	/**
+	 * Draw a Text
+	 */
 	public void visitText(SText stext) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (stext != null) {
@@ -128,17 +141,13 @@ public class ShapeDraftman implements ShapeVisitor {
 				g2d.setFont(fonte);
 
 				if (cA != null) {
-
 					if (cA.filled()) {
 						if (stext.getBounds() != null) {
-
 							g2d.setColor(cA.filledColor());
 							g2d.fillRect(sX, sY, sW, sH);
-
 						}
 					}
 					if (cA.stroked()) {
-
 						g2d.setColor(cA.strokedColor());
 						g2d.drawString(text, loc.x, loc.y);
 					}
@@ -153,6 +162,9 @@ public class ShapeDraftman implements ShapeVisitor {
 	}
 
 	@Override
+	/**
+	 * Draw a Collection
+	 */
 	public void visitCollection(SCollection scollec) {
 		Shape shape;
 		if (scollec != null) {
@@ -169,6 +181,9 @@ public class ShapeDraftman implements ShapeVisitor {
 	}
 
 	@Override
+	/**
+	 * Draw a Polygon
+	 */
 	public void visitPolygone(SPolygone spolygone) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		if (spolygone != null) {
@@ -207,6 +222,9 @@ public class ShapeDraftman implements ShapeVisitor {
 	}
 
 	@Override
+	/**
+	 * Draw an Image
+	 */
 	public void visitImage(SPicture spicture) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		BufferedImage image;

@@ -9,11 +9,13 @@ public class SText extends Shape {
 	private String text;
 	private int sizeText;
 
+	/**
+	 * Constructor of a random positioned SText
+	 */
 	public SText(String text) {
 		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
 		this.setLoc(point);
 		this.setText(text);
-
 		this.sizeText = 13;
 	}
 

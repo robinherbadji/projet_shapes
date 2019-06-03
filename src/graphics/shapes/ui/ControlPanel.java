@@ -35,6 +35,10 @@ import graphics.shapes.attributes.FontAttributes;
 import graphics.shapes.attributes.SelectionAttributes;
 
 @SuppressWarnings("serial")
+/**
+ * A JPanel dedicated to the JMenuBar on the top of the window
+ *
+ */
 public class ControlPanel extends JPanel {
 	private ShapesView shapesView;
 	private ShapesController shapesController;
@@ -51,14 +55,14 @@ public class ControlPanel extends JPanel {
 		this.menuBar.setSize(this.shapesView.getWidth(), 100);
 		this.animationOn = false;
 		this.speed = "Normal";
-		this.speedMap = new TreeMap<String, Integer>();
+		this.speedMap = new TreeMap<String, Integer>(); // Associate a String speed to an int speed
 		this.speedMap.put("Slow", 18);
 		this.speedMap.put("Normal", 8);
 		this.speedMap.put("Fast", 2);
-		initialisation();
+		this.buildMenu();
 	}
 
-	public void initialisation() {
+	public void buildMenu() {
 		menuFile = new JMenu("   File    ");
 		JMenuItem mNew = new JMenuItem(" New ");
 		mNew.addActionListener(new ActionListener() {
@@ -452,12 +456,13 @@ public class ControlPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				speed = ((JRadioButtonMenuItem) e.getSource()).getText();
 				speedInfo.setText("   (" + ((JRadioButtonMenuItem) e.getSource()).getText() + ")");
-				if (animationOn) { // On relance l'animation pour que la vitesse soit prise en compte
+				
+				// Restart Animation to take the new speed account
+				if (animationOn) {
 					shapesController.getTimer().stop();
 					shapesController.animatedSelected(shapesView, speedMap.get(speed));
 				}
 			}
-
 		}
 
 		SpeedListener speedLis = new SpeedListener();
@@ -508,21 +513,8 @@ public class ControlPanel extends JPanel {
 		menuBar.add(menuHelp);
 	}
 
-	// ------------ Setters -------------
-
-	public void setText(String text) {
-		this.sText = text;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
+	
 	// ------------ Getters -------------
-
-	public ControlPanel getMenu() {
-		return this;
-	}
 
 	public JMenuBar getMenuBar() {
 		return this.menuBar;

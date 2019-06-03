@@ -13,23 +13,27 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 @SuppressWarnings("serial")
+/**
+ * @author Robin
+ *
+ * Display a box with the Authors of the project
+ */
 public class FunctionsDialog extends JDialog {
 
 	public FunctionsDialog(JFrame parent, String title, boolean modal) {
 		super(parent, title, modal);
-		this.setSize(600, 850);
+		this.setSize(600, 925);
 		this.setLocationRelativeTo(null);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		JPanel panText = new JPanel();
 		panText.setBackground(Color.white);
-		// panText.setPreferredSize(new Dimension(500, 500));
 
 		JTextArea textContent = new JTextArea();
 		textContent.setEditable(false);
 		textContent.setFont(new Font("Serif", Font.PLAIN, 14));
-		textContent.append("\t\tFUNCTIONALITIES :\t\t\t\n");
+		textContent.append("\t\tFUNCTIONALITIES :\t\t\t");
 
 		textContent.append("\n\n- Selection of Shape : Left Click");
 
@@ -67,6 +71,11 @@ public class FunctionsDialog extends JDialog {
 		textContent.append("\n\t'1','2','3' > Set the Animation Speed");
 		textContent.append("\n\t'/' > Activate the Grid display");
 		textContent.append("\n\t'*' > Desactivate the Grid display");
+		textContent.append("\n\t'DELETE' > Delete the selected shape(s)");
+		textContent.append("\n\t'CTRL + C' > Copy the selected shape(s)");
+		textContent.append("\n\t'CTRL + X' > Cut the selected shape(s)");
+		textContent.append("\n\t'CTRL + V' > Paste the selected shape(s)");
+		textContent.append("\n\t'CTRL + A' > Select All the shapes");
 
 		panText.add(textContent);
 		this.getContentPane().add(panText, BorderLayout.CENTER);

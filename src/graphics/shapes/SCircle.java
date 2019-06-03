@@ -4,14 +4,21 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 public class SCircle extends Shape {
-
 	private int radius;
-
 	private float rotation;
 
+	/**
+	 * Constructor of a random Circle
+	 */
 	public SCircle() {
 		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
 		this.radius = 5 + (int) (Math.random() * 75);
+		this.setLoc(point);
+		this.setRadius(radius);
+	}
+	
+	public SCircle(int radius) {
+		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
 		this.setLoc(point);
 		this.setRadius(radius);
 	}

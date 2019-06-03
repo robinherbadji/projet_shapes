@@ -37,7 +37,6 @@ public class FilesManager {
 	public void serialisation(Shape shape) {
 
 		ColorAttributes colorAttribute = new ColorAttributes();
-		FontAttributes fontAttribute = new FontAttributes();
 
 		if (shape instanceof SRectangle) {
 			SRectangle rectangle = (SRectangle) shape;
@@ -77,7 +76,6 @@ public class FilesManager {
 
 			SText text = (SText) shape;
 			ColorAttributes colorAttributes = (ColorAttributes) text.getAttributes(colorAttribute.getId());
-			FontAttributes fontAttributes = (FontAttributes) text.getAttributes(fontAttribute.getId());
 			int f = 0;
 			int s = 0;
 
@@ -85,7 +83,6 @@ public class FilesManager {
 				f = colorAttributes.filledColor().getRGB();
 			if (colorAttributes.stroked())
 				s = colorAttributes.strokedColor().getRGB();
-			int t = fontAttributes.fontColor().getRGB();
 			d.println(" <text text=\"" + text.getText() + "\"" + " x=\"" + text.getLoc().x + "\" y=\"" + text.getLoc().y
 					+ "\"" + " filled=\"" + colorAttributes.filled() + "\"" + " stroked=\"" + colorAttributes.stroked()
 					+ "\"" + " filledColor=\"" + f + "\"" + " strokedColor=\"" + s + "\" />");

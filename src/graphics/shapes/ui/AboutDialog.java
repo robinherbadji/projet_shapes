@@ -13,8 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 @SuppressWarnings("serial")
+/**
+ * @author Robin
+ *
+ * Display a box with the functionalites
+ */
 public class AboutDialog extends JDialog {
-
+	
 	public AboutDialog(JFrame parent, String title, boolean modal) {
 		super(parent, title, modal);
 		this.setSize(350, 260);
@@ -29,7 +34,7 @@ public class AboutDialog extends JDialog {
 		JTextArea textContent = new JTextArea();
 		textContent.setEditable(false);
 		textContent.setFont(new Font("Serif", Font.PLAIN, 18));
-		textContent.append("             JAVA PROJECT\n");
+		textContent.append("             JAVA PROJECT 1A\n");
 
 		textContent.append("\n\nAuthors : \t- Bahrallil Khadija");
 		textContent.append("\n\t- Brugger Marie-Camille");

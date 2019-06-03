@@ -33,10 +33,6 @@ public abstract class Shape implements Cloneable {
 	public void addAttributes(Attributes attribute) {
 		this.attributes.put(attribute.getId(), attribute);
 	}
-	
-	public void flushAttributes() {
-		this.attributes.clear();
-	}
 
 	public Attributes getAttributes(String id) {
 		return this.attributes.get(id);
@@ -51,53 +47,48 @@ public abstract class Shape implements Cloneable {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
-	
-	public Shape clone()  {
+
+	/**
+	 * Clone the current shape
+	 */
+	public Shape clone() {
 		Shape newShape = null;
 		if (this instanceof SRectangle) {
-			newShape = new SRectangle(this.getLoc(),((SRectangle) this).getRect().width, ((SRectangle) this).getRect().height);
+			newShape = new SRectangle(((SRectangle) this).getRect().width, ((SRectangle) this).getRect().height);
 			newShape.addAttributes(new SelectionAttributes());
 			ColorAttributes cA = (ColorAttributes) this.getAttributes("colorAttributes");
-			newShape.addAttributes(new ColorAttributes(cA.filled(),cA.stroked(),cA.filledColor(),cA.strokedColor()));
-		}
-		else if (this instanceof SCircle) {
-			System.out.println("cercle");
-			newShape = new SCircle(new Point(10,100),((SCircle)this).getRadius());
+			newShape.addAttributes(new ColorAttributes(cA.filled(), cA.stroked(), cA.filledColor(), cA.strokedColor()));
+		} else if (this instanceof SCircle) {
+			newShape = new SCircle(((SCircle) this).getRadius());
 			newShape.addAttributes(new SelectionAttributes());
 			ColorAttributes cA = (ColorAttributes) this.getAttributes("colorAttributes");
-			newShape.addAttributes(new ColorAttributes(cA.filled(),cA.stroked(),cA.filledColor(),cA.strokedColor()));
-		}
-		else if (this instanceof SText) {
-			newShape = new SText(new Point(250,50),((SText)this).getText());
+			newShape.addAttributes(new ColorAttributes(cA.filled(), cA.stroked(), cA.filledColor(), cA.strokedColor()));
+		} else if (this instanceof SText) {
+			newShape = new SText(((SText) this).getText());
 			newShape.addAttributes(new SelectionAttributes());
 			ColorAttributes cA = (ColorAttributes) this.getAttributes("colorAttributes");
-			newShape.addAttributes(new ColorAttributes(cA.filled(),cA.stroked(),cA.filledColor(),cA.strokedColor()));
+			newShape.addAttributes(new ColorAttributes(cA.filled(), cA.stroked(), cA.filledColor(), cA.strokedColor()));
 			newShape.addAttributes(new FontAttributes());
-		}
-		else if (this instanceof SPolygone) {
-			newShape = new SPolygone(((SPolygone)this).nPoints,((SPolygone)this).x, ((SPolygone)this).y);
+		} else if (this instanceof SPolygone) {
+			newShape = new SPolygone(((SPolygone) this).nPoints, ((SPolygone) this).x, ((SPolygone) this).y);
 			newShape.addAttributes(new SelectionAttributes());
 			ColorAttributes cA = (ColorAttributes) this.getAttributes("colorAttributes");
-			newShape.addAttributes(new ColorAttributes(cA.filled(),cA.stroked(),cA.filledColor(),cA.strokedColor()));
-		}
-		else if (this instanceof SPicture) {
-			newShape = new SPicture(new Point(220,250),((SPicture)this).getPath());
+			newShape.addAttributes(new ColorAttributes(cA.filled(), cA.stroked(), cA.filledColor(), cA.strokedColor()));
+		} else if (this instanceof SPicture) {
+			newShape = new SPicture(((SPicture) this).getPath());
 			newShape.addAttributes(new SelectionAttributes());
-		}
-		else if (this instanceof SCollection) {
+		} else if (this instanceof SCollection) {
 			newShape = new SCollection();
 			newShape.addAttributes(new SelectionAttributes());
-			Iterator<Shape> itr = ((SCollection)this).iterator();
+			Iterator<Shape> itr = ((SCollection) this).iterator();
 			Shape shape_n;
 			while (itr.hasNext()) {
 				shape_n = itr.next();
 				System.out.println(shape_n);
-				((SCollection)newShape).add(shape_n.clone());
+				((SCollection) newShape).add(shape_n.clone());
 			}
 		}
-		
 		return newShape;
 	}
-	
-	
+
 }

@@ -5,8 +5,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import graphics.shapes.attributes.SelectionAttributes;
-
 public class SCollection extends Shape {
 	private ArrayList<Shape> collection;
 	private float rotation;
@@ -30,16 +28,15 @@ public class SCollection extends Shape {
 
 	@Override
 	public Point getLoc() {
-		// On retourne la position de la 1ere forme
 		if (collection != null)
-			return collection.get(0).getLoc();
+			return collection.get(0).getLoc(); // Position of the first shape
 		else
 			return null;
 	}
 
 	@Override
 	public void setLoc(Point point) {
-		// collection.get(0).setLoc(point);
+		collection.get(0).setLoc(point);
 		/*
 		 * Iterator<Shape> itr = collection.iterator(); while (itr.hasNext()) {
 		 * itr.next().setLoc(point); }
@@ -58,28 +55,12 @@ public class SCollection extends Shape {
 	@Override
 	public Rectangle getBounds() {
 		Iterator<Shape> itr = collection.iterator();
-		Rectangle bounds = new Rectangle(-1, -1); // Rectangle traité comme non-existant (bounds = null ne fonctionnant
-													// pas)
-		// Deux facons de faire pour declarer bounds:
-		// 1
-		/*
-		 * Rectangle bounds = itr.next().getBounds(); while (itr.hasNext()) { Shape
-		 * shape = itr.next(); bounds = bounds.union(shape.getBounds()); }
-		 */
-		// 2
+		Rectangle bounds = new Rectangle(-1, -1); // Rectangle seen as non-existing		
 		while (itr.hasNext()) {
 			Shape shape = itr.next();
 			bounds = bounds.union(shape.getBounds());
 		}
 		return bounds;
-
-		// 3 -> Bugs
-		/*
-		 * Rectangle bounds = new Rectangle(); for (Iterator<Shape> itr =
-		 * collection.iterator(); itr.hasNext();) { bounds.union(((Shape)
-		 * itr.next()).getBounds()); } return bounds;
-		 */
-
 	}
 
 	@Override

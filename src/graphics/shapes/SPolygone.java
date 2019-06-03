@@ -10,7 +10,10 @@ public class SPolygone extends Shape {
 	public int x[];
 	public int y[];
 	private double scale;
-
+	
+	/**
+	 * Constructor of a random positioned SPolygone
+	 */
 	public SPolygone() {
 		this.nPoints = 5;
 		this.x = new int[nPoints];
