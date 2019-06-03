@@ -5,7 +5,9 @@ import java.awt.Rectangle;
 
 public class SCircle extends Shape {
 	private int radius;
-	private float rotation;
+
+	private double rotation;
+
 
 	/**
 	 * Constructor of a random Circle
@@ -64,11 +66,11 @@ public class SCircle extends Shape {
 		sVisitor.visitCircle(this);
 	}
 
-	public float getRotation() {
+	public double getRotation() {
 		return rotation;
 	}
 
-	public void setRotation(float rotation) {
+	public void setRotation(double rotation) {
 		this.rotation = rotation;
 	}
 

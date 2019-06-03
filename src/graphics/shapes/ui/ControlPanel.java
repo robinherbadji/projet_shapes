@@ -158,7 +158,7 @@ public class ControlPanel extends JPanel {
 
 		JMenu mPolygon = new JMenu("Polygon");
 
-		JMenuItem mPentagone = new JMenuItem("Pentagone");
+		JMenuItem mPentagone = new JMenuItem("Maison");
 		JMenuItem mTriangle = new JMenuItem("Triangle");
 		JMenuItem mLosange = new JMenuItem("Losange");
 		// JMenuItem mMaison = new JMenuItem("Maison");

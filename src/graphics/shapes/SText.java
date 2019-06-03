@@ -6,8 +6,10 @@ import java.awt.Rectangle;
 import graphics.shapes.attributes.FontAttributes;
 
 public class SText extends Shape {
+	
 	private String text;
 	private int sizeText;
+	private double rotation;
 
 	/**
 	 * Constructor of a random positioned SText
@@ -72,6 +74,16 @@ public class SText extends Shape {
 
 	public void setSizeText(int sizeText) {
 		this.sizeText = sizeText;
+	}
+
+	@Override
+	public double getRotation() {
+		return this.rotation;
+	}
+
+	@Override
+	public void setRotation(double rotation) {
+		this.rotation = rotation;
 	}
 
 }

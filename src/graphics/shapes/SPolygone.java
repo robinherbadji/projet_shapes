@@ -10,6 +10,8 @@ public class SPolygone extends Shape {
 	public int x[];
 	public int y[];
 	private double scale;
+	private double rotation;
+
 	
 	/**
 	 * Constructor of a random positioned SPolygone
@@ -26,6 +28,7 @@ public class SPolygone extends Shape {
 		this.x = x;
 		this.y = y;
 		this.scale = 1;
+		this.rotation=0;
 	}
 
 	public SPolygone(Point pointRef) {
@@ -44,6 +47,7 @@ public class SPolygone extends Shape {
 	public SPolygone(String typePolygon) {
 		Point pointRef;
 		this.scale = 1;
+		this.rotation=0;
 		switch (typePolygon) {
 			case "Pentagone":
 				this.nPoints = 5;
@@ -81,27 +85,15 @@ public class SPolygone extends Shape {
 				int pointX3 = (int) pointRef.getX();
 				int pointY3 = (int) pointRef.getY();
 				int x3[] = { pointX3, pointX3 + 50, pointX3 + 100, pointX3 + 50, pointX3 };
-				int y3[] = { pointY3, pointY3 + 110, pointY3, pointY3 - 110, pointY3 };
+				int y3[] = { pointY3, pointY3 + 80, pointY3, pointY3 - 80, pointY3 };
 				this.x = x3;
 				this.y = y3;
 				System.out.println("Losange");
-
-			case "Maison":
-				this.nPoints = 5;
-				this.x = new int[nPoints];
-				this.y = new int[nPoints];
-				pointRef = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
-				int pointX = (int) pointRef.getX();
-				int pointY = (int) pointRef.getY();
-				int x[] = { pointX, pointX + 100, pointX + 100, pointX + 50, pointX, pointX };
-				int y[] = { pointY, pointY, pointY - 50, pointY - 70, pointY - 50, pointY };
-				this.x = x;
-				this.y = y;
-				System.out.println("Maison");
-				this.scale = 1;
 				break;
+				
 			default:
-				System.out.println("no match");
+				System.out.println("No match shape");
+				break;
 		}
 	}
 
@@ -186,6 +178,16 @@ public class SPolygone extends Shape {
 
 	public void setScale(double scale) {
 		this.scale = scale;
+	}
+
+	@Override
+	public double getRotation() {
+		return this.rotation;
+	}
+
+	@Override
+	public void setRotation(double rotation) {
+		this.rotation = rotation;
 	}
 
 }

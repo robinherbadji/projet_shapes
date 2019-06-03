@@ -47,13 +47,13 @@ public class ShapesController extends Controller {
 	}
 
 	// Accesseurs
-	
+
 	public Timer getTimer() {
 		return this.timer;
 	}
 
 	// Methodes
-	
+
 	/**
 	 * 
 	 * @return The focusing shape
@@ -72,7 +72,7 @@ public class ShapesController extends Controller {
 		else
 			return null;
 	}
-	
+
 	/**
 	 * Unselect all the shapes
 	 */
@@ -89,11 +89,13 @@ public class ShapesController extends Controller {
 			}
 		}
 	}
-	
+
 	/**
 	 * 
-	 * @param posx : New position of the MouseX
-	 * @param posy : New position of the MouseY
+	 * @param posx
+	 *            : New position of the MouseX
+	 * @param posy
+	 *            : New position of the MouseY
 	 */
 	public void translateSelected(int posx, int posy) {
 		Shape shape = null;
@@ -110,21 +112,18 @@ public class ShapesController extends Controller {
 			}
 		}
 	}
-	
-	private void rotateSelected(float paceangle) {
 
-		Shape shape = null;
-		Iterator<Shape> itr = ((SCollection) model).iterator();
-		while (itr.hasNext()) {
-			shape = itr.next();
-			if (shape != null) {
-				SelectionAttributes sA = (SelectionAttributes) shape.getAttributes("selectionAttributes");
-				if (sA != null && sA.isSelected()) {
-					shape.setRotation(shape.getRotation() + paceangle);
-					System.out.println(shape.getRotation());
-				}
-			}
-		}
+	private void rotateSelected(float paceangle) {
+		/*
+		 * Shape shape = null; Iterator<Shape> itr = ((SCollection) model).iterator();
+		 * while (itr.hasNext()) { shape = itr.next(); //System.out.println(shape); if
+		 * (shape != null) { SelectionAttributes sA = (SelectionAttributes)
+		 * shape.getAttributes("selectionAttributes"); if (sA != null &&
+		 * sA.isSelected()) { shape.setRotation(shape.getRotation() + paceangle);
+		 * System.out.println(shape.getRotation()); } } }
+		 */
+		getSelected().setRotation(getSelected().getRotation() + paceangle);
+		System.out.println(getSelected().getRotation());
 	}
 
 	private void reduceShape(Shape shape) {
@@ -149,11 +148,11 @@ public class ShapesController extends Controller {
 		} else if (shape instanceof SText) {
 			if (((SText) shape).getBounds().height > 5 && ((SText) shape).getBounds().width > 5) {
 				FontAttributes actualFont = (FontAttributes) shape.getAttributes("fontAttributes");
-				float reduceSize = actualFont.font().getSize() - 10;
+				float reduceSize = actualFont.font().getSize() - 5;
 				Font newFont = actualFont.font().deriveFont(reduceSize);
 				actualFont.setFont(newFont);
 				((SText) shape).addAttributes(actualFont);
-				((SText) shape).setSizeText(((SText) shape).getSizeText() - 10);
+				((SText) shape).setSizeText(((SText) shape).getSizeText() - 5);
 			}
 		} else if (shape instanceof SPicture) {
 
@@ -183,17 +182,16 @@ public class ShapesController extends Controller {
 		} else if (shape instanceof SText) {
 
 			FontAttributes actualFont = (FontAttributes) shape.getAttributes("fontAttributes");
-			float growSize = actualFont.font().getSize() + 10;
+			float growSize = actualFont.font().getSize() + 5;
 			Font newFont = actualFont.font().deriveFont(growSize);
 			actualFont.setFont(newFont);
 			((SText) shape).addAttributes(actualFont);
-			((SText) shape).setSizeText(((SText) shape).getSizeText() + 10);
+			((SText) shape).setSizeText(((SText) shape).getSizeText() + 5);
 		} else if (shape instanceof SPicture) {
 			this.scale *= 1.1;
 			((SPicture) shape).setScale(this.scale);
 
 		} else if (shape instanceof SCollection) {
-			this.growShapeCollection((SCollection) shape);
 		}
 	}
 
@@ -226,12 +224,14 @@ public class ShapesController extends Controller {
 			}
 		}
 	}
-	
+
 	/**
 	 * Animate the selected shapes (Moving + Bounce on a border)
 	 * 
-	 * @param shapesView : The main JPanel used for display
-	 * @param speed : The speed of the moving Shapes
+	 * @param shapesView
+	 *            : The main JPanel used for display
+	 * @param speed
+	 *            : The speed of the moving Shapes
 	 */
 	public void animatedSelected(ShapesView shapesView, int speed) {
 		this.timer = new Timer(speed, new ActionListener() {
@@ -264,7 +264,7 @@ public class ShapesController extends Controller {
 		});
 		this.timer.start();
 	}
-	
+
 	/**
 	 * 
 	 * @return An SCollection of the selected shapes
@@ -286,9 +286,9 @@ public class ShapesController extends Controller {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	// Evenements Listeners
-	
+
 	public void mousePressed(MouseEvent e) {
 		mouseStart = new Point(e.getX(), e.getY()); // Save the mouse position
 		this.target = getTarget(); // Keep the last focused shape
@@ -417,8 +417,8 @@ public class ShapesController extends Controller {
 							System.out.println("right rotation");
 							rotateSelected(10);
 						}
+						this.getView().repaint();
 					}
-					this.getView().repaint();
 				}
 			}
 		}

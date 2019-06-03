@@ -51,8 +51,8 @@ public class FontAttributes extends Attributes {
 	 * @param str : The String we want the getBounds
 	 * @return The getBounds of the String
 	 */
-	public Rectangle getBounds(String str) {
-		int width = this.fontMetrics.stringWidth(str)+8;
+	public Rectangle getBounds(String str) {		
+		int width = this.fontMetrics.stringWidth(str)+10;
 		int height = this.fontMetrics.getHeight();
 		Rectangle bounds = new Rectangle(100, 100, width, height);
 		return bounds;
