@@ -7,18 +7,19 @@ public class SRectangle extends Shape {
 
 	private Rectangle rect;
 	private Point point;
-	private float rotation;
 
 	public SRectangle() {
-		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
-		int rWidth = 20 + (int)(Math.random() * 100);
-		int rHeight = 20 + (int)(Math.random() * 100);
-		this.rect = new Rectangle((int)point.getX(), (int)point.getY(), rWidth, rHeight); // Utilisation de la classe java Rectangle
+		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
+		int rWidth = 20 + (int) (Math.random() * 100);
+		int rHeight = 20 + (int) (Math.random() * 100);
+		this.rect = new Rectangle((int) point.getX(), (int) point.getY(), rWidth, rHeight); // Utilisation de la classe
+																							// java Rectangle
 	}
 
 	public SRectangle(Point point, int rWidth, int rHeight) {
 		this.point = point;
-		this.rect = new Rectangle((int)point.getX(), (int)point.getY(), rWidth, rHeight); // Utilisation de la classe java Rectangle
+		this.rect = new Rectangle((int) point.getX(), (int) point.getY(), rWidth, rHeight); // Utilisation de la classe
+																							// java Rectangle
 	}
 
 	public Rectangle getRect() {
@@ -27,14 +28,14 @@ public class SRectangle extends Shape {
 
 	@Override
 	public Point getLoc() {
-		//return point;
+		// return point;
 		return this.rect.getLocation(); // Si on utilise les m�thodes de la classe java Point
 	}
 
 	@Override
 	public void setLoc(Point point) {
 		this.point = point;
-		this.rect = new Rectangle((int)point.getX(), (int)point.getY(), this.rect.width, this.rect.height);
+		this.rect = new Rectangle((int) point.getX(), (int) point.getY(), this.rect.width, this.rect.height);
 	}
 
 	@Override

@@ -13,9 +13,15 @@ public class FontAttributes extends Attributes {
 	public FontAttributes() {
 		// Utiliser le constructeur de Font
 		id = "fontAttributes";
-		//font = new Font("Arial", 0, 0);
+		// font = new Font("Arial", 0, 0);
 		font = Font.decode("Helvetica");
 		color = Color.BLUE;
+	}
+	
+	public FontAttributes(FontAttributes fA) {
+		id = "fontAttributes";
+		this.font = fA.font();
+		this.color = fA.fontColor();
 	}
 
 	public FontAttributes(Font font) {
@@ -49,7 +55,7 @@ public class FontAttributes extends Attributes {
 	public Rectangle getBounds(String str) {
 		int width = this.fontMetrics.stringWidth(str);
 		int height = this.fontMetrics.getHeight();
-		Rectangle bounds = new Rectangle(100,100,width,height);
+		Rectangle bounds = new Rectangle(100, 100, width, height);
 		return bounds;
 	}
 

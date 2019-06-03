@@ -1,12 +1,12 @@
 package graphics.shapes.ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Iterator;
@@ -35,7 +35,7 @@ public class ShapeDraftman implements ShapeVisitor {
 	public void drawSelectionShape(Rectangle rect) {
 		final int size = 5;
 		g.setColor(Color.black);
-		g.drawRect(rect.x-size+2, rect.y-size+2, size, size);
+		g.drawRect(rect.x - size + 2, rect.y - size + 2, size, size);
 	}
 
 	// Visit Shapes
@@ -47,9 +47,9 @@ public class ShapeDraftman implements ShapeVisitor {
 			int sY = rect.getRect().y; // ou sY = rect.getLoc().y;
 			int sW = rect.getRect().width;
 			int sH = rect.getRect().height;
-			g2d.translate(sX+sW/2,sY+sH/2);
+			g2d.translate(sX + sW / 2, sY + sH / 2);
 			g2d.rotate(Math.toRadians(rect.getRotation()));
-			g2d.translate(-sX-sW/2,-sY-sH/2);
+			g2d.translate(-sX - sW / 2, -sY - sH / 2);
 			ColorAttributes cA = (ColorAttributes) rect.getAttributes("colorAttributes");
 			if (cA != null) {
 				if (cA.filled()) {
@@ -61,8 +61,7 @@ public class ShapeDraftman implements ShapeVisitor {
 					g2d.setColor(cA.strokedColor());
 					g2d.drawRect(sX, sY, sW, sH);
 				}
-			}
-			else {
+			} else {
 				g2d.setColor(Color.BLACK);
 				g2d.fillRect(sX, sY, sW, sH);
 			}
@@ -73,7 +72,6 @@ public class ShapeDraftman implements ShapeVisitor {
 			}
 		}
 	}
-
 
 	@Override
 	public void visitCircle(SCircle scircle) {
@@ -93,8 +91,7 @@ public class ShapeDraftman implements ShapeVisitor {
 					g2d.setColor(cA.strokedColor());
 					g2d.drawOval(sX, sY, diam, diam);
 				}
-			}
-			else {
+			} else {
 				g2d.setColor(Color.BLACK);
 				g2d.fillOval(sX, sY, diam, diam);
 			}
@@ -105,7 +102,6 @@ public class ShapeDraftman implements ShapeVisitor {
 			}
 		}
 	}
-
 
 	@Override
 	public void visitText(SText stext) {
@@ -123,18 +119,26 @@ public class ShapeDraftman implements ShapeVisitor {
 				int sW = stext.getBounds().width;
 				int sH = stext.getBounds().height;
 
-				g2d.translate(sX+sW/2,sY+sH/2);
+				g2d.translate(sX + sW / 2, sY + sH / 2);
 				g2d.rotate(Math.toRadians(stext.getRotation()));
-				g2d.translate(-sX-sW/2,-sY-sH/2);
+				g2d.translate(-sX - sW / 2, -sY - sH / 2);
 				ColorAttributes cA = (ColorAttributes) stext.getAttributes("colorAttributes");
+
+				Font fonte = new Font("Helvetica", Font.BOLD, stext.getSizeText());
+				g2d.setFont(fonte);
+
 				if (cA != null) {
+
 					if (cA.filled()) {
 						if (stext.getBounds() != null) {
+
 							g2d.setColor(cA.filledColor());
 							g2d.fillRect(sX, sY, sW, sH);
+
 						}
 					}
 					if (cA.stroked()) {
+
 						g2d.setColor(cA.strokedColor());
 						g2d.drawString(text, loc.x, loc.y);
 					}
@@ -148,14 +152,13 @@ public class ShapeDraftman implements ShapeVisitor {
 		}
 	}
 
-
 	@Override
 	public void visitCollection(SCollection scollec) {
 		Shape shape;
 		if (scollec != null) {
 			Iterator<Shape> itr = scollec.iterator();
 			SelectionAttributes sA = (SelectionAttributes) scollec.getAttributes("selectionAttributes");
-			while(itr.hasNext()) {
+			while (itr.hasNext()) {
 				shape = itr.next();
 				shape.accept(this);
 				if (sA != null && sA.isSelected()) {
@@ -174,16 +177,11 @@ public class ShapeDraftman implements ShapeVisitor {
 			int sW = spolygone.getBounds().width;
 			int sH = spolygone.getBounds().height;
 
-			AffineTransform affineT = g2d.getTransform();
-
-			affineT.translate(-sW, -sH);
-			affineT.scale(spolygone.getScale(), spolygone.getScale());
-			affineT.translate(sW,sH);
-
-			g2d.translate(sX+sW/2,sY+sH/2);
+			g2d.translate(sX + sW / 2, sY + sH / 2);
 			g2d.rotate(Math.toRadians(spolygone.getRotation()));
-			g2d.translate(-sX-sW/2,-sY-sH/2);
-			//g2d.scale(spolygone.getScale(), spolygone.getScale());
+			g2d.scale(spolygone.getScale(), spolygone.getScale());
+			g2d.translate(-sX - sW / 2, -sY - sH / 2);
+
 			ColorAttributes cA = (ColorAttributes) spolygone.getAttributes("colorAttributes");
 			if (cA != null) {
 				if (cA.filled()) {
@@ -194,8 +192,7 @@ public class ShapeDraftman implements ShapeVisitor {
 					g2d.setColor(cA.strokedColor());
 					g2d.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 				}
-			}
-			else {
+			} else {
 				g2d.setColor(Color.BLACK);
 				g2d.drawPolygon(spolygone.getX(), spolygone.getY(), spolygone.getnPoints());
 			}
@@ -204,10 +201,10 @@ public class ShapeDraftman implements ShapeVisitor {
 			if (sA != null && sA.isSelected()) {
 				drawSelectionShape(spolygone.getBounds());
 			}
-			g2d.setTransform(affineT);
-		}
-	}
 
+		}
+
+	}
 
 	@Override
 	public void visitImage(SPicture spicture) {
@@ -221,9 +218,9 @@ public class ShapeDraftman implements ShapeVisitor {
 			int sW = spicture.getBounds().width;
 			int sH = spicture.getBounds().height;
 
-			g2d.translate(sX+sW/2,sY+sH/2);
+			g2d.translate(sX + sW / 2, sY + sH / 2);
 			g2d.rotate(Math.toRadians(spicture.getRotation()));
-			g2d.translate(-sX-sW/2,-sY-sH/2);
+			g2d.translate(-sX - sW / 2, -sY - sH / 2);
 			g2d.drawImage(image, spicture.getLoc().x, spicture.getLoc().y, null);
 
 		}
@@ -232,6 +229,5 @@ public class ShapeDraftman implements ShapeVisitor {
 			drawSelectionShape(spicture.getBounds());
 		}
 	}
-
 
 }

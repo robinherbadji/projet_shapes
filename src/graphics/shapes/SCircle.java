@@ -4,12 +4,14 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 public class SCircle extends Shape {
+
 	private int radius;
+
 	private float rotation;
 
 	public SCircle() {
-		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
-		this.radius = 5 + (int)(Math.random() * 75);
+		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
+		this.radius = 5 + (int) (Math.random() * 75);
 		this.setLoc(point);
 		this.setRadius(radius);
 	}
@@ -47,7 +49,7 @@ public class SCircle extends Shape {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(this.point.x,this.point.y,this.radius*2,this.radius*2);
+		return new Rectangle(this.point.x, this.point.y, this.radius * 2, this.radius * 2);
 	}
 
 	@Override
@@ -62,12 +64,5 @@ public class SCircle extends Shape {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
-
-	/*
-	@Override
-	public void rotate(int degree) {
-		// TODO Auto-generated method stub
-
-	}*/
 
 }

@@ -17,21 +17,21 @@ public class FunctionsDialog extends JDialog {
 
 	public FunctionsDialog(JFrame parent, String title, boolean modal) {
 		super (parent, title, modal);
-		this.setSize(600, 800);
+		this.setSize(600, 850);
 		this.setLocationRelativeTo(null);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		JPanel panText = new JPanel();
 		panText.setBackground(Color.white);
-		//panText.setPreferredSize(new Dimension(500, 500));
+		// panText.setPreferredSize(new Dimension(500, 500));
 
 		JTextArea textContent = new JTextArea();
 		textContent.setFont(new Font("Serif", Font.PLAIN, 14));
 		textContent.append("\t\tFUNCTIONALITIES :\t\t\t\n");
 		
 		textContent.append("\n\n- Selection of Shape : Left Click");
-		
+
 		textContent.append("\n\nFile : \t- New -> Create a new blank project");
 		textContent.append("\n\t- Open -> Open an existing project");
 		textContent.append("\n\t- Save -> Save the project in the current folder");
@@ -66,7 +66,7 @@ public class FunctionsDialog extends JDialog {
 		textContent.append("\n\t'1','2','3' > Set the Animation Speed");
 		textContent.append("\n\t'/' > Activate the Grid display");
 		textContent.append("\n\t'*' > Desactivate the Grid display");
-		
+
 		panText.add(textContent);
 		this.getContentPane().add(panText, BorderLayout.CENTER);
 
@@ -74,7 +74,7 @@ public class FunctionsDialog extends JDialog {
 		JButton okButton = new JButton("OK");
 		this.getRootPane().setDefaultButton(okButton);
 
-		okButton.addActionListener(new ActionListener(){
+		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
 			}

@@ -7,17 +7,20 @@ import graphics.shapes.attributes.FontAttributes;
 
 public class SText extends Shape {
 	private String text;
-	private float rotation;
+	private int sizeText;
 
 	public SText(String text) {
-		this.point = new Point((int)(Math.random() * 280), (int)(Math.random() * 280));
+		this.point = new Point((int) (Math.random() * 280), (int) (Math.random() * 280));
 		this.setLoc(point);
 		this.setText(text);
+
+		this.sizeText = 13;
 	}
 
 	public SText(Point loc, String text) {
 		this.setLoc(loc);
 		this.setText(text);
+		this.sizeText = 13;
 	}
 
 	@Override
@@ -38,7 +41,6 @@ public class SText extends Shape {
 		this.text = text;
 	}
 
-
 	@Override
 	public void translate(int dx, int dy) {
 		Point point = this.point;
@@ -52,23 +54,22 @@ public class SText extends Shape {
 		FontAttributes fA = (FontAttributes) this.getAttributes("fontAttributes");
 		if (fA != null) {
 			Rectangle bounds = fA.getBounds(this.text);
-			return new Rectangle(point.x,point.y-bounds.height,bounds.width,bounds.height);
-		}
-		else return null;
+			return new Rectangle(point.x, point.y - bounds.height, bounds.width, bounds.height);
+		} else
+			return null;
 	}
-
 
 	@Override
 	public void accept(ShapeVisitor sVisitor) {
 		sVisitor.visitText(this);
 	}
 
-	public float getRotation() {
-		return rotation;
+	public int getSizeText() {
+		return sizeText;
 	}
 
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
+	public void setSizeText(int sizeText) {
+		this.sizeText = sizeText;
 	}
 
 }

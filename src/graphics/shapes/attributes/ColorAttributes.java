@@ -9,7 +9,7 @@ public class ColorAttributes extends Attributes {
 	private Color strokedColor;
 
 	// Constructeur par defaut
-	public ColorAttributes () {
+	public ColorAttributes() {
 		id = "colorAttributes";
 		this.filled = true;
 		this.stroked = true;
@@ -17,15 +17,28 @@ public class ColorAttributes extends Attributes {
 		this.strokedColor = randomColor();
 	}
 
-	public ColorAttributes (boolean filled, boolean stroked, Color filledColor, Color strokedColor) {
+	public ColorAttributes(boolean filled, boolean stroked, Color filledColor, Color strokedColor) {
 		id = "colorAttributes";
 		this.filled = filled;
 		this.stroked = stroked;
 		this.filledColor = filledColor;
 		this.strokedColor = strokedColor;
 	}
+	
+	public ColorAttributes(ColorAttributes cA) {
+		id = "colorAttributes";
+		if (cA != null) {
+			this.filled = cA.filled;
+			this.stroked = cA.stroked;
+			this.filledColor = cA.filledColor;
+			this.strokedColor = cA.strokedColor;
+		}
+		//else this
+		
+		
+	}
 
-	public  String  getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -58,14 +71,14 @@ public class ColorAttributes extends Attributes {
 	}
 
 	public void setStrokedColor(Color strokedColor) {
-		this.strokedColor = strokedColor ;
+		this.strokedColor = strokedColor;
 	}
 
 	public Color randomColor() {
-		int red = (int)(Math.random() * 256);
-		int green = (int)(Math.random()*256);
-		int blue = (int)(Math.random()*256);
-		Color color = new Color(red,green,blue);
+		int red = (int) (Math.random() * 256);
+		int green = (int) (Math.random() * 256);
+		int blue = (int) (Math.random() * 256);
+		Color color = new Color(red, green, blue);
 		return color;
 	}
 

@@ -24,11 +24,11 @@ public class ShapesView extends View {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (this.gridState)	this.drawGrid(g);
+		if (this.gridState)
+			this.drawGrid(g);
 		ShapeDraftman draftman = new ShapeDraftman(g);
 		((Shape) model).accept(draftman);
 	}
-
 
 	public Controller defaultController(Object model) {
 		return new ShapesController(model);

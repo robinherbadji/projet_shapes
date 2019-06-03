@@ -5,13 +5,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public abstract class View extends JPanel implements ActionListener
-{
+public abstract class View extends JPanel implements ActionListener {
 	protected Object model;
 	private Controller controller;
 
-	public View(Object model)
-	{
+	public View(Object model) {
 		this.model = model;
 		this.controller = defaultController(model);
 		this.controller.setView(this);
@@ -22,24 +20,20 @@ public abstract class View extends JPanel implements ActionListener
 		setFocusable(true);
 	}
 
-	public void setModel(Object model)
-	{
+	public void setModel(Object model) {
 		this.model = model;
 		this.controller.setModel(model);
 	}
 
-	public Object getModel()
-	{
+	public Object getModel() {
 		return this.model;
 	}
 
-	public Controller defaultController(Object model)
-	{
+	public Controller defaultController(Object model) {
 		return new Controller(model);
 	}
 
-	final public Controller getController()
-	{
+	final public Controller getController() {
 		return this.controller;
 	}
 }
